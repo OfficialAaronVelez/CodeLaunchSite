@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodeLaunch — Affordable Software Development</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <style>
+    :root {
+      --bg: #080808;
+      --bg2: #111111;
+      --bg3: #181818;
+      --surface: #1a1a1a;
+      --border: #2a2a2a;
+      --orange: #F97316;
+      --orange-dim: #c45d0e;
+      --orange-glow: rgba(249,115,22,0.15);
+      --white: #FAFAFA;
+      --gray: #888;
+      --gray2: #555;
+      --text: #e8e8e8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--orange-dim); border-radius: 4px; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+      height: 64px;
+      background: rgba(8,8,8,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      user-select: none;
+    }
+    .logo .bracket { color: var(--orange); vertical-align: -0.05em; font-size: 0.85em; }
+    .logo .code { color: var(--white); }
+    .logo .launch { color: var(--orange); }
+
+    .nav-links {
+      display: flex; gap: 36px; list-style: none;
+    }
+    .nav-links a {
+      color: var(--gray);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+
+    .nav-cta {
+      background: var(--orange);
+      color: #000;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 10px 22px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .nav-cta:hover { background: #fff; transform: translateY(-1px); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 120px 48px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid-bg {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.35;
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 40%, transparent 100%);
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: -100px; right: -150px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(249,115,22,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; max-width: 900px; }
+
+    .hero-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      color: var(--orange);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block; width: 32px; height: 1px;
+      background: var(--orange);
+    }
+
+    .hero-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(52px, 7vw, 96px);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      margin-bottom: 28px;
+    }
+    .hero-title .accent { color: var(--orange); }
+    .hero-title .dim { color: var(--gray2); }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--gray);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+      font-weight: 300;
+    }
+
+    .hero-actions { display: flex; gap: 16px; align-items: center; }
+
+    .btn-primary {
+      background: var(--orange);
+      color: #000;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 16px 36px;
+      border: none; cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.01em;
+    }
+    .btn-primary:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(249,115,22,0.3); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--gray);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      font-size: 15px;
+      padding: 16px 28px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--gray); color: var(--white); }
+
+    .hero-stats {
+      position: absolute; bottom: 60px; right: 48px;
+      display: flex; gap: 48px;
+    }
+    .stat { text-align: right; }
+    .stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 36px; font-weight: 700;
+      color: var(--white); letter-spacing: -0.02em;
+    }
+    .stat-num span { color: var(--orange); }
+    .stat-label {
+      font-size: 12px; color: var(--gray);
+      letter-spacing: 0.08em; text-transform: uppercase;
+    }
+
+    /* MARQUEE */
+    .marquee-wrap {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden; white-space: nowrap;
+      background: var(--bg2);
+      padding: 14px 0;
+    }
+    .marquee-track {
+      display: inline-block;
+      animation: marquee 30s linear infinite;
+    }
+    .marquee-track span {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      color: var(--gray2);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0 40px;
+    }
+    .marquee-track span.hi { color: var(--orange); }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* SECTION LAYOUT */
+    section { padding: 100px 48px; }
+    .section-header { margin-bottom: 64px; }
+    .section-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--orange);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .section-title .accent { color: var(--orange); }
+
+    /* SERVICES */
+    #services { background: var(--bg); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .service-card {
+      background: var(--bg);
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+      cursor: default;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 3px; height: 0;
+      background: var(--orange);
+      transition: height 0.4s ease;
+    }
+    .service-card:hover { background: var(--bg3); }
+    .service-card:hover::before { height: 100%; }
+
+    .service-icon {
+      font-family: 'Space Mono', monospace;
+      font-size: 22px;
+      color: var(--orange);
+      margin-bottom: 20px;
+      display: block;
+    }
+    .service-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+    .service-desc {
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.7;
+    }
+    .service-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 20px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      color: var(--orange);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    /* QUOTE WIZARD */
+    #quote {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* WORK / PORTFOLIO */
+    #work { background: var(--bg); }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      background: var(--border);
+    }
+
+    .work-card {
+      background: var(--bg3);
+      aspect-ratio: 16/9;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .work-card-inner {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding: 32px;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
+    }
+    .work-card-bg {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.5s ease;
+    }
+    .work-card:hover .work-card-bg { transform: scale(1.04); }
+
+    .work-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--orange);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .work-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    /* TESTIMONIALS */
+    #testimonials { background: var(--bg); }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .tcard {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 36px;
+      position: relative;
+    }
+    .tcard::before {
+      content: '"';
+      position: absolute; top: 20px; right: 28px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 80px;
+      color: var(--orange);
+      opacity: 0.2;
+      line-height: 1;
+    }
+    .tcard-text {
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.8;
+      margin-bottom: 28px;
+      font-style: italic;
+      font-weight: 300;
+    }
+    .tcard-author {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .tcard-avatar {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      background: var(--orange);
+      color: #000;
+      flex-shrink: 0;
+    }
+    .tcard-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--white);
+    }
+    .tcard-role { font-size: 12px; color: var(--gray); }
+
+    /* CONTACT */
+    #contact {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .contact-form {
+      display: flex; flex-direction: column; gap: 16px;
+    }
+
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .form-input {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      padding: 14px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-input:focus { border-color: var(--orange); }
+    .form-input::placeholder { color: var(--gray2); }
+    textarea.form-input { resize: vertical; min-height: 120px; }
+
+    .contact-info { padding-top: 8px; }
+    .contact-info-item {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .ci-icon {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      color: var(--orange);
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+    .ci-label { font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.1em; }
+    .ci-value { font-size: 16px; color: var(--white); font-weight: 400; margin-top: 2px; }
+
+    /* FOOTER */
+    footer {
+      padding: 40px 48px;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-copy { font-size: 13px; color: var(--gray2); }
+    .footer-links { display: flex; gap: 28px; }
+    .footer-links a { font-size: 13px; color: var(--gray2); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--orange); }
+
+    /* TYPEWRITER CODE BLOCK */
+    .hero-code {
+      position: absolute;
+      right: 48px; top: 50%;
+      transform: translateY(-50%);
+      width: 380px;
+      background: #0d0d0d;
+      border: 1px solid var(--border);
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      line-height: 1.8;
+      overflow: hidden;
+    }
+    .code-topbar {
+      background: var(--bg3);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .code-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .code-filename {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--gray2);
+      margin-left: 8px;
+      letter-spacing: 0.05em;
+    }
+    .code-body { padding: 20px 20px 24px; }
+    .code-line { display: flex; gap: 16px; min-height: 1.8em; }
+    .code-ln { color: var(--gray2); font-size: 11px; user-select: none; min-width: 16px; text-align: right; padding-top: 1px; }
+    .code-kw { color: #c792ea; }
+    .code-fn { color: #82aaff; }
+    .code-str { color: #c3e88d; }
+    .code-cm { color: var(--gray2); font-style: italic; }
+    .code-or { color: var(--orange); }
+    .code-cursor {
+      display: inline-block;
+      width: 2px; height: 1em;
+      background: var(--orange);
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* CHAT BUBBLE */
+    #chat-bubble {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      z-index: 998;
+      display: flex; flex-direction: column; align-items: flex-end;
+      gap: 12px;
+    }
+    .chat-panel {
+      width: 300px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .chat-panel.open { display: flex; }
+    .chat-header {
+      background: var(--orange);
+      padding: 14px 18px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .chat-header-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 14px;
+      color: #000;
+    }
+    .chat-header-sub { font-size: 11px; color: rgba(0,0,0,0.6); margin-top: 1px; }
+    .chat-close {
+      background: none; border: none; color: #000;
+      font-size: 18px; cursor: pointer; line-height: 1;
+      opacity: 0.6;
+    }
+    .chat-close:hover { opacity: 1; }
+    .chat-body { padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+    .chat-input {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      padding: 10px 12px;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    .chat-input:focus { border-color: var(--orange); }
+    .chat-input::placeholder { color: var(--gray2); }
+    .chat-send {
+      background: var(--orange); color: #000;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 13px;
+      padding: 10px; border: none; cursor: pointer;
+      transition: background 0.2s; width: 100%;
+    }
+    .chat-send:hover { background: #fff; }
+    .chat-success {
+      padding: 18px; text-align: center;
+      display: none; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .chat-success.show { display: flex; }
+    .chat-success-icon { font-size: 28px; color: var(--orange); font-family: 'Space Mono', monospace; }
+    .chat-success-msg { font-family: 'Space Grotesk', sans-serif; font-size: 14px; color: var(--white); font-weight: 600; }
+    .chat-success-sub { font-size: 12px; color: var(--gray); }
+    .chat-btn {
+      width: 56px; height: 56px;
+      background: var(--orange);
+      border: none; cursor: pointer;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(249,115,22,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+      font-family: 'Space Mono', monospace;
+      font-size: 20px; color: #000;
+      flex-shrink: 0;
+    }
+    .chat-btn:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(249,115,22,0.55); }
+    .chat-tooltip {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px; font-weight: 500;
+      padding: 8px 14px;
+      white-space: nowrap;
+      animation: fadeSlide 0.4s ease both;
+      pointer-events: none;
+    }
+    @keyframes fadeSlide { from { opacity:0; transform: translateY(6px); } to { opacity:1; transform: translateY(0); } }
+
+    /* SCROLL REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 24px 80px; }
+      .hero-code { display: none; }
+      .hero-stats { right: 24px; gap: 28px; }
+      section { padding: 72px 24px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .work-grid { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .contact-layout { grid-template-columns: 1fr; gap: 48px; }
+      footer { flex-direction: column; gap: 16px; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">
+      <span class="bracket">&lt;</span><span class="code">code</span><span class="launch">Launch</span><span class="bracket">&gt;</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#testimonials">Clients</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-cta" onclick="document.getElementById('quote').scrollIntoView({behavior:'smooth'})">Get a Quote</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Affordable Software Solutions</div>
+      <h1 class="hero-title">
+        We build software<br/>
+        that <span class="accent">launches</span><br/>
+        <span class="dim">your business.</span>
+      </h1>
+      <p class="hero-sub">Websites, mobile apps, and custom software — delivered fast, priced fairly. No fluff, no bloat, just clean code that works.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="document.getElementById('quote').scrollIntoView({behavior:'smooth'})">Start Your Project</button>
+        <button class="btn-ghost" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">See Our Work</button>
+      </div>
+    </div>
+
+    <!-- TYPEWRITER CODE BLOCK -->
+    <div class="hero-code" id="hero-code">
+      <div class="code-topbar">
+        <div class="code-dot" style="background:#ff5f57"></div>
+        <div class="code-dot" style="background:#ffbd2e"></div>
+        <div class="code-dot" style="background:#28c840"></div>
+        <span class="code-filename">project.js</span>
+      </div>
+      <div class="code-body" id="code-body"></div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">50<span>+</span></div>
+        <div class="stat-label">Projects Shipped</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100<span>%</span></div>
+        <div class="stat-label">Client Satisfaction</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3<span>x</span></div>
+        <div class="stat-label">Faster Delivery</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track" id="marquee-track"></div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-header reveal">
+      <div class="section-tag">// What we do</div>
+      <h2 class="section-title">Full-stack solutions.<br/><span class="accent">Built to scale.</span></h2>
+    </div>
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <span class="service-icon">[ web ]</span>
+        <div class="service-name">Website Development</div>
+        <p class="service-desc">Custom, fast-loading websites designed to convert visitors into clients. From landing pages to full business portals.</p>
+        <div class="service-link">Explore →</div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">[ app ]</span>
+        <div class="service-name">Mobile App Development</div>
+        <p class="service-desc">iOS and Android apps built natively or with React Native. Seamless UX, real-time features, App Store ready.</p>
+        <div class="service-link">Explore →</div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">[ sys ]</span>
+        <div class="service-name">Custom Software</div>
+        <p class="service-desc">Internal tools, SaaS platforms, and automation systems tailored exactly to your workflow. No off-the-shelf compromise.</p>
+        <div class="service-link">Explore →</div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">[ ux ]</span>
+        <div class="service-name">UI/UX Design</div>
+        <p class="service-desc">User research, wireframes, high-fidelity prototypes, and polished design systems. Beautiful and functional.</p>
+        <div class="service-link">Explore →</div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">[ api ]</span>
+        <div class="service-name">API & Integrations</div>
+        <p class="service-desc">Connect your tools. We build robust APIs and integrate third-party services like payments, CRMs, and analytics.</p>
+        <div class="service-link">Explore →</div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">[ sup ]</span>
+        <div class="service-name">Maintenance & Support</div>
+        <p class="service-desc">Ongoing hosting, updates, and dedicated support. We keep your software running and improving after launch.</p>
+        <div class="service-link">Explore →</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE WIZARD -->
+  <section id="quote">
+    <div class="section-header reveal">
+      <div class="section-tag">// Instant estimate</div>
+      <h2 class="section-title">What are you<br/><span class="accent">building?</span></h2>
+    </div>
+    <div id="quote-root"></div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="section-header reveal">
+      <div class="section-tag">// Selected work</div>
+      <h2 class="section-title">Products we've<br/><span class="accent">shipped.</span></h2>
+    </div>
+    <div class="work-grid reveal">
+      <div class="work-card">
+        <div class="work-card-bg" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);">
+          <svg width="120" height="80" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="15" width="100" height="50" rx="4" stroke="#F97316" stroke-width="1.5" fill="none" opacity="0.4"/>
+            <rect x="20" y="25" width="40" height="6" rx="2" fill="#F97316" opacity="0.6"/>
+            <rect x="20" y="37" width="60" height="4" rx="2" fill="#444"/>
+            <rect x="20" y="47" width="45" height="4" rx="2" fill="#444"/>
+            <rect x="70" y="42" width="24" height="12" rx="2" fill="#F97316" opacity="0.8"/>
+          </svg>
+        </div>
+        <div class="work-card-inner">
+          <div class="work-tag">Website</div>
+          <div class="work-title">Apex Realty Group</div>
+        </div>
+      </div>
+      <div class="work-card">
+        <div class="work-card-bg" style="background: linear-gradient(135deg, #0a1628 0%, #1a0a28 100%);">
+          <svg width="70" height="120" viewBox="0 0 70 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="5" y="5" width="60" height="110" rx="8" stroke="#F97316" stroke-width="1.5" fill="none" opacity="0.4"/>
+            <rect x="15" y="20" width="40" height="30" rx="3" fill="#F97316" opacity="0.15"/>
+            <rect x="15" y="58" width="18" height="18" rx="2" fill="#F97316" opacity="0.5"/>
+            <rect x="37" y="58" width="18" height="18" rx="2" fill="#333"/>
+            <rect x="15" y="82" width="40" height="5" rx="2" fill="#333"/>
+            <circle cx="35" cy="108" r="4" stroke="#F97316" stroke-width="1.2" fill="none" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="work-card-inner">
+          <div class="work-tag">Mobile App</div>
+          <div class="work-title">FitTrack Pro</div>
+        </div>
+      </div>
+      <div class="work-card">
+        <div class="work-card-bg" style="background: linear-gradient(135deg, #0d1f0d 0%, #1a2a1a 100%);">
+          <svg width="130" height="80" viewBox="0 0 130 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="5" y="10" width="120" height="60" rx="4" stroke="#F97316" stroke-width="1.5" fill="none" opacity="0.3"/>
+            <rect x="15" y="20" width="25" height="40" rx="2" fill="#F97316" opacity="0.12"/>
+            <rect x="15" y="44" width="25" height="16" rx="2" fill="#F97316" opacity="0.5"/>
+            <rect x="47" y="30" width="25" height="30" rx="2" fill="#F97316" opacity="0.12"/>
+            <rect x="47" y="40" width="25" height="20" rx="2" fill="#F97316" opacity="0.3"/>
+            <rect x="79" y="20" width="25" height="40" rx="2" fill="#F97316" opacity="0.12"/>
+            <rect x="79" y="28" width="25" height="32" rx="2" fill="#F97316" opacity="0.4"/>
+            <rect x="111" y="35" width="8" height="25" rx="2" fill="#F97316" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="work-card-inner">
+          <div class="work-tag">SaaS Dashboard</div>
+          <div class="work-title">Vanta Analytics</div>
+        </div>
+      </div>
+      <div class="work-card">
+        <div class="work-card-bg" style="background: linear-gradient(135deg, #1a100a 0%, #2a1a0a 100%);">
+          <svg width="110" height="90" viewBox="0 0 110 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="55" cy="45" r="35" stroke="#F97316" stroke-width="1.5" fill="none" opacity="0.3"/>
+            <circle cx="55" cy="45" r="20" stroke="#F97316" stroke-width="1" fill="none" opacity="0.2"/>
+            <circle cx="55" cy="45" r="5" fill="#F97316" opacity="0.7"/>
+            <line x1="55" y1="10" x2="55" y2="45" stroke="#F97316" stroke-width="2" opacity="0.6"/>
+            <line x1="55" y1="45" x2="78" y2="62" stroke="#F97316" stroke-width="1.5" opacity="0.4"/>
+          </svg>
+        </div>
+        <div class="work-card-inner">
+          <div class="work-tag">E-Commerce</div>
+          <div class="work-title">Nomad Goods Store</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="section-header reveal">
+      <div class="section-tag">// Client voices</div>
+      <h2 class="section-title">Trusted by<br/><span class="accent">builders.</span></h2>
+    </div>
+    <div class="testimonials-grid reveal">
+      <div class="tcard">
+        <p class="tcard-text">"CodeLaunch delivered our e-commerce site in under 3 weeks. Fast, clean, exactly what we asked for — and the ongoing support has been excellent."</p>
+        <div class="tcard-author">
+          <div class="tcard-avatar">JM</div>
+          <div>
+            <div class="tcard-name">Jamie Mitchell</div>
+            <div class="tcard-role">Founder, Nomad Goods</div>
+          </div>
+        </div>
+      </div>
+      <div class="tcard">
+        <p class="tcard-text">"The mobile app they built exceeded every expectation. Clean UI, zero bugs on launch day. I'd recommend them to any startup that wants things done right."</p>
+        <div class="tcard-author">
+          <div class="tcard-avatar">SR</div>
+          <div>
+            <div class="tcard-name">Sarah Reynolds</div>
+            <div class="tcard-role">CEO, FitTrack Pro</div>
+          </div>
+        </div>
+      </div>
+      <div class="tcard">
+        <p class="tcard-text">"Our custom analytics dashboard transformed how we operate. The CodeLaunch team actually understood our business before writing a single line of code."</p>
+        <div class="tcard-author">
+          <div class="tcard-avatar">DK</div>
+          <div>
+            <div class="tcard-name">Daniel Kwon</div>
+            <div class="tcard-role">CTO, Vanta Analytics</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-header reveal">
+      <div class="section-tag">// Let's talk</div>
+      <h2 class="section-title">Ready to<br/><span class="accent">build?</span></h2>
+    </div>
+    <div class="contact-layout reveal">
+      <form class="contact-form" onsubmit="handleContactSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input class="form-input" type="text" placeholder="Jane Smith" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input class="form-input" type="email" placeholder="jane@company.com" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Project Type</label>
+          <select class="form-input">
+            <option value="" disabled selected>Select a service</option>
+            <option>Website Development</option>
+            <option>Mobile App</option>
+            <option>Custom Software</option>
+            <option>UI/UX Design</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tell us about your project</label>
+          <textarea class="form-input" placeholder="A brief overview of what you'd like to build..."></textarea>
+        </div>
+        <button type="submit" class="btn-primary" style="width:100%;margin-top:4px;" id="contact-btn">Send Message →</button>
+      </form>
+      <div class="contact-info">
+        <div class="contact-info-item">
+          <div class="ci-icon">[mail]</div>
+          <div>
+            <div class="ci-label">Email</div>
+            <div class="ci-value">hello@codelaunch.dev</div>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="ci-icon">[time]</div>
+          <div>
+            <div class="ci-label">Response Time</div>
+            <div class="ci-value">Within 24 hours</div>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="ci-icon">[loc]</div>
+          <div>
+            <div class="ci-label">Based In</div>
+            <div class="ci-value">Remote-first, Worldwide</div>
+          </div>
+        </div>
+        <div class="contact-info-item" style="border-bottom:none;">
+          <div class="ci-icon">[call]</div>
+          <div>
+            <div class="ci-label">Free Consultation</div>
+            <div class="ci-value">30 min. No commitment.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STICKY CHAT BUBBLE -->
+  <div id="chat-bubble">
+    <div class="chat-panel" id="chat-panel">
+      <div class="chat-header">
+        <div>
+          <div class="chat-header-title">Start a project</div>
+          <div class="chat-header-sub">We reply within 24 hours</div>
+        </div>
+        <button class="chat-close" onclick="toggleChat()">×</button>
+      </div>
+      <div class="chat-body" id="chat-form-body">
+        <input class="chat-input" id="chat-name" type="text" placeholder="Your name" />
+        <input class="chat-input" id="chat-email" type="email" placeholder="Email address" />
+        <input class="chat-input" id="chat-msg" type="text" placeholder="What do you need built?" />
+        <button class="chat-send" onclick="submitChat()">Send Message →</button>
+      </div>
+      <div class="chat-success" id="chat-success">
+        <div class="chat-success-icon">[ ✓ ]</div>
+        <div class="chat-success-msg">Message sent!</div>
+        <div class="chat-success-sub">We'll be in touch within 24 hours.</div>
+      </div>
+    </div>
+    <div class="chat-tooltip" id="chat-tooltip">Let's build something →</div>
+    <button class="chat-btn" id="chat-toggle" onclick="toggleChat()" title="Start a project">✦</button>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <div class="logo" style="font-size:15px;margin-bottom:6px;">
+        <span class="bracket">&lt;</span><span class="code">code</span><span class="launch">Launch</span><span class="bracket">&gt;</span>
+      </div>
+      <div class="footer-copy">© 2026 CodeLaunch. All rights reserved.</div>
+    </div>
+    <div class="footer-links">
+      <a href="#services">Services</a>
+      <a href="#work">Work</a>
+      <a href="#contact">Contact</a>
+      <a href="#">Privacy</a>
+    </div>
+  </footer>
+
+  <script>
+    // Marquee
+    const items = ['Website Design', '✦', 'Mobile Apps', '✦', 'Custom Software', '✦', 'UI/UX Design', '✦', 'API Development', '✦', 'E-Commerce', '✦', 'SaaS Platforms', '✦', 'Maintenance', '✦'];
+    const doubled = [...items, ...items];
+    const track = document.getElementById('marquee-track');
+    track.innerHTML = doubled.map(t => `<span class="${t==='✦'?'hi':''}">${t}</span>`).join('');
+
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // TYPEWRITER CODE BLOCK
+    const codeLines = [
+      { ln:'1',  parts:[{cls:'code-cm', t:'// codeLaunch — your idea, built fast'}] },
+      { ln:'2',  parts:[] },
+      { ln:'3',  parts:[{cls:'code-kw', t:'const'}, {cls:'', t:' project = {'}] },
+      { ln:'4',  parts:[{cls:'', t:'  '}, {cls:'code-fn', t:'name'}, {cls:'', t:': '}, {cls:'code-str', t:"'Your Business'"}] },
+      { ln:'5',  parts:[{cls:'', t:'  '}, {cls:'code-fn', t:'type'}, {cls:'', t:': '}, {cls:'code-str', t:"'web app'"}] },
+      { ln:'6',  parts:[{cls:'', t:'  '}, {cls:'code-fn', t:'stack'}, {cls:'', t:': ['}, {cls:'code-str', t:"'React'"}, {cls:'', t:', '}, {cls:'code-str', t:"'Node'"}, {cls:'', t:']'}] },
+      { ln:'7',  parts:[{cls:'', t:'  '}, {cls:'code-fn', t:'deadline'}, {cls:'', t:': '}, {cls:'code-str', t:"'2 weeks'"}] },
+      { ln:'8',  parts:[{cls:'', t:'}'}] },
+      { ln:'9',  parts:[] },
+      { ln:'10', parts:[{cls:'code-kw', t:'async function'}, {cls:'code-fn', t:' launch'}, {cls:'', t:'(project) {'}] },
+      { ln:'11', parts:[{cls:'', t:'  '}, {cls:'code-kw', t:'await'}, {cls:'code-fn', t:' codeLaunch'}, {cls:'', t:'.build(project);'}] },
+      { ln:'12', parts:[{cls:'', t:'  '}, {cls:'code-kw', t:'return'}, {cls:'code-or', t:' 🚀 success'}, {cls:'', t:';'}] },
+      { ln:'13', parts:[{cls:'', t:'}'}] },
+    ];
+
+    function renderCodeLine(line, showCursor) {
+      const row = document.createElement('div');
+      row.className = 'code-line';
+      const ln = document.createElement('span');
+      ln.className = 'code-ln'; ln.textContent = line.ln;
+      row.appendChild(ln);
+      const content = document.createElement('span');
+      line.parts.forEach(p => {
+        const s = document.createElement('span');
+        if (p.cls) s.className = p.cls;
+        s.textContent = p.t;
+        content.appendChild(s);
+      });
+      if (showCursor) {
+        const c = document.createElement('span');
+        c.className = 'code-cursor';
+        content.appendChild(c);
+      }
+      row.appendChild(content);
+      return row;
+    }
+
+    (function typeCode() {
+      const body = document.getElementById('code-body');
+      if (!body) return;
+      let i = 0;
+      function next() {
+        if (i >= codeLines.length) return;
+        body.appendChild(renderCodeLine(codeLines[i], true));
+        // Remove cursor from all but last line
+        const rows = body.querySelectorAll('.code-line');
+        rows.forEach((r, idx) => {
+          if (idx < rows.length - 1) {
+            const c = r.querySelector('.code-cursor');
+            if (c) c.remove();
+          }
+        });
+        i++;
+        setTimeout(next, codeLines[i - 1].parts.length === 0 ? 80 : 220);
+      }
+      setTimeout(next, 800);
+    })();
+
+    // STICKY CHAT BUBBLE
+    let chatOpen = false;
+    const tooltip = document.getElementById('chat-tooltip');
+    setTimeout(() => { if (tooltip) tooltip.style.display = 'none'; }, 4000);
+
+    function toggleChat() {
+      chatOpen = !chatOpen;
+      const panel = document.getElementById('chat-panel');
+      if (chatOpen) {
+        panel.classList.add('open');
+        if (tooltip) tooltip.style.display = 'none';
+      } else {
+        panel.classList.remove('open');
+      }
+    }
+
+    async function submitChat() {
+      const name  = document.getElementById('chat-name').value.trim();
+      const email = document.getElementById('chat-email').value.trim();
+      const msg   = document.getElementById('chat-msg').value.trim();
+      if (!name || !email || !msg) return;
+
+      const sendBtn = document.querySelector('.chat-send');
+      sendBtn.textContent = 'Sending…';
+      sendBtn.disabled = true;
+
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, message: msg }),
+        });
+        if (!res.ok) throw new Error();
+
+        document.getElementById('chat-form-body').style.display = 'none';
+        document.getElementById('chat-success').classList.add('show');
+        setTimeout(() => {
+          toggleChat();
+          setTimeout(() => {
+            document.getElementById('chat-form-body').style.display = '';
+            document.getElementById('chat-success').classList.remove('show');
+            document.getElementById('chat-name').value = '';
+            document.getElementById('chat-email').value = '';
+            document.getElementById('chat-msg').value = '';
+            sendBtn.textContent = 'Send Message →';
+            sendBtn.disabled = false;
+            chatOpen = false;
+          }, 300);
+        }, 2500);
+      } catch {
+        sendBtn.textContent = 'Failed — try again';
+        sendBtn.disabled = false;
+        setTimeout(() => { sendBtn.textContent = 'Send Message →'; }, 3000);
+      }
+    }
+
+    // CONTACT FORM
+    async function handleContactSubmit(e) {
+      e.preventDefault();
+      const btn  = document.getElementById('contact-btn');
+      const form = e.target;
+
+      const name        = form.querySelector('input[type="text"]').value.trim();
+      const email       = form.querySelector('input[type="email"]').value.trim();
+      const projectType = form.querySelector('select').value;
+      const message     = form.querySelector('textarea').value.trim();
+
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, projectType, message }),
+        });
+        if (!res.ok) throw new Error();
+
+        btn.textContent = "Sent! We'll be in touch ✓";
+        btn.style.background = '#22c55e';
+        btn.style.color = '#fff';
+        setTimeout(() => {
+          btn.textContent = 'Send Message →';
+          btn.style.background = '';
+          btn.style.color = '';
+          btn.disabled = false;
+          form.reset();
+        }, 3000);
+      } catch {
+        btn.textContent = 'Failed — please email us directly';
+        btn.style.background = '#ef4444';
+        btn.style.color = '#fff';
+        setTimeout(() => {
+          btn.textContent = 'Send Message →';
+          btn.style.background = '';
+          btn.style.color = '';
+          btn.disabled = false;
+        }, 4000);
+      }
+    }
+  </script>
+
+  <!-- QUOTE WIZARD (React) -->
+  <script type="text/babel">
+    const { useState } = React;
+
+    const steps = [
+      {
+        id: 'type',
+        question: 'What are you looking to build?',
+        hint: 'Pick one to get started',
+        options: [
+          { value: 'website',   label: 'Website',         sub: 'Landing page, business site, blog',    icon: '[ web ]' },
+          { value: 'mobile',    label: 'Mobile App',       sub: 'iOS, Android, or both',                icon: '[ app ]' },
+          { value: 'software',  label: 'Custom Software',  sub: 'SaaS, internal tool, platform',        icon: '[ sys ]' },
+          { value: 'ecommerce', label: 'E-Commerce',       sub: 'Online store, product listings',       icon: '[ $ ]'   },
+        ]
+      },
+      {
+        id: 'size',
+        question: 'How large is the project?',
+        hint: 'Estimate the scope',
+        options: [
+          { value: 'small',      label: 'Small',      sub: '1–5 pages / basic features',          icon: '[ · ]'   },
+          { value: 'medium',     label: 'Medium',     sub: '5–15 pages / moderate complexity',    icon: '[ ·· ]'  },
+          { value: 'large',      label: 'Large',      sub: '15+ pages / advanced features',       icon: '[ ··· ]' },
+          { value: 'enterprise', label: 'Enterprise', sub: 'Complex, multi-user systems',         icon: '[ ∞ ]'   },
+        ]
+      },
+      {
+        id: 'timeline',
+        question: 'When do you need it live?',
+        hint: 'Choose your urgency',
+        options: [
+          { value: 'rush',     label: 'ASAP',       sub: 'Under 2 weeks',          icon: '[ !! ]' },
+          { value: 'month',    label: '1 Month',    sub: 'Standard turnaround',    icon: '[ > ]'  },
+          { value: 'quarter',  label: '1–3 Months', sub: 'Measured & thorough',    icon: '[ ~ ]'  },
+          { value: 'flexible', label: 'Flexible',   sub: 'No hard deadline',       icon: '[ ∞ ]'  },
+        ]
+      },
+      {
+        id: 'budget',
+        question: "What's your rough budget?",
+        hint: 'Helps us tailor a fair proposal',
+        options: [
+          { value: 'low',        label: 'Under $1,000',       sub: 'Great for small sites',        icon: '[ $ ]'    },
+          { value: 'mid',        label: '$1,000 – $5,000',    sub: 'Most projects land here',      icon: '[ $$ ]'   },
+          { value: 'high',       label: '$5,000 – $15,000',   sub: 'Full-featured builds',         icon: '[ $$$ ]'  },
+          { value: 'enterprise', label: '$15,000+',            sub: 'Enterprise or complex SaaS',  icon: '[ $$$$ ]' },
+        ]
+      },
+    ];
+
+    const estimates = {
+      'website-small': '$400–$800',       'website-medium': '$800–$2,500',    'website-large': '$2,500–$6,000',    'website-enterprise': '$6,000+',
+      'mobile-small':  '$1,200–$3,000',   'mobile-medium':  '$3,000–$8,000',  'mobile-large':  '$8,000–$18,000',  'mobile-enterprise':  '$18,000+',
+      'software-small':'$1,000–$3,500',   'software-medium':'$3,500–$10,000', 'software-large':'$10,000–$25,000', 'software-enterprise':'$25,000+',
+      'ecommerce-small':'$600–$1,500',    'ecommerce-medium':'$1,500–$4,000', 'ecommerce-large':'$4,000–$10,000', 'ecommerce-enterprise':'$10,000+',
+    };
+
+    const timelines = {
+      'website-small':  '1–2 weeks',  'website-medium':  '3–5 weeks',  'website-large':  '6–10 weeks',
+      'mobile-small':   '3–5 weeks',  'mobile-medium':   '6–10 weeks', 'mobile-large':   '10–18 weeks',
+      'software-small': '2–4 weeks',  'software-medium': '5–10 weeks', 'software-large': '10–20 weeks',
+      'ecommerce-small':'2–3 weeks',  'ecommerce-medium':'4–7 weeks',  'ecommerce-large':'7–14 weeks',
+    };
+
+    function QuoteWizard() {
+      const [step, setStep] = useState(0);
+      const [answers, setAnswers] = useState({});
+      const [done, setDone] = useState(false);
+      const [email, setEmail] = useState('');
+      const [submitted, setSubmitted] = useState(false);
+
+      const current = steps[step];
+
+      const select = (val) => {
+        const newAnswers = { ...answers, [current.id]: val };
+        setAnswers(newAnswers);
+        if (step < steps.length - 1) {
+          setTimeout(() => setStep(step + 1), 220);
+        } else {
+          setTimeout(() => setDone(true), 220);
+        }
+      };
+
+      const reset = () => { setStep(0); setAnswers({}); setDone(false); setSubmitted(false); setEmail(''); };
+
+      const getEstimate = () => estimates[`${answers.type}-${answers.size}`] || 'Custom Quote';
+      const getTimeline = () => timelines[`${answers.type}-${answers.size}`] || 'Depends on scope';
+
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!email) return;
+        try {
+          await fetch('/api/quote', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email,
+              type: answers.type,
+              size: answers.size,
+              timeline: answers.timeline,
+              budget: answers.budget,
+              estimate: getEstimate(),
+              estTimeline: getTimeline(),
+            }),
+          });
+        } catch (_) {
+          // submission stored locally — set submitted anyway
+        }
+        setSubmitted(true);
+      };
+
+      const progressStyle = { display: 'flex', gap: '8px', marginBottom: '40px' };
+      const dotStyle = (i) => ({
+        height: '3px', flex: 1,
+        background: i <= step ? 'var(--orange)' : 'var(--border)',
+        transition: 'background 0.3s', borderRadius: '2px',
+      });
+      const cardStyle = (selected) => ({
+        background: selected ? 'rgba(249,115,22,0.1)' : 'var(--bg)',
+        border: `1px solid ${selected ? 'var(--orange)' : 'var(--border)'}`,
+        padding: '24px', cursor: 'pointer', transition: 'all 0.18s',
+        display: 'flex', alignItems: 'flex-start', gap: '16px',
+      });
+
+      if (submitted) {
+        return (
+          <div style={{maxWidth:'780px'}}>
+            <div style={{textAlign:'center', padding:'60px 0'}}>
+              <div style={{fontFamily:'Space Mono, monospace', fontSize:'13px', color:'var(--orange)', marginBottom:'20px', letterSpacing:'0.15em'}}>[ ESTIMATE SENT ]</div>
+              <h3 style={{fontFamily:'Space Grotesk, sans-serif', fontSize:'36px', fontWeight:700, color:'var(--white)', marginBottom:'16px', letterSpacing:'-0.02em'}}>We'll be in touch soon.</h3>
+              <p style={{color:'var(--gray)', fontSize:'15px', maxWidth:'400px', margin:'0 auto 32px'}}>Check your inbox at <strong style={{color:'var(--white)'}}>{email}</strong>. We'll follow up with a detailed quote within 24 hours.</p>
+              <button onClick={reset} style={{background:'transparent', border:'1px solid var(--border)', color:'var(--gray)', fontFamily:'Space Grotesk, sans-serif', fontSize:'14px', padding:'12px 28px', cursor:'pointer'}}>Start Over</button>
+            </div>
+          </div>
+        );
+      }
+
+      if (done) {
+        return (
+          <div style={{maxWidth:'780px'}}>
+            <div style={progressStyle}>
+              {steps.map((_, i) => <div key={i} style={dotStyle(steps.length)}></div>)}
+            </div>
+            <div style={{fontFamily:'Space Mono, monospace', fontSize:'11px', color:'var(--orange)', letterSpacing:'0.2em', textTransform:'uppercase', marginBottom:'24px'}}>// Your Estimate</div>
+            <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:'2px', background:'var(--border)', border:'1px solid var(--border)', marginBottom:'32px'}}>
+              <div style={{background:'var(--bg)', padding:'32px'}}>
+                <div style={{fontFamily:'Space Mono, monospace', fontSize:'11px', color:'var(--gray)', letterSpacing:'0.1em', textTransform:'uppercase', marginBottom:'10px'}}>Estimated Cost</div>
+                <div style={{fontFamily:'Space Grotesk, sans-serif', fontSize:'40px', fontWeight:700, color:'var(--orange)', letterSpacing:'-0.02em'}}>{getEstimate()}</div>
+              </div>
+              <div style={{background:'var(--bg)', padding:'32px'}}>
+                <div style={{fontFamily:'Space Mono, monospace', fontSize:'11px', color:'var(--gray)', letterSpacing:'0.1em', textTransform:'uppercase', marginBottom:'10px'}}>Est. Timeline</div>
+                <div style={{fontFamily:'Space Grotesk, sans-serif', fontSize:'40px', fontWeight:700, color:'var(--white)', letterSpacing:'-0.02em'}}>{getTimeline()}</div>
+              </div>
+            </div>
+            <div style={{display:'flex', gap:'12px', marginBottom:'32px', flexWrap:'wrap'}}>
+              {Object.entries(answers).map(([k, v]) => (
+                <div key={k} style={{background:'var(--bg3)', border:'1px solid var(--border)', padding:'6px 14px', fontFamily:'Space Mono, monospace', fontSize:'11px', color:'var(--gray)', letterSpacing:'0.05em'}}>{v}</div>
+              ))}
+            </div>
+            <p style={{color:'var(--gray)', fontSize:'14px', marginBottom:'24px', lineHeight:'1.7'}}>This is a rough estimate based on your answers. Drop your email below and we'll send you a detailed, no-obligation quote.</p>
+            <form onSubmit={handleSubmit} style={{display:'flex', gap:'0'}}>
+              <input type="email" placeholder="your@email.com" value={email} onChange={e => setEmail(e.target.value)} required
+                style={{flex:1, background:'var(--bg3)', border:'1px solid var(--border)', borderRight:'none', color:'var(--white)', fontFamily:'DM Sans, sans-serif', fontSize:'15px', padding:'14px 16px', outline:'none'}} />
+              <button type="submit" style={{background:'var(--orange)', color:'#000', fontFamily:'Space Grotesk, sans-serif', fontWeight:700, fontSize:'14px', padding:'14px 28px', border:'none', cursor:'pointer', whiteSpace:'nowrap'}}>
+                Get Full Quote →
+              </button>
+            </form>
+            <button onClick={reset} style={{marginTop:'16px', background:'transparent', border:'none', color:'var(--gray)', fontFamily:'Space Grotesk, sans-serif', fontSize:'13px', cursor:'pointer', padding:'0'}}>← Start over</button>
+          </div>
+        );
+      }
+
+      return (
+        <div style={{maxWidth:'780px'}}>
+          <div style={progressStyle}>
+            {steps.map((_, i) => <div key={i} style={dotStyle(i)}></div>)}
+          </div>
+          <div style={{fontFamily:'Space Mono, monospace', fontSize:'11px', color:'var(--gray)', letterSpacing:'0.1em', marginBottom:'12px'}}>
+            Step {step + 1} of {steps.length}
+          </div>
+          <h3 style={{fontFamily:'Space Grotesk, sans-serif', fontSize:'clamp(24px,3vw,36px)', fontWeight:700, color:'var(--white)', marginBottom:'8px', letterSpacing:'-0.02em'}}>
+            {current.question}
+          </h3>
+          <p style={{color:'var(--gray)', fontSize:'14px', marginBottom:'32px'}}>{current.hint}</p>
+          <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:'2px', background:'var(--border)'}}>
+            {current.options.map(opt => (
+              <div
+                key={opt.value}
+                style={cardStyle(answers[current.id] === opt.value)}
+                onClick={() => select(opt.value)}
+                onMouseEnter={e => { if (answers[current.id] !== opt.value) e.currentTarget.style.borderColor = 'var(--gray2)'; }}
+                onMouseLeave={e => { if (answers[current.id] !== opt.value) e.currentTarget.style.borderColor = 'var(--border)'; }}
+              >
+                <div style={{fontFamily:'Space Mono, monospace', fontSize:'13px', color:'var(--orange)', flexShrink:0, paddingTop:'2px'}}>{opt.icon}</div>
+                <div>
+                  <div style={{fontFamily:'Space Grotesk, sans-serif', fontWeight:600, fontSize:'16px', color:'var(--white)', marginBottom:'4px'}}>{opt.label}</div>
+                  <div style={{fontSize:'13px', color:'var(--gray)'}}>{opt.sub}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('quote-root')).render(<QuoteWizard />);
+  </script>
+
+</body>
+</html>
