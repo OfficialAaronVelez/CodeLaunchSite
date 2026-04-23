@@ -1,7 +1,7 @@
-const { DatabaseSync } = require('node:sqlite');
+const Database = require('better-sqlite3');
 const path = require('path');
 
-const db = new DatabaseSync(path.join(__dirname, 'submissions.db'));
+const db = new Database(path.join(__dirname, 'submissions.db'));
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS contacts (

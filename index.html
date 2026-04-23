@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CodeLaunch — Affordable Software Development</title>
+  <title data-i18n="meta.title">CodeLaunch — Affordable Software Development</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
@@ -94,6 +94,31 @@
       transition: background 0.2s, transform 0.15s;
     }
     .nav-cta:hover { background: #fff; transform: translateY(-1px); }
+
+    .lang-toggle {
+      display: flex; align-items: center;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .lang-toggle button {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      padding: 8px 12px;
+      border: none;
+      background: transparent;
+      color: var(--gray);
+      cursor: pointer;
+      transition: color 0.2s, background 0.2s;
+    }
+    .lang-toggle button:hover { color: var(--white); }
+    .lang-toggle button.active {
+      background: var(--orange);
+      color: #000;
+    }
 
     /* HERO */
     .hero {
@@ -630,7 +655,8 @@
 
     /* RESPONSIVE */
     @media (max-width: 900px) {
-      nav { padding: 0 24px; }
+      nav { padding: 0 24px; flex-wrap: wrap; height: auto; min-height: 64px; padding-top: 8px; padding-bottom: 8px; gap: 8px; }
+      .lang-toggle { order: 3; margin-left: auto; }
       .nav-links { display: none; }
       .hero { padding: 100px 24px 80px; }
       .hero-code { display: none; }
@@ -652,12 +678,18 @@
       <span class="bracket">&lt;</span><span class="code">code</span><span class="launch">Launch</span><span class="bracket">&gt;</span>
     </div>
     <ul class="nav-links">
-      <li><a href="#services">Services</a></li>
-      <li><a href="#work">Work</a></li>
-      <li><a href="#testimonials">Clients</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#services" data-i18n="nav.services">Services</a></li>
+      <li><a href="#work" data-i18n="nav.work">Work</a></li>
+      <li><a href="#testimonials" data-i18n="nav.clients">Clients</a></li>
+      <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
     </ul>
-    <button class="nav-cta" onclick="document.getElementById('quote').scrollIntoView({behavior:'smooth'})">Get a Quote</button>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button type="button" class="lang-btn" data-locale="en" aria-pressed="true">EN</button>
+        <button type="button" class="lang-btn" data-locale="es" aria-pressed="false">ES</button>
+      </div>
+    <button class="nav-cta" data-i18n="nav.getQuote" onclick="document.getElementById('quote').scrollIntoView({behavior:'smooth'})">Get a Quote</button>
+    </div>
   </nav>
 
   <!-- HERO -->
@@ -665,16 +697,16 @@
     <div class="hero-grid-bg"></div>
     <div class="hero-glow"></div>
     <div class="hero-content">
-      <div class="hero-eyebrow">Affordable Software Solutions</div>
+      <div class="hero-eyebrow" data-i18n="hero.eyebrow">Affordable Software Solutions</div>
       <h1 class="hero-title">
-        We build software<br/>
-        that <span class="accent">launches</span><br/>
-        <span class="dim">your business.</span>
+        <span data-i18n="hero.title1">We build software</span><br/>
+        <span data-i18n="hero.title2a">that </span><span class="accent" data-i18n="hero.title2b">launches</span><br/>
+        <span class="dim" data-i18n="hero.title3">your business.</span>
       </h1>
-      <p class="hero-sub">Websites, mobile apps, and custom software — delivered fast, priced fairly. No fluff, no bloat, just clean code that works.</p>
+      <p class="hero-sub" data-i18n="hero.sub">Websites, mobile apps, and custom software — delivered fast, priced fairly. No fluff, no bloat, just clean code that works.</p>
       <div class="hero-actions">
-        <button class="btn-primary" onclick="document.getElementById('quote').scrollIntoView({behavior:'smooth'})">Start Your Project</button>
-        <button class="btn-ghost" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">See Our Work</button>
+        <button class="btn-primary" data-i18n="hero.ctaPrimary" onclick="document.getElementById('quote').scrollIntoView({behavior:'smooth'})">Start Your Project</button>
+        <button class="btn-ghost" data-i18n="hero.ctaGhost" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">See Our Work</button>
       </div>
     </div>
 
@@ -692,15 +724,15 @@
     <div class="hero-stats">
       <div class="stat">
         <div class="stat-num">50<span>+</span></div>
-        <div class="stat-label">Projects Shipped</div>
+        <div class="stat-label" data-i18n="hero.stat1">Projects Shipped</div>
       </div>
       <div class="stat">
         <div class="stat-num">100<span>%</span></div>
-        <div class="stat-label">Client Satisfaction</div>
+        <div class="stat-label" data-i18n="hero.stat2">Client Satisfaction</div>
       </div>
       <div class="stat">
         <div class="stat-num">3<span>x</span></div>
-        <div class="stat-label">Faster Delivery</div>
+        <div class="stat-label" data-i18n="hero.stat3">Faster Delivery</div>
       </div>
     </div>
   </section>
@@ -713,45 +745,45 @@
   <!-- SERVICES -->
   <section id="services">
     <div class="section-header reveal">
-      <div class="section-tag">// What we do</div>
-      <h2 class="section-title">Full-stack solutions.<br/><span class="accent">Built to scale.</span></h2>
+      <div class="section-tag" data-i18n="services.tag">// What we do</div>
+      <h2 class="section-title"><span data-i18n="services.title1">Full-stack solutions.</span><br/><span class="accent" data-i18n="services.title2">Built to scale.</span></h2>
     </div>
     <div class="services-grid reveal">
       <div class="service-card">
         <span class="service-icon">[ web ]</span>
-        <div class="service-name">Website Development</div>
-        <p class="service-desc">Custom, fast-loading websites designed to convert visitors into clients. From landing pages to full business portals.</p>
-        <div class="service-link">Explore →</div>
+        <div class="service-name" data-i18n="services.web.name">Website Development</div>
+        <p class="service-desc" data-i18n="services.web.desc">Custom, fast-loading websites designed to convert visitors into clients. From landing pages to full business portals.</p>
+        <div class="service-link" data-i18n="services.explore">Explore →</div>
       </div>
       <div class="service-card">
         <span class="service-icon">[ app ]</span>
-        <div class="service-name">Mobile App Development</div>
-        <p class="service-desc">iOS and Android apps built natively or with React Native. Seamless UX, real-time features, App Store ready.</p>
-        <div class="service-link">Explore →</div>
+        <div class="service-name" data-i18n="services.app.name">Mobile App Development</div>
+        <p class="service-desc" data-i18n="services.app.desc">iOS and Android apps built natively or with React Native. Seamless UX, real-time features, App Store ready.</p>
+        <div class="service-link" data-i18n="services.explore">Explore →</div>
       </div>
       <div class="service-card">
         <span class="service-icon">[ sys ]</span>
-        <div class="service-name">Custom Software</div>
-        <p class="service-desc">Internal tools, SaaS platforms, and automation systems tailored exactly to your workflow. No off-the-shelf compromise.</p>
-        <div class="service-link">Explore →</div>
+        <div class="service-name" data-i18n="services.software.name">Custom Software</div>
+        <p class="service-desc" data-i18n="services.software.desc">Internal tools, SaaS platforms, and automation systems tailored exactly to your workflow. No off-the-shelf compromise.</p>
+        <div class="service-link" data-i18n="services.explore">Explore →</div>
       </div>
       <div class="service-card">
         <span class="service-icon">[ ux ]</span>
-        <div class="service-name">UI/UX Design</div>
-        <p class="service-desc">User research, wireframes, high-fidelity prototypes, and polished design systems. Beautiful and functional.</p>
-        <div class="service-link">Explore →</div>
+        <div class="service-name" data-i18n="services.ux.name">UI/UX Design</div>
+        <p class="service-desc" data-i18n="services.ux.desc">User research, wireframes, high-fidelity prototypes, and polished design systems. Beautiful and functional.</p>
+        <div class="service-link" data-i18n="services.explore">Explore →</div>
       </div>
       <div class="service-card">
         <span class="service-icon">[ api ]</span>
-        <div class="service-name">API & Integrations</div>
-        <p class="service-desc">Connect your tools. We build robust APIs and integrate third-party services like payments, CRMs, and analytics.</p>
-        <div class="service-link">Explore →</div>
+        <div class="service-name" data-i18n="services.api.name">API & Integrations</div>
+        <p class="service-desc" data-i18n="services.api.desc">Connect your tools. We build robust APIs and integrate third-party services like payments, CRMs, and analytics.</p>
+        <div class="service-link" data-i18n="services.explore">Explore →</div>
       </div>
       <div class="service-card">
         <span class="service-icon">[ sup ]</span>
-        <div class="service-name">Maintenance & Support</div>
-        <p class="service-desc">Ongoing hosting, updates, and dedicated support. We keep your software running and improving after launch.</p>
-        <div class="service-link">Explore →</div>
+        <div class="service-name" data-i18n="services.support.name">Maintenance & Support</div>
+        <p class="service-desc" data-i18n="services.support.desc">Ongoing hosting, updates, and dedicated support. We keep your software running and improving after launch.</p>
+        <div class="service-link" data-i18n="services.explore">Explore →</div>
       </div>
     </div>
   </section>
@@ -759,8 +791,8 @@
   <!-- QUOTE WIZARD -->
   <section id="quote">
     <div class="section-header reveal">
-      <div class="section-tag">// Instant estimate</div>
-      <h2 class="section-title">What are you<br/><span class="accent">building?</span></h2>
+      <div class="section-tag" data-i18n="quoteSec.tag">// Instant estimate</div>
+      <h2 class="section-title"><span data-i18n="quoteSec.title1">What are you</span><br/><span class="accent" data-i18n="quoteSec.title2">building?</span></h2>
     </div>
     <div id="quote-root"></div>
   </section>
@@ -768,8 +800,8 @@
   <!-- WORK -->
   <section id="work">
     <div class="section-header reveal">
-      <div class="section-tag">// Selected work</div>
-      <h2 class="section-title">Products we've<br/><span class="accent">shipped.</span></h2>
+      <div class="section-tag" data-i18n="workSec.tag">// Selected work</div>
+      <h2 class="section-title"><span data-i18n="workSec.title1">Products we've</span><br/><span class="accent" data-i18n="workSec.title2">shipped.</span></h2>
     </div>
     <div class="work-grid reveal">
       <div class="work-card">
@@ -783,7 +815,7 @@
           </svg>
         </div>
         <div class="work-card-inner">
-          <div class="work-tag">Website</div>
+          <div class="work-tag" data-i18n="work.item1.tag">Website</div>
           <div class="work-title">Apex Realty Group</div>
         </div>
       </div>
@@ -799,7 +831,7 @@
           </svg>
         </div>
         <div class="work-card-inner">
-          <div class="work-tag">Mobile App</div>
+          <div class="work-tag" data-i18n="work.item2.tag">Mobile App</div>
           <div class="work-title">FitTrack Pro</div>
         </div>
       </div>
@@ -817,7 +849,7 @@
           </svg>
         </div>
         <div class="work-card-inner">
-          <div class="work-tag">SaaS Dashboard</div>
+          <div class="work-tag" data-i18n="work.item3.tag">SaaS Dashboard</div>
           <div class="work-title">Vanta Analytics</div>
         </div>
       </div>
@@ -832,7 +864,7 @@
           </svg>
         </div>
         <div class="work-card-inner">
-          <div class="work-tag">E-Commerce</div>
+          <div class="work-tag" data-i18n="work.item4.tag">E-Commerce</div>
           <div class="work-title">Nomad Goods Store</div>
         </div>
       </div>
@@ -842,37 +874,37 @@
   <!-- TESTIMONIALS -->
   <section id="testimonials">
     <div class="section-header reveal">
-      <div class="section-tag">// Client voices</div>
-      <h2 class="section-title">Trusted by<br/><span class="accent">builders.</span></h2>
+      <div class="section-tag" data-i18n="testimonials.tag">// Client voices</div>
+      <h2 class="section-title"><span data-i18n="testimonials.title1">Trusted by</span><br/><span class="accent" data-i18n="testimonials.title2">builders.</span></h2>
     </div>
     <div class="testimonials-grid reveal">
       <div class="tcard">
-        <p class="tcard-text">"CodeLaunch delivered our e-commerce site in under 3 weeks. Fast, clean, exactly what we asked for — and the ongoing support has been excellent."</p>
+        <p class="tcard-text" data-i18n="testimonials.t1">"CodeLaunch delivered our e-commerce site in under 3 weeks. Fast, clean, exactly what we asked for — and the ongoing support has been excellent."</p>
         <div class="tcard-author">
           <div class="tcard-avatar">JM</div>
           <div>
             <div class="tcard-name">Jamie Mitchell</div>
-            <div class="tcard-role">Founder, Nomad Goods</div>
+            <div class="tcard-role" data-i18n="testimonials.t1role">Founder, Nomad Goods</div>
           </div>
         </div>
       </div>
       <div class="tcard">
-        <p class="tcard-text">"The mobile app they built exceeded every expectation. Clean UI, zero bugs on launch day. I'd recommend them to any startup that wants things done right."</p>
+        <p class="tcard-text" data-i18n="testimonials.t2">"The mobile app they built exceeded every expectation. Clean UI, zero bugs on launch day. I'd recommend them to any startup that wants things done right."</p>
         <div class="tcard-author">
           <div class="tcard-avatar">SR</div>
           <div>
             <div class="tcard-name">Sarah Reynolds</div>
-            <div class="tcard-role">CEO, FitTrack Pro</div>
+            <div class="tcard-role" data-i18n="testimonials.t2role">CEO, FitTrack Pro</div>
           </div>
         </div>
       </div>
       <div class="tcard">
-        <p class="tcard-text">"Our custom analytics dashboard transformed how we operate. The CodeLaunch team actually understood our business before writing a single line of code."</p>
+        <p class="tcard-text" data-i18n="testimonials.t3">"Our custom analytics dashboard transformed how we operate. The CodeLaunch team actually understood our business before writing a single line of code."</p>
         <div class="tcard-author">
           <div class="tcard-avatar">DK</div>
           <div>
             <div class="tcard-name">Daniel Kwon</div>
-            <div class="tcard-role">CTO, Vanta Analytics</div>
+            <div class="tcard-role" data-i18n="testimonials.t3role">CTO, Vanta Analytics</div>
           </div>
         </div>
       </div>
@@ -882,63 +914,63 @@
   <!-- CONTACT -->
   <section id="contact">
     <div class="section-header reveal">
-      <div class="section-tag">// Let's talk</div>
-      <h2 class="section-title">Ready to<br/><span class="accent">build?</span></h2>
+      <div class="section-tag" data-i18n="contactSec.tag">// Let's talk</div>
+      <h2 class="section-title"><span data-i18n="contactSec.title1">Ready to</span><br/><span class="accent" data-i18n="contactSec.title2">build?</span></h2>
     </div>
     <div class="contact-layout reveal">
       <form class="contact-form" onsubmit="handleContactSubmit(event)">
         <div class="form-group">
-          <label class="form-label">Your Name</label>
-          <input class="form-input" type="text" placeholder="Jane Smith" required />
+          <label class="form-label" data-i18n="contact.labelName">Your Name</label>
+          <input class="form-input" type="text" data-i18n-placeholder="contact.phName" placeholder="Jane Smith" required />
         </div>
         <div class="form-group">
-          <label class="form-label">Email</label>
-          <input class="form-input" type="email" placeholder="jane@company.com" required />
+          <label class="form-label" data-i18n="contact.labelEmail">Email</label>
+          <input class="form-input" type="email" data-i18n-placeholder="contact.phEmail" placeholder="jane@company.com" required />
         </div>
         <div class="form-group">
-          <label class="form-label">Project Type</label>
-          <select class="form-input">
-            <option value="" disabled selected>Select a service</option>
-            <option>Website Development</option>
-            <option>Mobile App</option>
-            <option>Custom Software</option>
-            <option>UI/UX Design</option>
-            <option>Other</option>
+          <label class="form-label" data-i18n="contact.labelProject">Project Type</label>
+          <select class="form-input" id="contact-project-type">
+            <option value="" disabled selected data-i18n="contact.selectPlaceholder">Select a service</option>
+            <option value="Website Development" data-i18n="contact.optWeb">Website Development</option>
+            <option value="Mobile App" data-i18n="contact.optApp">Mobile App</option>
+            <option value="Custom Software" data-i18n="contact.optSoft">Custom Software</option>
+            <option value="UI/UX Design" data-i18n="contact.optUx">UI/UX Design</option>
+            <option value="Other" data-i18n="contact.optOther">Other</option>
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label">Tell us about your project</label>
-          <textarea class="form-input" placeholder="A brief overview of what you'd like to build..."></textarea>
+          <label class="form-label" data-i18n="contact.labelMessage">Tell us about your project</label>
+          <textarea class="form-input" data-i18n-placeholder="contact.phMessage" placeholder="A brief overview of what you'd like to build..."></textarea>
         </div>
-        <button type="submit" class="btn-primary" style="width:100%;margin-top:4px;" id="contact-btn">Send Message →</button>
+        <button type="submit" class="btn-primary" style="width:100%;margin-top:4px;" id="contact-btn" data-i18n="contact.send">Send Message →</button>
       </form>
       <div class="contact-info">
         <div class="contact-info-item">
           <div class="ci-icon">[mail]</div>
           <div>
-            <div class="ci-label">Email</div>
+            <div class="ci-label" data-i18n="contact.infoEmail">Email</div>
             <div class="ci-value">hello@codelaunch.dev</div>
           </div>
         </div>
         <div class="contact-info-item">
           <div class="ci-icon">[time]</div>
           <div>
-            <div class="ci-label">Response Time</div>
-            <div class="ci-value">Within 24 hours</div>
+            <div class="ci-label" data-i18n="contact.infoResponse">Response Time</div>
+            <div class="ci-value" data-i18n="contact.infoResponseVal">Within 24 hours</div>
           </div>
         </div>
         <div class="contact-info-item">
           <div class="ci-icon">[loc]</div>
           <div>
-            <div class="ci-label">Based In</div>
-            <div class="ci-value">Remote-first, Worldwide</div>
+            <div class="ci-label" data-i18n="contact.infoBased">Based In</div>
+            <div class="ci-value" data-i18n="contact.infoBasedVal">Remote-first, Worldwide</div>
           </div>
         </div>
         <div class="contact-info-item" style="border-bottom:none;">
           <div class="ci-icon">[call]</div>
           <div>
-            <div class="ci-label">Free Consultation</div>
-            <div class="ci-value">30 min. No commitment.</div>
+            <div class="ci-label" data-i18n="contact.infoConsult">Free Consultation</div>
+            <div class="ci-value" data-i18n="contact.infoConsultVal">30 min. No commitment.</div>
           </div>
         </div>
       </div>
@@ -950,25 +982,25 @@
     <div class="chat-panel" id="chat-panel">
       <div class="chat-header">
         <div>
-          <div class="chat-header-title">Start a project</div>
-          <div class="chat-header-sub">We reply within 24 hours</div>
+          <div class="chat-header-title" data-i18n="chat.title">Start a project</div>
+          <div class="chat-header-sub" data-i18n="chat.sub">We reply within 24 hours</div>
         </div>
         <button class="chat-close" onclick="toggleChat()">×</button>
       </div>
       <div class="chat-body" id="chat-form-body">
-        <input class="chat-input" id="chat-name" type="text" placeholder="Your name" />
-        <input class="chat-input" id="chat-email" type="email" placeholder="Email address" />
-        <input class="chat-input" id="chat-msg" type="text" placeholder="What do you need built?" />
-        <button class="chat-send" onclick="submitChat()">Send Message →</button>
+        <input class="chat-input" id="chat-name" type="text" data-i18n-placeholder="chat.phName" placeholder="Your name" />
+        <input class="chat-input" id="chat-email" type="email" data-i18n-placeholder="chat.phEmail" placeholder="Email address" />
+        <input class="chat-input" id="chat-msg" type="text" data-i18n-placeholder="chat.phMsg" placeholder="What do you need built?" />
+        <button class="chat-send" id="chat-send-btn" data-i18n="chat.send" onclick="submitChat()">Send Message →</button>
       </div>
       <div class="chat-success" id="chat-success">
         <div class="chat-success-icon">[ ✓ ]</div>
-        <div class="chat-success-msg">Message sent!</div>
-        <div class="chat-success-sub">We'll be in touch within 24 hours.</div>
+        <div class="chat-success-msg" data-i18n="chat.success">Message sent!</div>
+        <div class="chat-success-sub" data-i18n="chat.successSub">We'll be in touch within 24 hours.</div>
       </div>
     </div>
-    <div class="chat-tooltip" id="chat-tooltip">Let's build something →</div>
-    <button class="chat-btn" id="chat-toggle" onclick="toggleChat()" title="Start a project">✦</button>
+    <div class="chat-tooltip" id="chat-tooltip" data-i18n="chat.tooltip">Let's build something →</div>
+    <button class="chat-btn" id="chat-toggle" onclick="toggleChat()" data-i18n-title="chat.titleStart" title="Start a project">✦</button>
   </div>
 
   <!-- FOOTER -->
@@ -977,88 +1009,253 @@
       <div class="logo" style="font-size:15px;margin-bottom:6px;">
         <span class="bracket">&lt;</span><span class="code">code</span><span class="launch">Launch</span><span class="bracket">&gt;</span>
       </div>
-      <div class="footer-copy">© 2026 CodeLaunch. All rights reserved.</div>
+      <div class="footer-copy" data-i18n="footer.copy">© 2026 CodeLaunch. All rights reserved.</div>
     </div>
     <div class="footer-links">
-      <a href="#services">Services</a>
-      <a href="#work">Work</a>
-      <a href="#contact">Contact</a>
-      <a href="#">Privacy</a>
+      <a href="#services" data-i18n="nav.services">Services</a>
+      <a href="#work" data-i18n="nav.work">Work</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+      <a href="#" data-i18n="footer.privacy">Privacy</a>
     </div>
   </footer>
 
   <script>
-    // Marquee
-    const items = ['Website Design', '✦', 'Mobile Apps', '✦', 'Custom Software', '✦', 'UI/UX Design', '✦', 'API Development', '✦', 'E-Commerce', '✦', 'SaaS Platforms', '✦', 'Maintenance', '✦'];
-    const doubled = [...items, ...items];
-    const track = document.getElementById('marquee-track');
-    track.innerHTML = doubled.map(t => `<span class="${t==='✦'?'hi':''}">${t}</span>`).join('');
+    (function () {
+      const STORAGE_KEY = 'codelaunch-lang';
+      const I18N = {
+        en: {
+          'meta.title': 'CodeLaunch — Affordable Software Development',
+          'nav.services': 'Services', 'nav.work': 'Work', 'nav.clients': 'Clients', 'nav.contact': 'Contact', 'nav.getQuote': 'Get a Quote',
+          'hero.eyebrow': 'Affordable Software Solutions',
+          'hero.title1': 'We build software', 'hero.title2a': 'that ', 'hero.title2b': 'launches', 'hero.title3': 'your business.',
+          'hero.sub': 'Websites, mobile apps, and custom software — delivered fast, priced fairly. No fluff, no bloat, just clean code that works.',
+          'hero.ctaPrimary': 'Start Your Project', 'hero.ctaGhost': 'See Our Work',
+          'hero.stat1': 'Projects Shipped', 'hero.stat2': 'Client Satisfaction', 'hero.stat3': 'Faster Delivery',
+          'services.tag': '// What we do', 'services.title1': 'Full-stack solutions.', 'services.title2': 'Built to scale.',
+          'services.explore': 'Explore →',
+          'services.web.name': 'Website Development', 'services.web.desc': 'Custom, fast-loading websites designed to convert visitors into clients. From landing pages to full business portals.',
+          'services.app.name': 'Mobile App Development', 'services.app.desc': 'iOS and Android apps built natively or with React Native. Seamless UX, real-time features, App Store ready.',
+          'services.software.name': 'Custom Software', 'services.software.desc': 'Internal tools, SaaS platforms, and automation systems tailored exactly to your workflow. No off-the-shelf compromise.',
+          'services.ux.name': 'UI/UX Design', 'services.ux.desc': 'User research, wireframes, high-fidelity prototypes, and polished design systems. Beautiful and functional.',
+          'services.api.name': 'API & Integrations', 'services.api.desc': 'Connect your tools. We build robust APIs and integrate third-party services like payments, CRMs, and analytics.',
+          'services.support.name': 'Maintenance & Support', 'services.support.desc': 'Ongoing hosting, updates, and dedicated support. We keep your software running and improving after launch.',
+          'quoteSec.tag': '// Instant estimate', 'quoteSec.title1': 'What are you', 'quoteSec.title2': 'building?',
+          'workSec.tag': "// Selected work", 'workSec.title1': "Products we've", 'workSec.title2': 'shipped.',
+          'work.item1.tag': 'Website', 'work.item2.tag': 'Mobile App', 'work.item3.tag': 'SaaS Dashboard', 'work.item4.tag': 'E-Commerce',
+          'testimonials.tag': '// Client voices', 'testimonials.title1': 'Trusted by', 'testimonials.title2': 'builders.',
+          'testimonials.t1': '“CodeLaunch delivered our e-commerce site in under 3 weeks. Fast, clean, exactly what we asked for — and the ongoing support has been excellent.”',
+          'testimonials.t1role': 'Founder, Nomad Goods',
+          'testimonials.t2': '“The mobile app they built exceeded every expectation. Clean UI, zero bugs on launch day. I’d recommend them to any startup that wants things done right.”',
+          'testimonials.t2role': 'CEO, FitTrack Pro',
+          'testimonials.t3': '“Our custom analytics dashboard transformed how we operate. The CodeLaunch team actually understood our business before writing a single line of code.”',
+          'testimonials.t3role': 'CTO, Vanta Analytics',
+          'contactSec.tag': "// Let's talk", 'contactSec.title1': 'Ready to', 'contactSec.title2': 'build?',
+          'contact.labelName': 'Your Name', 'contact.phName': 'Jane Smith',
+          'contact.labelEmail': 'Email', 'contact.phEmail': 'jane@company.com',
+          'contact.labelProject': 'Project Type', 'contact.selectPlaceholder': 'Select a service',
+          'contact.optWeb': 'Website Development', 'contact.optApp': 'Mobile App', 'contact.optSoft': 'Custom Software', 'contact.optUx': 'UI/UX Design', 'contact.optOther': 'Other',
+          'contact.labelMessage': 'Tell us about your project', 'contact.phMessage': "A brief overview of what you'd like to build...",
+          'contact.send': 'Send Message →', 'contact.infoEmail': 'Email', 'contact.infoResponse': 'Response Time', 'contact.infoResponseVal': 'Within 24 hours',
+          'contact.infoBased': 'Based In', 'contact.infoBasedVal': 'Remote-first, Worldwide', 'contact.infoConsult': 'Free Consultation', 'contact.infoConsultVal': '30 min. No commitment.',
+          'chat.title': 'Start a project', 'chat.sub': 'We reply within 24 hours', 'chat.phName': 'Your name', 'chat.phEmail': 'Email address', 'chat.phMsg': 'What do you need built?',
+          'chat.send': 'Send Message →', 'chat.success': 'Message sent!', 'chat.successSub': "We'll be in touch within 24 hours.", 'chat.tooltip': "Let's build something →", 'chat.titleStart': 'Start a project',
+          'footer.copy': '© 2026 CodeLaunch. All rights reserved.', 'footer.privacy': 'Privacy',
+          'form.sending': 'Sending…', 'form.sent': "Sent! We'll be in touch ✓", 'form.failed': 'Failed — please email us directly', 'form.send': 'Send Message →',
+          'chat.sending': 'Sending…', 'chat.fail': 'Failed — try again',
+        },
+        es: {
+          'meta.title': 'CodeLaunch — Desarrollo de software asequible',
+          'nav.services': 'Servicios', 'nav.work': 'Trabajo', 'nav.clients': 'Clientes', 'nav.contact': 'Contacto', 'nav.getQuote': 'Solicitar presupuesto',
+          'hero.eyebrow': 'Soluciones de software asequibles',
+          'hero.title1': 'Construimos software', 'hero.title2a': 'que ', 'hero.title2b': 'impulsa', 'hero.title3': 'tu negocio.',
+          'hero.sub': 'Sitios web, apps móviles y software a medida — entregas rápidas, precios justos. Sin relleno: código limpio que funciona.',
+          'hero.ctaPrimary': 'Empezar tu proyecto', 'hero.ctaGhost': 'Ver nuestro trabajo',
+          'hero.stat1': 'Proyectos entregados', 'hero.stat2': 'Satisfacción del cliente', 'hero.stat3': 'Entrega más rápida',
+          'services.tag': '// Qué hacemos', 'services.title1': 'Soluciones full-stack.', 'services.title2': 'Pensadas para crecer.',
+          'services.explore': 'Explorar →',
+          'services.web.name': 'Desarrollo web', 'services.web.desc': 'Sitios a medida y rápidos, pensados para convertir visitas en clientes. Desde landings hasta portales completos.',
+          'services.app.name': 'Apps móviles', 'services.app.desc': 'Apps iOS y Android nativas o con React Native. UX fluida, funciones en tiempo real y listas para la tienda.',
+          'services.software.name': 'Software a medida', 'services.software.desc': 'Herramientas internas, SaaS y automatización adaptados a tu flujo de trabajo. Nada de soluciones genéricas.',
+          'services.ux.name': 'Diseño UI/UX', 'services.ux.desc': 'Investigación, wireframes, prototipos y sistemas de diseño pulidos. Bonito y funcional.',
+          'services.api.name': 'APIs e integraciones', 'services.api.desc': 'Conecta tus herramientas. APIs sólidas e integración con pagos, CRMs, analítica y más.',
+          'services.support.name': 'Mantenimiento y soporte', 'services.support.desc': 'Hosting, actualizaciones y soporte continuo. Tu producto sigue creciendo después del lanzamiento.',
+          'quoteSec.tag': '// Presupuesto al instante', 'quoteSec.title1': '¿Qué estás', 'quoteSec.title2': 'construyendo?',
+          'workSec.tag': '// Proyectos', 'workSec.title1': 'Lo que hemos', 'workSec.title2': 'lanzado.',
+          'work.item1.tag': 'Sitio web', 'work.item2.tag': 'App móvil', 'work.item3.tag': 'Panel SaaS', 'work.item4.tag': 'E‑commerce',
+          'testimonials.tag': '// Opiniones', 'testimonials.title1': 'Quién confía', 'testimonials.title2': 'en nosotros.',
+          'testimonials.t1': '“CodeLaunch entregó nuestra tienda en menos de 3 semanas. Rápido, limpio, justo lo pedido — y el soporte continuo es excelente.”',
+          'testimonials.t1role': 'Fundadora, Nomad Goods',
+          'testimonials.t2': '“La app superó todas las expectativas. UI clara, cero fallos en el lanzamiento. Los recomendaría a cualquier startup que quiera bien hecho.”',
+          'testimonials.t2role': 'CEO, FitTrack Pro',
+          'testimonials.t3': '“Nuestro panel de analítica cambió la forma de trabajar. El equipo entendió el negocio antes de escribir la primera línea de código.”',
+          'testimonials.t3role': 'CTO, Vanta Analytics',
+          'contactSec.tag': '// Hablemos', 'contactSec.title1': '¿Listo para', 'contactSec.title2': 'construir?',
+          'contact.labelName': 'Tu nombre', 'contact.phName': 'María García',
+          'contact.labelEmail': 'Correo', 'contact.phEmail': 'maria@empresa.com',
+          'contact.labelProject': 'Tipo de proyecto', 'contact.selectPlaceholder': 'Elige un servicio',
+          'contact.optWeb': 'Desarrollo web', 'contact.optApp': 'App móvil', 'contact.optSoft': 'Software a medida', 'contact.optUx': 'Diseño UI/UX', 'contact.optOther': 'Otro',
+          'contact.labelMessage': 'Cuéntanos tu proyecto', 'contact.phMessage': 'Un resumen de lo que te gustaría construir...',
+          'contact.send': 'Enviar mensaje →', 'contact.infoEmail': 'Correo', 'contact.infoResponse': 'Tiempo de respuesta', 'contact.infoResponseVal': 'En 24 horas',
+          'contact.infoBased': 'Sede', 'contact.infoBasedVal': '100 % remoto, en todo el mundo', 'contact.infoConsult': 'Consulta gratuita', 'contact.infoConsultVal': '30 min. Sin compromiso.',
+          'chat.title': 'Iniciar un proyecto', 'chat.sub': 'Respondemos en 24 horas', 'chat.phName': 'Tu nombre', 'chat.phEmail': 'Correo electrónico', 'chat.phMsg': '¿Qué necesitas construir?',
+          'chat.send': 'Enviar mensaje →', 'chat.success': '¡Mensaje enviado!', 'chat.successSub': 'Te contactaremos en 24 horas.', 'chat.tooltip': 'Construyamos algo →', 'chat.titleStart': 'Iniciar un proyecto',
+          'footer.copy': '© 2026 CodeLaunch. Todos los derechos reservados.', 'footer.privacy': 'Privacidad',
+          'form.sending': 'Enviando…', 'form.sent': '¡Enviado! Te contactaremos pronto ✓', 'form.failed': 'Error — escríbenos por correo', 'form.send': 'Enviar mensaje →',
+          'chat.sending': 'Enviando…', 'chat.fail': 'Error — inténtalo de nuevo',
+        },
+      };
+
+      const MARQUEE = {
+        en: ['Website Design', '✦', 'Mobile Apps', '✦', 'Custom Software', '✦', 'UI/UX Design', '✦', 'API Development', '✦', 'E-Commerce', '✦', 'SaaS Platforms', '✦', 'Maintenance', '✦'],
+        es: ['Diseño web', '✦', 'Apps móviles', '✦', 'Software a medida', '✦', 'UI/UX', '✦', 'APIs', '✦', 'E‑commerce', '✦', 'Plataformas SaaS', '✦', 'Mantenimiento', '✦'],
+      };
+
+      function getLocale() { return localStorage.getItem(STORAGE_KEY) || 'en'; }
+      function t(key, loc) {
+        const L = loc || getLocale();
+        const pack = I18N[L] || I18N.en;
+        if (pack[key] != null) return pack[key];
+        return I18N.en[key] != null ? I18N.en[key] : key;
+      }
+      function applyI18n(loc) {
+        const L = loc || getLocale();
+        document.documentElement.lang = L;
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          var k = el.getAttribute('data-i18n');
+          if (k) el.textContent = t(k, L);
+        });
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+          var k = el.getAttribute('data-i18n-placeholder');
+          if (k) el.placeholder = t(k, L);
+        });
+        document.querySelectorAll('[data-i18n-title]').forEach(function (el) {
+          var k = el.getAttribute('data-i18n-title');
+          if (k) el.title = t(k, L);
+        });
+        document.querySelectorAll('.lang-btn').forEach(function (btn) {
+          var isOn = btn.getAttribute('data-locale') === L;
+          btn.classList.toggle('active', isOn);
+          btn.setAttribute('aria-pressed', isOn);
+        });
+      }
+      function rebuildMarquee() {
+        const track = document.getElementById('marquee-track');
+        if (!track) return;
+        const items = MARQUEE[getLocale()] || MARQUEE.en;
+        const doubled = items.concat(items);
+        track.innerHTML = doubled.map(function (x) {
+          return '<span class="' + (x === '✦' ? 'hi' : '') + '">' + x + '</span>';
+        }).join('');
+      }
+      var heroCodeTimeout = null;
+      function getCodeLinesForLocale() {
+        var isEs = getLocale() === 'es';
+        if (isEs) {
+          return [
+            { ln: '1',  parts: [{ cls: 'code-cm', t: '// codeLaunch — tu idea, hecha realidad' }] },
+            { ln: '2',  parts: [] },
+            { ln: '3',  parts: [{ cls: 'code-kw', t: 'const' }, { cls: '', t: ' proyecto = {' }] },
+            { ln: '4',  parts: [{ cls: '', t: '  ' }, { cls: 'code-fn', t: 'nombre' }, { cls: '', t: ': ' }, { cls: 'code-str', t: "'Tu negocio'" }] },
+            { ln: '5',  parts: [{ cls: '', t: '  ' }, { cls: 'code-fn', t: 'tipo' }, { cls: '', t: ': ' }, { cls: 'code-str', t: "'app web'" }] },
+            { ln: '6',  parts: [{ cls: '', t: '  ' }, { cls: 'code-fn', t: 'stack' }, { cls: '', t: ': [' }, { cls: 'code-str', t: "'React'" }, { cls: '', t: ', ' }, { cls: 'code-str', t: "'Node'" }, { cls: '', t: ']' }] },
+            { ln: '7',  parts: [{ cls: '', t: '  ' }, { cls: 'code-fn', t: 'plazo' }, { cls: '', t: ': ' }, { cls: 'code-str', t: "'2 semanas'" }] },
+            { ln: '8',  parts: [{ cls: '', t: '}' }] },
+            { ln: '9',  parts: [] },
+            { ln: '10', parts: [{ cls: 'code-kw', t: 'async function' }, { cls: 'code-fn', t: ' lanzar' }, { cls: '', t: '(proyecto) {' }] },
+            { ln: '11', parts: [{ cls: '', t: '  ' }, { cls: 'code-kw', t: 'await' }, { cls: 'code-fn', t: ' codeLaunch' }, { cls: '', t: '.construir(proyecto);' }] },
+            { ln: '12', parts: [{ cls: '', t: '  ' }, { cls: 'code-kw', t: 'return' }, { cls: 'code-or', t: ' éxito 🚀' }, { cls: '', t: ';' }] },
+            { ln: '13', parts: [{ cls: '', t: '}' }] },
+          ];
+        }
+        return [
+          { ln: '1',  parts: [{ cls: 'code-cm', t: '// codeLaunch — your idea, built fast' }] },
+          { ln: '2',  parts: [] },
+          { ln: '3',  parts: [{ cls: 'code-kw', t: 'const' }, { cls: '', t: ' project = {' }] },
+          { ln: '4',  parts: [{ cls: '', t: '  ' }, { cls: 'code-fn', t: 'name' }, { cls: '', t: ': ' }, { cls: 'code-str', t: "'Your Business'" }] },
+          { ln: '5',  parts: [{ cls: '', t: '  ' }, { cls: 'code-fn', t: 'type' }, { cls: '', t: ': ' }, { cls: 'code-str', t: "'web app'" }] },
+          { ln: '6',  parts: [{ cls: '', t: '  ' }, { cls: 'code-fn', t: 'stack' }, { cls: '', t: ': [' }, { cls: 'code-str', t: "'React'" }, { cls: '', t: ', ' }, { cls: 'code-str', t: "'Node'" }, { cls: '', t: ']' }] },
+          { ln: '7',  parts: [{ cls: '', t: '  ' }, { cls: 'code-fn', t: 'deadline' }, { cls: '', t: ': ' }, { cls: 'code-str', t: "'2 weeks'" }] },
+          { ln: '8',  parts: [{ cls: '', t: '}' }] },
+          { ln: '9',  parts: [] },
+          { ln: '10', parts: [{ cls: 'code-kw', t: 'async function' }, { cls: 'code-fn', t: ' launch' }, { cls: '', t: '(project) {' }] },
+          { ln: '11', parts: [{ cls: '', t: '  ' }, { cls: 'code-kw', t: 'await' }, { cls: 'code-fn', t: ' codeLaunch' }, { cls: '', t: '.build(project);' }] },
+          { ln: '12', parts: [{ cls: '', t: '  ' }, { cls: 'code-kw', t: 'return' }, { cls: 'code-or', t: ' 🚀 success' }, { cls: '', t: ';' }] },
+          { ln: '13', parts: [{ cls: '', t: '}' }] },
+        ];
+      }
+      function rebuildHeroCode() {
+        var body = document.getElementById('code-body');
+        if (!body) return;
+        if (heroCodeTimeout) clearTimeout(heroCodeTimeout);
+        body.innerHTML = '';
+        var codeLines = getCodeLinesForLocale();
+        function renderCodeLine(line, showCursor) {
+          var row = document.createElement('div');
+          row.className = 'code-line';
+          var ln = document.createElement('span');
+          ln.className = 'code-ln';
+          ln.textContent = line.ln;
+          row.appendChild(ln);
+          var content = document.createElement('span');
+          line.parts.forEach(function (p) {
+            var s = document.createElement('span');
+            if (p.cls) s.className = p.cls;
+            s.textContent = p.t;
+            content.appendChild(s);
+          });
+          if (showCursor) {
+            var c = document.createElement('span');
+            c.className = 'code-cursor';
+            content.appendChild(c);
+          }
+          row.appendChild(content);
+          return row;
+        }
+        var i = 0;
+        function next() {
+          if (i >= codeLines.length) return;
+          body.appendChild(renderCodeLine(codeLines[i], true));
+          var rows = body.querySelectorAll('.code-line');
+          rows.forEach(function (r, idx) {
+            if (idx < rows.length - 1) {
+              var c = r.querySelector('.code-cursor');
+              if (c) c.remove();
+            }
+          });
+          i++;
+          heroCodeTimeout = setTimeout(next, codeLines[i - 1].parts.length === 0 ? 80 : 220);
+        }
+        heroCodeTimeout = setTimeout(next, 400);
+      }
+      function setLocale(lang) {
+        if (!I18N[lang]) return;
+        localStorage.setItem(STORAGE_KEY, lang);
+        applyI18n(lang);
+        rebuildMarquee();
+        rebuildHeroCode();
+        window.dispatchEvent(new CustomEvent('codelaunch-lang', { detail: { lang: lang } }));
+      }
+      window.CodeLaunchI18N = { getLocale: getLocale, t: t, setLocale: setLocale, I18N: I18N };
+      function initCodelaunchLang() {
+        var saved = getLocale();
+        if (!I18N[saved]) saved = 'en';
+        setLocale(saved);
+        document.querySelectorAll('.lang-btn').forEach(function (btn) {
+          btn.addEventListener('click', function () { setLocale(btn.getAttribute('data-locale')); });
+        });
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initCodelaunchLang);
+      } else {
+        initCodelaunchLang();
+      }
+    })();
 
     // Scroll reveal
     const observer = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    // TYPEWRITER CODE BLOCK
-    const codeLines = [
-      { ln:'1',  parts:[{cls:'code-cm', t:'// codeLaunch — your idea, built fast'}] },
-      { ln:'2',  parts:[] },
-      { ln:'3',  parts:[{cls:'code-kw', t:'const'}, {cls:'', t:' project = {'}] },
-      { ln:'4',  parts:[{cls:'', t:'  '}, {cls:'code-fn', t:'name'}, {cls:'', t:': '}, {cls:'code-str', t:"'Your Business'"}] },
-      { ln:'5',  parts:[{cls:'', t:'  '}, {cls:'code-fn', t:'type'}, {cls:'', t:': '}, {cls:'code-str', t:"'web app'"}] },
-      { ln:'6',  parts:[{cls:'', t:'  '}, {cls:'code-fn', t:'stack'}, {cls:'', t:': ['}, {cls:'code-str', t:"'React'"}, {cls:'', t:', '}, {cls:'code-str', t:"'Node'"}, {cls:'', t:']'}] },
-      { ln:'7',  parts:[{cls:'', t:'  '}, {cls:'code-fn', t:'deadline'}, {cls:'', t:': '}, {cls:'code-str', t:"'2 weeks'"}] },
-      { ln:'8',  parts:[{cls:'', t:'}'}] },
-      { ln:'9',  parts:[] },
-      { ln:'10', parts:[{cls:'code-kw', t:'async function'}, {cls:'code-fn', t:' launch'}, {cls:'', t:'(project) {'}] },
-      { ln:'11', parts:[{cls:'', t:'  '}, {cls:'code-kw', t:'await'}, {cls:'code-fn', t:' codeLaunch'}, {cls:'', t:'.build(project);'}] },
-      { ln:'12', parts:[{cls:'', t:'  '}, {cls:'code-kw', t:'return'}, {cls:'code-or', t:' 🚀 success'}, {cls:'', t:';'}] },
-      { ln:'13', parts:[{cls:'', t:'}'}] },
-    ];
-
-    function renderCodeLine(line, showCursor) {
-      const row = document.createElement('div');
-      row.className = 'code-line';
-      const ln = document.createElement('span');
-      ln.className = 'code-ln'; ln.textContent = line.ln;
-      row.appendChild(ln);
-      const content = document.createElement('span');
-      line.parts.forEach(p => {
-        const s = document.createElement('span');
-        if (p.cls) s.className = p.cls;
-        s.textContent = p.t;
-        content.appendChild(s);
-      });
-      if (showCursor) {
-        const c = document.createElement('span');
-        c.className = 'code-cursor';
-        content.appendChild(c);
-      }
-      row.appendChild(content);
-      return row;
-    }
-
-    (function typeCode() {
-      const body = document.getElementById('code-body');
-      if (!body) return;
-      let i = 0;
-      function next() {
-        if (i >= codeLines.length) return;
-        body.appendChild(renderCodeLine(codeLines[i], true));
-        // Remove cursor from all but last line
-        const rows = body.querySelectorAll('.code-line');
-        rows.forEach((r, idx) => {
-          if (idx < rows.length - 1) {
-            const c = r.querySelector('.code-cursor');
-            if (c) c.remove();
-          }
-        });
-        i++;
-        setTimeout(next, codeLines[i - 1].parts.length === 0 ? 80 : 220);
-      }
-      setTimeout(next, 800);
-    })();
 
     // STICKY CHAT BUBBLE
     let chatOpen = false;
@@ -1077,13 +1274,14 @@
     }
 
     async function submitChat() {
+      const t = (k) => (window.CodeLaunchI18N && window.CodeLaunchI18N.t(k)) || k;
       const name  = document.getElementById('chat-name').value.trim();
       const email = document.getElementById('chat-email').value.trim();
       const msg   = document.getElementById('chat-msg').value.trim();
       if (!name || !email || !msg) return;
 
-      const sendBtn = document.querySelector('.chat-send');
-      sendBtn.textContent = 'Sending…';
+      const sendBtn = document.getElementById('chat-send-btn');
+      sendBtn.textContent = t('chat.sending');
       sendBtn.disabled = true;
 
       try {
@@ -1104,21 +1302,22 @@
             document.getElementById('chat-name').value = '';
             document.getElementById('chat-email').value = '';
             document.getElementById('chat-msg').value = '';
-            sendBtn.textContent = 'Send Message →';
+            sendBtn.textContent = t('chat.send');
             sendBtn.disabled = false;
             chatOpen = false;
           }, 300);
         }, 2500);
       } catch {
-        sendBtn.textContent = 'Failed — try again';
+        sendBtn.textContent = t('chat.fail');
         sendBtn.disabled = false;
-        setTimeout(() => { sendBtn.textContent = 'Send Message →'; }, 3000);
+        setTimeout(() => { sendBtn.textContent = t('chat.send'); }, 3000);
       }
     }
 
     // CONTACT FORM
     async function handleContactSubmit(e) {
       e.preventDefault();
+      const t = (k) => (window.CodeLaunchI18N && window.CodeLaunchI18N.t(k)) || k;
       const btn  = document.getElementById('contact-btn');
       const form = e.target;
 
@@ -1127,7 +1326,7 @@
       const projectType = form.querySelector('select').value;
       const message     = form.querySelector('textarea').value.trim();
 
-      btn.textContent = 'Sending…';
+      btn.textContent = t('form.sending');
       btn.disabled = true;
 
       try {
@@ -1138,22 +1337,22 @@
         });
         if (!res.ok) throw new Error();
 
-        btn.textContent = "Sent! We'll be in touch ✓";
+        btn.textContent = t('form.sent');
         btn.style.background = '#22c55e';
         btn.style.color = '#fff';
         setTimeout(() => {
-          btn.textContent = 'Send Message →';
+          btn.textContent = t('form.send');
           btn.style.background = '';
           btn.style.color = '';
           btn.disabled = false;
           form.reset();
         }, 3000);
       } catch {
-        btn.textContent = 'Failed — please email us directly';
+        btn.textContent = t('form.failed');
         btn.style.background = '#ef4444';
         btn.style.color = '#fff';
         setTimeout(() => {
-          btn.textContent = 'Send Message →';
+          btn.textContent = t('form.send');
           btn.style.background = '';
           btn.style.color = '';
           btn.disabled = false;
@@ -1164,54 +1363,57 @@
 
   <!-- QUOTE WIZARD (React) -->
   <script type="text/babel">
-    const { useState } = React;
+    const { useState, useEffect } = React;
 
-    const steps = [
-      {
-        id: 'type',
-        question: 'What are you looking to build?',
-        hint: 'Pick one to get started',
-        options: [
-          { value: 'website',   label: 'Website',         sub: 'Landing page, business site, blog',    icon: '[ web ]' },
-          { value: 'mobile',    label: 'Mobile App',       sub: 'iOS, Android, or both',                icon: '[ app ]' },
-          { value: 'software',  label: 'Custom Software',  sub: 'SaaS, internal tool, platform',        icon: '[ sys ]' },
-          { value: 'ecommerce', label: 'E-Commerce',       sub: 'Online store, product listings',       icon: '[ $ ]'   },
-        ]
-      },
-      {
-        id: 'size',
-        question: 'How large is the project?',
-        hint: 'Estimate the scope',
-        options: [
-          { value: 'small',      label: 'Small',      sub: '1–5 pages / basic features',          icon: '[ · ]'   },
-          { value: 'medium',     label: 'Medium',     sub: '5–15 pages / moderate complexity',    icon: '[ ·· ]'  },
-          { value: 'large',      label: 'Large',      sub: '15+ pages / advanced features',       icon: '[ ··· ]' },
-          { value: 'enterprise', label: 'Enterprise', sub: 'Complex, multi-user systems',         icon: '[ ∞ ]'   },
-        ]
-      },
-      {
-        id: 'timeline',
-        question: 'When do you need it live?',
-        hint: 'Choose your urgency',
-        options: [
-          { value: 'rush',     label: 'ASAP',       sub: 'Under 2 weeks',          icon: '[ !! ]' },
-          { value: 'month',    label: '1 Month',    sub: 'Standard turnaround',    icon: '[ > ]'  },
-          { value: 'quarter',  label: '1–3 Months', sub: 'Measured & thorough',    icon: '[ ~ ]'  },
-          { value: 'flexible', label: 'Flexible',   sub: 'No hard deadline',       icon: '[ ∞ ]'  },
-        ]
-      },
-      {
-        id: 'budget',
-        question: "What's your rough budget?",
-        hint: 'Helps us tailor a fair proposal',
-        options: [
-          { value: 'low',        label: 'Under $1,000',       sub: 'Great for small sites',        icon: '[ $ ]'    },
-          { value: 'mid',        label: '$1,000 – $5,000',    sub: 'Most projects land here',      icon: '[ $$ ]'   },
-          { value: 'high',       label: '$5,000 – $15,000',   sub: 'Full-featured builds',         icon: '[ $$$ ]'  },
-          { value: 'enterprise', label: '$15,000+',            sub: 'Enterprise or complex SaaS',  icon: '[ $$$$ ]' },
-        ]
-      },
-    ];
+    function getQuoteSteps(es) {
+      const L = (en, s) => (es ? s : en);
+      return [
+        {
+          id: 'type',
+          question: L('What are you looking to build?', '¿Qué quieres construir?'),
+          hint: L('Pick one to get started', 'Elige una opción para empezar'),
+          options: [
+            { value: 'website',   label: L('Website', 'Sitio web'),         sub: L('Landing page, business site, blog', 'Landing, web corporativa, blog'),    icon: '[ web ]' },
+            { value: 'mobile',    label: L('Mobile App', 'App móvil'),       sub: L('iOS, Android, or both', 'iOS, Android o ambos'),                icon: '[ app ]' },
+            { value: 'software',  label: L('Custom Software', 'Software a medida'),  sub: L('SaaS, internal tool, platform', 'SaaS, herramienta interna, plataforma'),        icon: '[ sys ]' },
+            { value: 'ecommerce', label: L('E-Commerce', 'E‑commerce'),       sub: L('Online store, product listings', 'Tienda online, catálogo'),       icon: '[ $ ]'   },
+          ]
+        },
+        {
+          id: 'size',
+          question: L('How large is the project?', '¿Qué tan grande es el proyecto?'),
+          hint: L('Estimate the scope', 'Estima el alcance'),
+          options: [
+            { value: 'small',      label: L('Small', 'Pequeño'),      sub: L('1–5 pages / basic features', '1–5 páginas / funciones básicas'),          icon: '[ · ]'   },
+            { value: 'medium',     label: L('Medium', 'Mediano'),     sub: L('5–15 pages / moderate complexity', '5–15 págs. / complejidad media'),    icon: '[ ·· ]'  },
+            { value: 'large',      label: L('Large', 'Grande'),      sub: L('15+ pages / advanced features', '15+ págs. / funciones avanzadas'),       icon: '[ ··· ]' },
+            { value: 'enterprise', label: L('Enterprise', 'Empresarial'), sub: L('Complex, multi-user systems', 'Sistemas complejos multiusuario'),         icon: '[ ∞ ]'   },
+          ]
+        },
+        {
+          id: 'timeline',
+          question: L('When do you need it live?', '¿Cuándo lo necesitas en producción?'),
+          hint: L('Choose your urgency', 'Elige la urgencia'),
+          options: [
+            { value: 'rush',     label: 'ASAP',       sub: L('Under 2 weeks', 'Menos de 2 semanas'),          icon: '[ !! ]' },
+            { value: 'month',    label: L('1 Month', '1 mes'),    sub: L('Standard turnaround', 'Plazo estándar'),    icon: '[ > ]'  },
+            { value: 'quarter',  label: L('1–3 Months', '1–3 meses'), sub: L('Measured & thorough', 'Con calma y rigor'),    icon: '[ ~ ]'  },
+            { value: 'flexible', label: L('Flexible', 'Flexible'),   sub: L('No hard deadline', 'Sin fecha fija'),       icon: '[ ∞ ]'  },
+          ]
+        },
+        {
+          id: 'budget',
+          question: L("What's your rough budget?", '¿Presupuesto aproximado?'),
+          hint: L('Helps us tailor a fair proposal', 'Nos ayuda a preparar una propuesta justa'),
+          options: [
+            { value: 'low',        label: 'Under $1,000',       sub: L('Great for small sites', 'Ideal para sitios pequeños'),        icon: '[ $ ]'    },
+            { value: 'mid',        label: '$1,000 – $5,000',    sub: L('Most projects land here', 'Donde encajan muchos proyectos'),      icon: '[ $$ ]'   },
+            { value: 'high',       label: '$5,000 – $15,000',   sub: L('Full-featured builds', 'Proyectos con muchas funciones'),         icon: '[ $$$ ]'  },
+            { value: 'enterprise', label: '$15,000+',            sub: L('Enterprise or complex SaaS', 'Empresarial o SaaS complejo'),  icon: '[ $$$$ ]' },
+          ]
+        },
+      ];
+    }
 
     const estimates = {
       'website-small': '$400–$800',       'website-medium': '$800–$2,500',    'website-large': '$2,500–$6,000',    'website-enterprise': '$6,000+',
@@ -1226,15 +1428,30 @@
       'software-small': '2–4 weeks',  'software-medium': '5–10 weeks', 'software-large': '10–20 weeks',
       'ecommerce-small':'2–3 weeks',  'ecommerce-medium':'4–7 weeks',  'ecommerce-large':'7–14 weeks',
     };
+    const timelinesEs = {
+      'website-small':  '1–2 semanas',  'website-medium':  '3–5 semanas',  'website-large':  '6–10 semanas',
+      'mobile-small':   '3–5 semanas',  'mobile-medium':   '6–10 semanas', 'mobile-large':   '10–18 semanas',
+      'software-small': '2–4 semanas',  'software-medium': '5–10 semanas', 'software-large': '10–20 semanas',
+      'ecommerce-small':'2–3 semanas',  'ecommerce-medium':'4–7 semanas',  'ecommerce-large':'7–14 semanas',
+    };
 
-    function QuoteWizard() {
+    function QuoteWizard({ lang }) {
+      const es = lang === 'es';
+      const steps = getQuoteSteps(es);
       const [step, setStep] = useState(0);
       const [answers, setAnswers] = useState({});
       const [done, setDone] = useState(false);
       const [email, setEmail] = useState('');
       const [submitted, setSubmitted] = useState(false);
+      const L = (a, b) => (es ? b : a);
 
       const current = steps[step];
+
+      const labelForAnswer = (qid, val) => {
+        const s = getQuoteSteps(es).find((x) => x.id === qid);
+        const opt = s && s.options.find((o) => o.value === val);
+        return (opt && opt.label) || val;
+      };
 
       const select = (val) => {
         const newAnswers = { ...answers, [current.id]: val };
@@ -1248,8 +1465,12 @@
 
       const reset = () => { setStep(0); setAnswers({}); setDone(false); setSubmitted(false); setEmail(''); };
 
-      const getEstimate = () => estimates[`${answers.type}-${answers.size}`] || 'Custom Quote';
-      const getTimeline = () => timelines[`${answers.type}-${answers.size}`] || 'Depends on scope';
+      const getEstimate = () => estimates[`${answers.type}-${answers.size}`] || L('Custom Quote', 'Presupuesto personalizado');
+      const getTimeline = () => {
+        const k = `${answers.type}-${answers.size}`;
+        if (es) return timelinesEs[k] || timelines[k] || L('Depends on scope', 'Según el alcance');
+        return timelines[k] || L('Depends on scope', 'Según el alcance');
+      };
 
       const handleSubmit = async (e) => {
         e.preventDefault();
@@ -1291,10 +1512,16 @@
         return (
           <div style={{maxWidth:'780px'}}>
             <div style={{textAlign:'center', padding:'60px 0'}}>
-              <div style={{fontFamily:'Space Mono, monospace', fontSize:'13px', color:'var(--orange)', marginBottom:'20px', letterSpacing:'0.15em'}}>[ ESTIMATE SENT ]</div>
-              <h3 style={{fontFamily:'Space Grotesk, sans-serif', fontSize:'36px', fontWeight:700, color:'var(--white)', marginBottom:'16px', letterSpacing:'-0.02em'}}>We'll be in touch soon.</h3>
-              <p style={{color:'var(--gray)', fontSize:'15px', maxWidth:'400px', margin:'0 auto 32px'}}>Check your inbox at <strong style={{color:'var(--white)'}}>{email}</strong>. We'll follow up with a detailed quote within 24 hours.</p>
-              <button onClick={reset} style={{background:'transparent', border:'1px solid var(--border)', color:'var(--gray)', fontFamily:'Space Grotesk, sans-serif', fontSize:'14px', padding:'12px 28px', cursor:'pointer'}}>Start Over</button>
+              <div style={{fontFamily:'Space Mono, monospace', fontSize:'13px', color:'var(--orange)', marginBottom:'20px', letterSpacing:'0.15em'}}>{L('[ ESTIMATE SENT ]', '[ PRESUPUESTO ENVIADO ]')}</div>
+              <h3 style={{fontFamily:'Space Grotesk, sans-serif', fontSize:'36px', fontWeight:700, color:'var(--white)', marginBottom:'16px', letterSpacing:'-0.02em'}}>{L("We'll be in touch soon.", 'Pronto te contactaremos.')}</h3>
+              <p style={{color:'var(--gray)', fontSize:'15px', maxWidth:'420px', margin:'0 auto 32px'}}>
+                {es ? (
+                  <>Revisa tu bandeja en <strong style={{color:'var(--white)'}}>{email}</strong>. Te enviaremos un presupuesto detallado en 24 horas.</>
+                ) : (
+                  <>Check your inbox at <strong style={{color:'var(--white)'}}>{email}</strong>. We&apos;ll follow up with a detailed quote within 24 hours.</>
+                )}
+              </p>
+              <button onClick={reset} type="button" style={{background:'transparent', border:'1px solid var(--border)', color:'var(--gray)', fontFamily:'Space Grotesk, sans-serif', fontSize:'14px', padding:'12px 28px', cursor:'pointer'}}>{L('Start Over', 'Volver a empezar')}</button>
             </div>
           </div>
         );
@@ -1304,33 +1531,33 @@
         return (
           <div style={{maxWidth:'780px'}}>
             <div style={progressStyle}>
-              {steps.map((_, i) => <div key={i} style={dotStyle(steps.length)}></div>)}
+              {steps.map((_, i) => <div key={i} style={dotStyle(i)}></div>)}
             </div>
-            <div style={{fontFamily:'Space Mono, monospace', fontSize:'11px', color:'var(--orange)', letterSpacing:'0.2em', textTransform:'uppercase', marginBottom:'24px'}}>// Your Estimate</div>
+            <div style={{fontFamily:'Space Mono, monospace', fontSize:'11px', color:'var(--orange)', letterSpacing:'0.2em', textTransform:'uppercase', marginBottom:'24px'}}>{L('// Your Estimate', '// Tu estimación')}</div>
             <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:'2px', background:'var(--border)', border:'1px solid var(--border)', marginBottom:'32px'}}>
               <div style={{background:'var(--bg)', padding:'32px'}}>
-                <div style={{fontFamily:'Space Mono, monospace', fontSize:'11px', color:'var(--gray)', letterSpacing:'0.1em', textTransform:'uppercase', marginBottom:'10px'}}>Estimated Cost</div>
+                <div style={{fontFamily:'Space Mono, monospace', fontSize:'11px', color:'var(--gray)', letterSpacing:'0.1em', textTransform:'uppercase', marginBottom:'10px'}}>{L('Estimated Cost', 'Coste estimado')}</div>
                 <div style={{fontFamily:'Space Grotesk, sans-serif', fontSize:'40px', fontWeight:700, color:'var(--orange)', letterSpacing:'-0.02em'}}>{getEstimate()}</div>
               </div>
               <div style={{background:'var(--bg)', padding:'32px'}}>
-                <div style={{fontFamily:'Space Mono, monospace', fontSize:'11px', color:'var(--gray)', letterSpacing:'0.1em', textTransform:'uppercase', marginBottom:'10px'}}>Est. Timeline</div>
+                <div style={{fontFamily:'Space Mono, monospace', fontSize:'11px', color:'var(--gray)', letterSpacing:'0.1em', textTransform:'uppercase', marginBottom:'10px'}}>{L('Est. Timeline', 'Plazo aprox.')}</div>
                 <div style={{fontFamily:'Space Grotesk, sans-serif', fontSize:'40px', fontWeight:700, color:'var(--white)', letterSpacing:'-0.02em'}}>{getTimeline()}</div>
               </div>
             </div>
             <div style={{display:'flex', gap:'12px', marginBottom:'32px', flexWrap:'wrap'}}>
               {Object.entries(answers).map(([k, v]) => (
-                <div key={k} style={{background:'var(--bg3)', border:'1px solid var(--border)', padding:'6px 14px', fontFamily:'Space Mono, monospace', fontSize:'11px', color:'var(--gray)', letterSpacing:'0.05em'}}>{v}</div>
+                <div key={k} style={{background:'var(--bg3)', border:'1px solid var(--border)', padding:'6px 14px', fontFamily:'Space Mono, monospace', fontSize:'11px', color:'var(--gray)', letterSpacing:'0.05em'}}>{labelForAnswer(k, v)}</div>
               ))}
             </div>
-            <p style={{color:'var(--gray)', fontSize:'14px', marginBottom:'24px', lineHeight:'1.7'}}>This is a rough estimate based on your answers. Drop your email below and we'll send you a detailed, no-obligation quote.</p>
+            <p style={{color:'var(--gray)', fontSize:'14px', marginBottom:'24px', lineHeight:'1.7'}}>{L("This is a rough estimate based on your answers. Drop your email below and we'll send you a detailed, no-obligation quote.", 'Es una estimación según tus respuestas. Deja tu email y te enviaremos un presupuesto detallado sin compromiso.')}</p>
             <form onSubmit={handleSubmit} style={{display:'flex', gap:'0'}}>
-              <input type="email" placeholder="your@email.com" value={email} onChange={e => setEmail(e.target.value)} required
+              <input type="email" placeholder={L('your@email.com', 'tu@email.com')} value={email} onChange={e => setEmail(e.target.value)} required
                 style={{flex:1, background:'var(--bg3)', border:'1px solid var(--border)', borderRight:'none', color:'var(--white)', fontFamily:'DM Sans, sans-serif', fontSize:'15px', padding:'14px 16px', outline:'none'}} />
               <button type="submit" style={{background:'var(--orange)', color:'#000', fontFamily:'Space Grotesk, sans-serif', fontWeight:700, fontSize:'14px', padding:'14px 28px', border:'none', cursor:'pointer', whiteSpace:'nowrap'}}>
-                Get Full Quote →
+                {L('Get Full Quote →', 'Recibir presupuesto →')}
               </button>
             </form>
-            <button onClick={reset} style={{marginTop:'16px', background:'transparent', border:'none', color:'var(--gray)', fontFamily:'Space Grotesk, sans-serif', fontSize:'13px', cursor:'pointer', padding:'0'}}>← Start over</button>
+            <button type="button" onClick={reset} style={{marginTop:'16px', background:'transparent', border:'none', color:'var(--gray)', fontFamily:'Space Grotesk, sans-serif', fontSize:'13px', cursor:'pointer', padding:'0'}}>{L('← Start over', '← Volver al inicio')}</button>
           </div>
         );
       }
@@ -1341,7 +1568,7 @@
             {steps.map((_, i) => <div key={i} style={dotStyle(i)}></div>)}
           </div>
           <div style={{fontFamily:'Space Mono, monospace', fontSize:'11px', color:'var(--gray)', letterSpacing:'0.1em', marginBottom:'12px'}}>
-            Step {step + 1} of {steps.length}
+            {es ? `Paso ${step + 1} de ${steps.length}` : `Step ${step + 1} of ${steps.length}`}
           </div>
           <h3 style={{fontFamily:'Space Grotesk, sans-serif', fontSize:'clamp(24px,3vw,36px)', fontWeight:700, color:'var(--white)', marginBottom:'8px', letterSpacing:'-0.02em'}}>
             {current.question}
@@ -1368,7 +1595,20 @@
       );
     }
 
-    ReactDOM.createRoot(document.getElementById('quote-root')).render(<QuoteWizard />);
+    function QuoteApp() {
+      const [lang, setLang] = useState(() => (window.CodeLaunchI18N && window.CodeLaunchI18N.getLocale()) || 'en');
+      useEffect(() => {
+        const onLang = (e) => {
+          const next = (e && e.detail && e.detail.lang) || (window.CodeLaunchI18N && window.CodeLaunchI18N.getLocale()) || 'en';
+          setLang(next);
+        };
+        window.addEventListener('codelaunch-lang', onLang);
+        return () => window.removeEventListener('codelaunch-lang', onLang);
+      }, []);
+      return <QuoteWizard key={lang} lang={lang} />;
+    }
+
+    ReactDOM.createRoot(document.getElementById('quote-root')).render(<QuoteApp />);
   </script>
 
 </body>
