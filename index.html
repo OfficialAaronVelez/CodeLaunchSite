@@ -357,6 +357,7 @@
       position: relative;
       overflow: hidden;
       cursor: pointer;
+      border: 1px solid var(--border);
     }
     .work-card-inner {
       position: absolute; inset: 0;
@@ -367,8 +368,14 @@
     }
     .work-card-bg {
       position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
       transition: transform 0.5s ease;
+    }
+    .work-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
     }
     .work-card:hover .work-card-bg { transform: scale(1.04); }
 
@@ -655,18 +662,44 @@
 
     /* RESPONSIVE */
     @media (max-width: 900px) {
-      nav { padding: 0 24px; flex-wrap: wrap; height: auto; min-height: 64px; padding-top: 8px; padding-bottom: 8px; gap: 8px; }
+      nav { padding: 0 18px; flex-wrap: wrap; height: auto; min-height: 64px; padding-top: 10px; padding-bottom: 10px; gap: 8px; }
       .lang-toggle { order: 3; margin-left: auto; }
       .nav-links { display: none; }
-      .hero { padding: 100px 24px 80px; }
+      .nav-cta { padding: 9px 14px; font-size: 11px; }
+      .hero { min-height: auto; padding: 106px 18px 42px; }
+      .hero-title { font-size: clamp(38px, 13vw, 60px); margin-bottom: 20px; }
+      .hero-sub { font-size: 16px; margin-bottom: 30px; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .hero-actions .btn-primary,
+      .hero-actions .btn-ghost { width: 100%; }
       .hero-code { display: none; }
-      .hero-stats { right: 24px; gap: 28px; }
-      section { padding: 72px 24px; }
+      .hero-stats { position: static; margin-top: 32px; justify-content: space-between; gap: 16px; width: 100%; }
+      .stat { text-align: left; }
+      .stat-num { font-size: 28px; }
+      section { padding: 60px 18px; }
+      .section-header { margin-bottom: 34px; }
       .services-grid { grid-template-columns: 1fr; }
       .work-grid { grid-template-columns: 1fr; }
+      .work-card { aspect-ratio: 5/4; }
+      .work-card-inner { padding: 18px; }
       .testimonials-grid { grid-template-columns: 1fr; }
-      .contact-layout { grid-template-columns: 1fr; gap: 48px; }
-      footer { flex-direction: column; gap: 16px; align-items: flex-start; }
+      .contact-layout { grid-template-columns: 1fr; gap: 34px; }
+      footer { padding: 30px 18px; flex-direction: column; gap: 16px; align-items: flex-start; }
+    }
+
+    @media (max-width: 600px) {
+      .logo { font-size: 20px; }
+      .lang-toggle button { padding: 7px 10px; font-size: 10px; }
+      .hero-title { font-size: clamp(32px, 12vw, 46px); }
+      .hero-sub { font-size: 15px; line-height: 1.55; }
+      .hero-stats { flex-direction: column; align-items: flex-start; }
+      .marquee-track span { padding: 0 22px; }
+      .service-card { padding: 28px 20px; }
+      .work-card { aspect-ratio: 4/3; }
+      .testimonials-grid .tcard { padding: 24px 20px; }
+      .contact-info-item { padding: 16px 0; }
+      .chat-panel { width: min(300px, calc(100vw - 24px)); }
+      #chat-bubble { right: 12px; bottom: 12px; }
     }
   </style>
 </head>
@@ -683,7 +716,7 @@
       <li><a href="#testimonials" data-i18n="nav.clients">Clients</a></li>
       <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
     </ul>
-    <div style="display:flex;align-items:center;gap:12px;">
+    <div class="nav-actions" style="display:flex;align-items:center;gap:12px;">
       <div class="lang-toggle" role="group" aria-label="Language">
         <button type="button" class="lang-btn" data-locale="en" aria-pressed="true">EN</button>
         <button type="button" class="lang-btn" data-locale="es" aria-pressed="false">ES</button>
@@ -805,67 +838,39 @@
     </div>
     <div class="work-grid reveal">
       <div class="work-card">
-        <div class="work-card-bg" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);">
-          <svg width="120" height="80" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="10" y="15" width="100" height="50" rx="4" stroke="#F97316" stroke-width="1.5" fill="none" opacity="0.4"/>
-            <rect x="20" y="25" width="40" height="6" rx="2" fill="#F97316" opacity="0.6"/>
-            <rect x="20" y="37" width="60" height="4" rx="2" fill="#444"/>
-            <rect x="20" y="47" width="45" height="4" rx="2" fill="#444"/>
-            <rect x="70" y="42" width="24" height="12" rx="2" fill="#F97316" opacity="0.8"/>
-          </svg>
+        <div class="work-card-bg">
+          <img class="work-card-img" src="assets/work/cooking-dashboard.png" alt="cooking app dashboard" loading="lazy" />
         </div>
         <div class="work-card-inner">
-          <div class="work-tag" data-i18n="work.item1.tag">Website</div>
-          <div class="work-title">Apex Realty Group</div>
+          <div class="work-tag" data-i18n="work.item1.tag">Mobile/Web App</div>
+          <div class="work-title">Chefsitos Online Cooking App</div>
         </div>
       </div>
       <div class="work-card">
-        <div class="work-card-bg" style="background: linear-gradient(135deg, #0a1628 0%, #1a0a28 100%);">
-          <svg width="70" height="120" viewBox="0 0 70 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="5" y="5" width="60" height="110" rx="8" stroke="#F97316" stroke-width="1.5" fill="none" opacity="0.4"/>
-            <rect x="15" y="20" width="40" height="30" rx="3" fill="#F97316" opacity="0.15"/>
-            <rect x="15" y="58" width="18" height="18" rx="2" fill="#F97316" opacity="0.5"/>
-            <rect x="37" y="58" width="18" height="18" rx="2" fill="#333"/>
-            <rect x="15" y="82" width="40" height="5" rx="2" fill="#333"/>
-            <circle cx="35" cy="108" r="4" stroke="#F97316" stroke-width="1.2" fill="none" opacity="0.5"/>
-          </svg>
+        <div class="work-card-bg">
+          <img class="work-card-img" src="assets/work/docusearch.png" alt="DocuSearch loading screen interface" loading="lazy" />
         </div>
         <div class="work-card-inner">
-          <div class="work-tag" data-i18n="work.item2.tag">Mobile App</div>
-          <div class="work-title">FitTrack Pro</div>
+          <div class="work-tag" data-i18n="work.item2.tag">Web Platform</div>
+          <div class="work-title">DocuSearch</div>
         </div>
       </div>
       <div class="work-card">
-        <div class="work-card-bg" style="background: linear-gradient(135deg, #0d1f0d 0%, #1a2a1a 100%);">
-          <svg width="130" height="80" viewBox="0 0 130 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="5" y="10" width="120" height="60" rx="4" stroke="#F97316" stroke-width="1.5" fill="none" opacity="0.3"/>
-            <rect x="15" y="20" width="25" height="40" rx="2" fill="#F97316" opacity="0.12"/>
-            <rect x="15" y="44" width="25" height="16" rx="2" fill="#F97316" opacity="0.5"/>
-            <rect x="47" y="30" width="25" height="30" rx="2" fill="#F97316" opacity="0.12"/>
-            <rect x="47" y="40" width="25" height="20" rx="2" fill="#F97316" opacity="0.3"/>
-            <rect x="79" y="20" width="25" height="40" rx="2" fill="#F97316" opacity="0.12"/>
-            <rect x="79" y="28" width="25" height="32" rx="2" fill="#F97316" opacity="0.4"/>
-            <rect x="111" y="35" width="8" height="25" rx="2" fill="#F97316" opacity="0.6"/>
-          </svg>
+        <div class="work-card-bg">
+          <img class="work-card-img" src="assets/work/redpoint-wealth.png" alt="Redpoint Wealth Management landing page" loading="lazy" />
         </div>
         <div class="work-card-inner">
-          <div class="work-tag" data-i18n="work.item3.tag">SaaS Dashboard</div>
-          <div class="work-title">Vanta Analytics</div>
+          <div class="work-tag" data-i18n="work.item3.tag">Landing Page</div>
+          <div class="work-title">Redpoint Wealth Management</div>
         </div>
       </div>
       <div class="work-card">
-        <div class="work-card-bg" style="background: linear-gradient(135deg, #1a100a 0%, #2a1a0a 100%);">
-          <svg width="110" height="90" viewBox="0 0 110 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="55" cy="45" r="35" stroke="#F97316" stroke-width="1.5" fill="none" opacity="0.3"/>
-            <circle cx="55" cy="45" r="20" stroke="#F97316" stroke-width="1" fill="none" opacity="0.2"/>
-            <circle cx="55" cy="45" r="5" fill="#F97316" opacity="0.7"/>
-            <line x1="55" y1="10" x2="55" y2="45" stroke="#F97316" stroke-width="2" opacity="0.6"/>
-            <line x1="55" y1="45" x2="78" y2="62" stroke="#F97316" stroke-width="1.5" opacity="0.4"/>
-          </svg>
+        <div class="work-card-bg">
+          <img class="work-card-img" src="assets/work/easytrack-dashboard.png" alt="EasyTrack project management dashboard" loading="lazy" />
         </div>
         <div class="work-card-inner">
-          <div class="work-tag" data-i18n="work.item4.tag">E-Commerce</div>
-          <div class="work-title">Nomad Goods Store</div>
+          <div class="work-tag" data-i18n="work.item4.tag">SaaS Dashboard</div>
+          <div class="work-title">EasyTrack</div>
         </div>
       </div>
     </div>
@@ -1041,7 +1046,7 @@
           'services.support.name': 'Maintenance & Support', 'services.support.desc': 'Ongoing hosting, updates, and dedicated support. We keep your software running and improving after launch.',
           'quoteSec.tag': '// Instant estimate', 'quoteSec.title1': 'What are you', 'quoteSec.title2': 'building?',
           'workSec.tag': "// Selected work", 'workSec.title1': "Products we've", 'workSec.title2': 'shipped.',
-          'work.item1.tag': 'Website', 'work.item2.tag': 'Mobile App', 'work.item3.tag': 'SaaS Dashboard', 'work.item4.tag': 'E-Commerce',
+          'work.item1.tag': 'Mobile App', 'work.item2.tag': 'Web Platform', 'work.item3.tag': 'Landing Page', 'work.item4.tag': 'SaaS Dashboard',
           'testimonials.tag': '// Client voices', 'testimonials.title1': 'Trusted by', 'testimonials.title2': 'builders.',
           'testimonials.t1': '“CodeLaunch delivered our e-commerce site in under 3 weeks. Fast, clean, exactly what we asked for — and the ongoing support has been excellent.”',
           'testimonials.t1role': 'Founder, Nomad Goods',
@@ -1081,7 +1086,7 @@
           'services.support.name': 'Mantenimiento y soporte', 'services.support.desc': 'Hosting, actualizaciones y soporte continuo. Tu producto sigue creciendo después del lanzamiento.',
           'quoteSec.tag': '// Presupuesto al instante', 'quoteSec.title1': '¿Qué estás', 'quoteSec.title2': 'construyendo?',
           'workSec.tag': '// Proyectos', 'workSec.title1': 'Lo que hemos', 'workSec.title2': 'lanzado.',
-          'work.item1.tag': 'Sitio web', 'work.item2.tag': 'App móvil', 'work.item3.tag': 'Panel SaaS', 'work.item4.tag': 'E‑commerce',
+          'work.item1.tag': 'App móvil', 'work.item2.tag': 'Plataforma web', 'work.item3.tag': 'Landing page', 'work.item4.tag': 'Panel SaaS',
           'testimonials.tag': '// Opiniones', 'testimonials.title1': 'Quién confía', 'testimonials.title2': 'en nosotros.',
           'testimonials.t1': '“CodeLaunch entregó nuestra tienda en menos de 3 semanas. Rápido, limpio, justo lo pedido — y el soporte continuo es excelente.”',
           'testimonials.t1role': 'Fundadora, Nomad Goods',
