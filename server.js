@@ -27,16 +27,18 @@ app.use('/api', limiter);
 // ── Mailer ───────────────────────────────────────────────────────────────────
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: 'smtp.zoho.com',
+  port: 465,
+  secure: true,
   auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD,
+    user: process.env.ZOHO_USER,
+    pass: process.env.ZOHO_APP_PASSWORD,
   },
 });
 
 async function sendMail(subject, html) {
   await transporter.sendMail({
-    from: `"CodeLaunch Site" <${process.env.GMAIL_USER}>`,
+    from: `"CodeLaunch Site" <${process.env.ZOHO_USER}>`,
     to: process.env.NOTIFY_EMAIL,
     subject,
     html,
