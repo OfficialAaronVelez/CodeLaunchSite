@@ -9,6 +9,9 @@ const { insertContact, insertChat, insertQuote } = require('./db');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Railway / reverse proxies send X-Forwarded-* — required for express-rate-limit + accurate req.ip
+app.set('trust proxy', 1);
+
 // ── Middleware ────────────────────────────────────────────────────────────────
 
 app.use(express.json());
@@ -25,18 +28,49 @@ const limiter = rateLimit({
 app.use('/api', limiter);
 
 // ── Mailer ───────────────────────────────────────────────────────────────────
+// Zoho: 465 = TLS from first byte (secure:true). 587 = plain socket then STARTTLS (secure:false).
+// Never use secure:true on 587 — OpenSSL reports "wrong version number".
+const smtpPort = Number(process.env.SMTP_PORT || 587);
+let smtpSecure;
+let smtpRequireTLS;
+if (smtpPort === 465) {
+  smtpSecure = true;
+  smtpRequireTLS = false;
+} else if (smtpPort === 587) {
+  smtpSecure = false;
+  smtpRequireTLS = true;
+  if (process.env.SMTP_SECURE === 'true') {
+    console.warn('[mail] Ignoring SMTP_SECURE=true for port 587 (use STARTTLS; set SMTP_SECURE=false or omit).');
+  }
+} else {
+  smtpSecure = process.env.SMTP_SECURE === 'true';
+  smtpRequireTLS = !smtpSecure;
+}
+
+const mailConfigured = Boolean(
+  process.env.ZOHO_USER && process.env.ZOHO_APP_PASSWORD && process.env.NOTIFY_EMAIL
+);
 
 const transporter = nodemailer.createTransport({
-  host: 'smtp.zoho.com',
-  port: 465,
-  secure: true,
+  host: process.env.SMTP_HOST || 'smtp.zoho.com',
+  port: smtpPort,
+  secure: smtpSecure,
+  requireTLS: smtpRequireTLS,
   auth: {
     user: process.env.ZOHO_USER,
     pass: process.env.ZOHO_APP_PASSWORD,
   },
+  connectionTimeout: 25_000,
+  greetingTimeout: 25_000,
+  socketTimeout: 25_000,
 });
 
 async function sendMail(subject, html) {
+  if (!mailConfigured) {
+    const err = new Error('Mail is not configured (set ZOHO_USER, ZOHO_APP_PASSWORD, NOTIFY_EMAIL).');
+    err.code = 'MAIL_NOT_CONFIGURED';
+    throw err;
+  }
   await transporter.sendMail({
     from: `"CodeLaunch Site" <${process.env.ZOHO_USER}>`,
     to: process.env.NOTIFY_EMAIL,
@@ -150,8 +184,8 @@ app.post('/api/chat', async (req, res) => {
 app.post('/api/quote', async (req, res) => {
   const email       = sanitize(req.body.email);
   const type        = sanitize(req.body.type);
-  const size        = sanitize(req.body.size);
-  const timeline    = sanitize(req.body.timeline);
+  const start       = sanitize(req.body.start);
+  const priority    = sanitize(req.body.priority);
   const budget      = sanitize(req.body.budget);
   const estimate    = sanitize(req.body.estimate);
   const estTimeline = sanitize(req.body.estTimeline);
@@ -161,24 +195,24 @@ app.post('/api/quote', async (req, res) => {
   }
 
   try {
-    insertQuote.run(email, type, size, timeline, budget, estimate, estTimeline);
+    insertQuote.run(email, type, start, priority, budget, estimate, estTimeline);
 
     await sendMail(
       `Quote request from ${email}`,
       emailWrap('New Quote Request', [
-        ['Email',        `<a href="mailto:${email}" style="color:#F97316;">${email}</a>`],
-        ['Project Type', type],
-        ['Size',         size],
-        ['Timeline',     timeline],
-        ['Budget',       budget],
-        ['Estimate',     estimate],
-        ['Est. Timeline',estTimeline],
+        ['Email',          `<a href="mailto:${email}" style="color:#F97316;">${email}</a>`],
+        ['Project Type',   type],
+        ['Starting Point', start],
+        ['Priority',       priority],
+        ['Budget',         budget],
+        ['Estimate',       estimate],
+        ['Est. Timeline',  estTimeline],
       ])
     );
 
     res.json({ ok: true });
   } catch (err) {
-    console.error('Quote error:', err);
+    console.error('Quote error:', err && err.message ? err.message : err);
     res.status(500).json({ error: 'Failed to send — please email us directly.' });
   }
 });
@@ -190,6 +224,14 @@ app.get('*', (req, res) => {
 
 // ── Start ─────────────────────────────────────────────────────────────────────
 
-app.listen(PORT, () => {
-  console.log(`CodeLaunch server running at http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`CodeLaunch server listening on 0.0.0.0:${PORT}`);
+  if (!mailConfigured) {
+    console.error('[mail] Missing ZOHO_USER, ZOHO_APP_PASSWORD, or NOTIFY_EMAIL — emails will fail until set.');
+  } else {
+    transporter.verify((err) => {
+      if (err) console.error('[mail] SMTP verify failed:', err.message);
+      else console.log(`[mail] SMTP OK (${process.env.SMTP_HOST || 'smtp.zoho.com'}:${smtpPort}).`);
+    });
+  }
 });

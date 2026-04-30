@@ -1416,69 +1416,69 @@
       return [
         {
           id: 'type',
-          question: L('What are you looking to build?', '¿Qué quieres construir?'),
-          hint: L('Pick one to get started', 'Elige una opción para empezar'),
+          question: L('What do you want to build?', '¿Qué quieres construir?'),
+          hint: L('Pick the closest match', 'Elige la opción más cercana'),
           options: [
-            { value: 'website',   label: L('Website', 'Sitio web'),         sub: L('Landing page, business site, blog', 'Landing, web corporativa, blog'),    icon: '[ web ]' },
-            { value: 'mobile',    label: L('Mobile App', 'App móvil'),       sub: L('iOS, Android, or both', 'iOS, Android o ambos'),                icon: '[ app ]' },
-            { value: 'software',  label: L('Custom Software', 'Software a medida'),  sub: L('SaaS, internal tool, platform', 'SaaS, herramienta interna, plataforma'),        icon: '[ sys ]' },
-            { value: 'ecommerce', label: L('E-Commerce', 'E‑commerce'),       sub: L('Online store, product listings', 'Tienda online, catálogo'),       icon: '[ $ ]'   },
+            { value: 'website',   label: L('Website', 'Sitio web'),              sub: L('Landing page, business site, portfolio', 'Landing, web corporativa, portafolio'), icon: '[ web ]' },
+            { value: 'mobile',    label: L('Mobile App', 'App móvil'),            sub: L('iOS, Android, or both', 'iOS, Android o ambos'),                                  icon: '[ app ]' },
+            { value: 'ecommerce', label: L('E-Commerce', 'E‑commerce'),           sub: L('Online store, product catalog', 'Tienda online, catálogo de productos'),          icon: '[ $ ]'   },
+            { value: 'software',  label: L('Custom Software', 'Software a medida'), sub: L('SaaS, internal tool, platform', 'SaaS, herramienta interna, plataforma'),      icon: '[ sys ]' },
           ]
         },
         {
-          id: 'size',
-          question: L('How large is the project?', '¿Qué tan grande es el proyecto?'),
-          hint: L('Estimate the scope', 'Estima el alcance'),
+          id: 'start',
+          question: L('Where are you starting from?', '¿Desde dónde partes?'),
+          hint: L('This affects cost and timeline the most', 'Esto afecta más el costo y el tiempo'),
           options: [
-            { value: 'small',      label: L('Small', 'Pequeño'),      sub: L('1–5 pages / basic features', '1–5 páginas / funciones básicas'),          icon: '[ · ]'   },
-            { value: 'medium',     label: L('Medium', 'Mediano'),     sub: L('5–15 pages / moderate complexity', '5–15 págs. / complejidad media'),    icon: '[ ·· ]'  },
-            { value: 'large',      label: L('Large', 'Grande'),      sub: L('15+ pages / advanced features', '15+ págs. / funciones avanzadas'),       icon: '[ ··· ]' },
-            { value: 'enterprise', label: L('Enterprise', 'Empresarial'), sub: L('Complex, multi-user systems', 'Sistemas complejos multiusuario'),         icon: '[ ∞ ]'   },
+            { value: 'fresh',    label: L('From scratch', 'Desde cero'),           sub: L('No designs or code yet', 'Sin diseños ni código existente'),          icon: '[ 0 ]'  },
+            { value: 'designs',  label: L('I have designs', 'Tengo diseños'),       sub: L('Mockups or Figma ready to build', 'Mockups o Figma listos'),           icon: '[ ▢ ]'  },
+            { value: 'redesign', label: L('Redesign / upgrade', 'Rediseño'),        sub: L('Something already exists', 'Ya existe algo funcionando'),             icon: '[ ↺ ]'  },
+            { value: 'features', label: L('Add features', 'Agregar funciones'),     sub: L('Extend an existing product', 'Ampliar un producto existente'),        icon: '[ + ]'  },
           ]
         },
         {
-          id: 'timeline',
-          question: L('When do you need it live?', '¿Cuándo lo necesitas en producción?'),
-          hint: L('Choose your urgency', 'Elige la urgencia'),
+          id: 'priority',
+          question: L('What matters most to you?', '¿Qué es lo más importante para ti?'),
+          hint: L('Helps us tailor the right approach', 'Nos ayuda a preparar la mejor propuesta'),
           options: [
-            { value: 'rush',     label: 'ASAP',       sub: L('Under 2 weeks', 'Menos de 2 semanas'),          icon: '[ !! ]' },
-            { value: 'month',    label: L('1 Month', '1 mes'),    sub: L('Standard turnaround', 'Plazo estándar'),    icon: '[ > ]'  },
-            { value: 'quarter',  label: L('1–3 Months', '1–3 meses'), sub: L('Measured & thorough', 'Con calma y rigor'),    icon: '[ ~ ]'  },
-            { value: 'flexible', label: L('Flexible', 'Flexible'),   sub: L('No hard deadline', 'Sin fecha fija'),       icon: '[ ∞ ]'  },
+            { value: 'speed',   label: L('Launch fast', 'Lanzar rápido'),           sub: L('Speed over perfection', 'Velocidad sobre perfección'),                icon: '[ >> ]' },
+            { value: 'budget',  label: L('Stay on budget', 'Respetar presupuesto'), sub: L('Predictable cost, no surprises', 'Sin sorpresas en el costo'),        icon: '[ $ ]'  },
+            { value: 'quality', label: L('Quality first', 'Calidad ante todo'),     sub: L('Built to last long-term', 'Hecho para durar'),                        icon: '[ ★ ]'  },
+            { value: 'scale',   label: L('Built to scale', 'Listo para crecer'),    sub: L('Designed for growth from day one', 'Diseñado para escalar'),          icon: '[ ∞ ]'  },
           ]
         },
         {
           id: 'budget',
-          question: L("What's your rough budget?", '¿Presupuesto aproximado?'),
-          hint: L('Helps us tailor a fair proposal', 'Nos ayuda a preparar una propuesta justa'),
+          question: L("What's your budget range?", '¿Cuál es tu rango de presupuesto?'),
+          hint: L('Helps us prepare a fair proposal', 'Nos ayuda a preparar una propuesta justa'),
           options: [
-            { value: 'low',        label: 'Under $1,000',       sub: L('Great for small sites', 'Ideal para sitios pequeños'),        icon: '[ $ ]'    },
-            { value: 'mid',        label: '$1,000 – $5,000',    sub: L('Most projects land here', 'Donde encajan muchos proyectos'),      icon: '[ $$ ]'   },
-            { value: 'high',       label: '$5,000 – $15,000',   sub: L('Full-featured builds', 'Proyectos con muchas funciones'),         icon: '[ $$$ ]'  },
-            { value: 'enterprise', label: '$15,000+',            sub: L('Enterprise or complex SaaS', 'Empresarial o SaaS complejo'),  icon: '[ $$$$ ]' },
+            { value: 'low',        label: L('Under $15,000 MXN', 'Menos de $15,000 MXN'),         sub: L('Small scope projects', 'Proyectos de alcance pequeño'),              icon: '[ $ ]'    },
+            { value: 'mid',        label: L('$15,000 – $60,000 MXN', '$15,000 – $60,000 MXN'),    sub: L('Most projects land here', 'Donde encajan muchos proyectos'),          icon: '[ $$ ]'   },
+            { value: 'high',       label: L('$60,000 – $150,000 MXN', '$60,000 – $150,000 MXN'),  sub: L('Full-featured builds', 'Proyectos con muchas funciones'),             icon: '[ $$$ ]'  },
+            { value: 'enterprise', label: L('$150,000+ MXN', '$150,000+ MXN'),                     sub: L('Enterprise or complex systems', 'Empresarial o sistemas complejos'), icon: '[ $$$$ ]' },
           ]
         },
       ];
     }
 
     const estimates = {
-      'website-small': '$400–$800',       'website-medium': '$800–$2,500',    'website-large': '$2,500–$6,000',    'website-enterprise': '$6,000+',
-      'mobile-small':  '$1,200–$3,000',   'mobile-medium':  '$3,000–$8,000',  'mobile-large':  '$8,000–$18,000',  'mobile-enterprise':  '$18,000+',
-      'software-small':'$1,000–$3,500',   'software-medium':'$3,500–$10,000', 'software-large':'$10,000–$25,000', 'software-enterprise':'$25,000+',
-      'ecommerce-small':'$600–$1,500',    'ecommerce-medium':'$1,500–$4,000', 'ecommerce-large':'$4,000–$10,000', 'ecommerce-enterprise':'$10,000+',
+      'website-fresh':    '$8,000–$18,000 MXN',   'website-designs':   '$6,000–$14,000 MXN',   'website-redesign':   '$10,000–$28,000 MXN',  'website-features':   '$5,000–$15,000 MXN',
+      'mobile-fresh':     '$35,000–$80,000 MXN',  'mobile-designs':    '$25,000–$60,000 MXN',  'mobile-redesign':    '$40,000–$90,000 MXN',   'mobile-features':    '$20,000–$50,000 MXN',
+      'ecommerce-fresh':  '$12,000–$30,000 MXN',  'ecommerce-designs': '$9,000–$22,000 MXN',   'ecommerce-redesign': '$14,000–$35,000 MXN',   'ecommerce-features': '$8,000–$20,000 MXN',
+      'software-fresh':   '$28,000–$70,000 MXN',  'software-designs':  '$20,000–$55,000 MXN',  'software-redesign':  '$30,000–$80,000 MXN',   'software-features':  '$15,000–$40,000 MXN',
     };
 
     const timelines = {
-      'website-small':  '1–2 weeks',  'website-medium':  '3–5 weeks',  'website-large':  '6–10 weeks',
-      'mobile-small':   '3–5 weeks',  'mobile-medium':   '6–10 weeks', 'mobile-large':   '10–18 weeks',
-      'software-small': '2–4 weeks',  'software-medium': '5–10 weeks', 'software-large': '10–20 weeks',
-      'ecommerce-small':'2–3 weeks',  'ecommerce-medium':'4–7 weeks',  'ecommerce-large':'7–14 weeks',
+      'website-fresh':    '4–7 weeks',   'website-designs':   '3–5 weeks',   'website-redesign':   '5–9 weeks',    'website-features':   '2–5 weeks',
+      'mobile-fresh':     '10–16 weeks', 'mobile-designs':    '8–13 weeks',  'mobile-redesign':    '12–18 weeks',  'mobile-features':    '6–12 weeks',
+      'ecommerce-fresh':  '5–9 weeks',   'ecommerce-designs': '4–7 weeks',   'ecommerce-redesign': '6–11 weeks',   'ecommerce-features': '3–7 weeks',
+      'software-fresh':   '10–18 weeks', 'software-designs':  '8–15 weeks',  'software-redesign':  '12–20 weeks',  'software-features':  '6–13 weeks',
     };
     const timelinesEs = {
-      'website-small':  '1–2 semanas',  'website-medium':  '3–5 semanas',  'website-large':  '6–10 semanas',
-      'mobile-small':   '3–5 semanas',  'mobile-medium':   '6–10 semanas', 'mobile-large':   '10–18 semanas',
-      'software-small': '2–4 semanas',  'software-medium': '5–10 semanas', 'software-large': '10–20 semanas',
-      'ecommerce-small':'2–3 semanas',  'ecommerce-medium':'4–7 semanas',  'ecommerce-large':'7–14 semanas',
+      'website-fresh':    '4–7 semanas',   'website-designs':   '3–5 semanas',   'website-redesign':   '5–9 semanas',    'website-features':   '2–5 semanas',
+      'mobile-fresh':     '10–16 semanas', 'mobile-designs':    '8–13 semanas',  'mobile-redesign':    '12–18 semanas',  'mobile-features':    '6–12 semanas',
+      'ecommerce-fresh':  '5–9 semanas',   'ecommerce-designs': '4–7 semanas',   'ecommerce-redesign': '6–11 semanas',   'ecommerce-features': '3–7 semanas',
+      'software-fresh':   '10–18 semanas', 'software-designs':  '8–15 semanas',  'software-redesign':  '12–20 semanas',  'software-features':  '6–13 semanas',
     };
 
     function QuoteWizard({ lang }) {
@@ -1511,9 +1511,9 @@
 
       const reset = () => { setStep(0); setAnswers({}); setDone(false); setSubmitted(false); setEmail(''); };
 
-      const getEstimate = () => estimates[`${answers.type}-${answers.size}`] || L('Custom Quote', 'Presupuesto personalizado');
+      const getEstimate = () => estimates[`${answers.type}-${answers.start}`] || L('Custom Quote', 'Presupuesto personalizado');
       const getTimeline = () => {
-        const k = `${answers.type}-${answers.size}`;
+        const k = `${answers.type}-${answers.start}`;
         if (es) return timelinesEs[k] || timelines[k] || L('Depends on scope', 'Según el alcance');
         return timelines[k] || L('Depends on scope', 'Según el alcance');
       };
@@ -1528,8 +1528,8 @@
             body: JSON.stringify({
               email,
               type: answers.type,
-              size: answers.size,
-              timeline: answers.timeline,
+              start: answers.start,
+              priority: answers.priority,
               budget: answers.budget,
               estimate: getEstimate(),
               estTimeline: getTimeline(),
