@@ -187,12 +187,4 @@ app.get('*', (req, res) => {
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`CodeLaunch server listening on 0.0.0.0:${PORT}`);
-  if (!mailConfigured) {
-    console.error('[mail] Missing ZOHO_USER, ZOHO_APP_PASSWORD, or NOTIFY_EMAIL — emails will fail until set.');
-  } else {
-    transporter.verify((err) => {
-      if (err) console.error('[mail] SMTP verify failed:', err.message);
-      else console.log(`[mail] SMTP OK (${process.env.SMTP_HOST || 'smtp.zoho.com'}:${smtpPort}).`);
-    });
-  }
 });
