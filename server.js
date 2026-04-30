@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
 const { insertContact, insertChat, insertQuote } = require('./db');
@@ -28,51 +28,12 @@ const limiter = rateLimit({
 app.use('/api', limiter);
 
 // ── Mailer ───────────────────────────────────────────────────────────────────
-// Zoho: 465 = TLS from first byte (secure:true). 587 = plain socket then STARTTLS (secure:false).
-// Never use secure:true on 587 — OpenSSL reports "wrong version number".
-const smtpPort = Number(process.env.SMTP_PORT || 587);
-let smtpSecure;
-let smtpRequireTLS;
-if (smtpPort === 465) {
-  smtpSecure = true;
-  smtpRequireTLS = false;
-} else if (smtpPort === 587) {
-  smtpSecure = false;
-  smtpRequireTLS = true;
-  if (process.env.SMTP_SECURE === 'true') {
-    console.warn('[mail] Ignoring SMTP_SECURE=true for port 587 (use STARTTLS; set SMTP_SECURE=false or omit).');
-  }
-} else {
-  smtpSecure = process.env.SMTP_SECURE === 'true';
-  smtpRequireTLS = !smtpSecure;
-}
 
-const mailConfigured = Boolean(
-  process.env.ZOHO_USER && process.env.ZOHO_APP_PASSWORD && process.env.NOTIFY_EMAIL
-);
-
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'smtp.zoho.com',
-  port: smtpPort,
-  secure: smtpSecure,
-  requireTLS: smtpRequireTLS,
-  auth: {
-    user: process.env.ZOHO_USER,
-    pass: process.env.ZOHO_APP_PASSWORD,
-  },
-  connectionTimeout: 25_000,
-  greetingTimeout: 25_000,
-  socketTimeout: 25_000,
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 async function sendMail(subject, html) {
-  if (!mailConfigured) {
-    const err = new Error('Mail is not configured (set ZOHO_USER, ZOHO_APP_PASSWORD, NOTIFY_EMAIL).');
-    err.code = 'MAIL_NOT_CONFIGURED';
-    throw err;
-  }
-  await transporter.sendMail({
-    from: `"CodeLaunch Site" <${process.env.ZOHO_USER}>`,
+  await resend.emails.send({
+    from: process.env.MAIL_FROM || 'CodeLaunch Site <onboarding@resend.dev>',
     to: process.env.NOTIFY_EMAIL,
     subject,
     html,
