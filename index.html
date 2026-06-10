@@ -48,9 +48,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
-  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
   <style>
     :root {
@@ -375,22 +372,8 @@
       letter-spacing: 0.02em;
     }
 
-    /* QUOTE WIZARD */
-    #quote {
-      background: var(--bg2);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
     /* WORK / PORTFOLIO */
     #work { background: var(--bg); }
-
-    .work-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2px;
-      background: var(--border);
-    }
 
     .work-card {
       background: var(--bg3);
@@ -418,6 +401,9 @@
       object-position: center;
       display: block;
     }
+    .work-card-img.contain {
+      object-fit: contain;
+    }
     .work-card:hover .work-card-bg { transform: scale(1.04); }
 
     .work-tag {
@@ -435,59 +421,112 @@
       color: var(--white);
     }
 
-    /* TESTIMONIALS */
-    #testimonials { background: var(--bg); }
-
-    .testimonials-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .tcard {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 36px;
+    /* WORK CAROUSEL */
+    .work-carousel-wrap {
       position: relative;
     }
-    .tcard::before {
-      content: '"';
-      position: absolute; top: 20px; right: 28px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 80px;
-      color: var(--orange);
-      opacity: 0.2;
-      line-height: 1;
+    .work-carousel {
+      width: 100%;
+      overflow: hidden;
+      cursor: grab;
+      user-select: none;
     }
-    .tcard-text {
-      font-size: 15px;
-      color: var(--text);
-      line-height: 1.8;
-      margin-bottom: 28px;
-      font-style: italic;
-      font-weight: 300;
-    }
-    .tcard-author {
-      display: flex; align-items: center; gap: 14px;
-    }
-    .tcard-avatar {
-      width: 42px; height: 42px;
-      border-radius: 50%;
+    .work-carousel:active { cursor: grabbing; }
+    .work-card { cursor: zoom-in; }
+
+    /* LIGHTBOX */
+    .lightbox {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.92);
       display: flex; align-items: center; justify-content: center;
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-      font-size: 16px;
-      background: var(--orange);
-      color: #000;
-      flex-shrink: 0;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      padding: 24px;
     }
-    .tcard-name {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 600;
-      font-size: 14px;
+    .lightbox.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .lightbox-img {
+      max-width: 92vw;
+      max-height: 88vh;
+      object-fit: contain;
+      border: 1px solid var(--border);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.7);
+      transform: scale(0.95);
+      transition: transform 0.25s ease;
+    }
+    .lightbox.open .lightbox-img { transform: scale(1); }
+    .lightbox-close {
+      position: fixed;
+      top: 20px; right: 24px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
       color: var(--white);
+      font-family: 'Space Mono', monospace;
+      font-size: 18px;
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s;
+      z-index: 10000;
     }
-    .tcard-role { font-size: 12px; color: var(--gray); }
+    .lightbox-close:hover { background: var(--surface); }
+    .lightbox-caption {
+      position: fixed;
+      bottom: 24px; left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      color: var(--gray);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .work-carousel-track {
+      display: flex;
+      gap: 0;
+      transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+      will-change: transform;
+    }
+    .work-carousel-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    .work-carousel-dots {
+      display: flex;
+      gap: 8px;
+    }
+    .work-dot {
+      width: 28px; height: 3px;
+      background: var(--border);
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+      border-radius: 2px;
+      padding: 0;
+    }
+    .work-dot.active { background: var(--orange); }
+    .work-carousel-arrows {
+      display: flex;
+      gap: 8px;
+    }
+    .work-arrow {
+      width: 40px; height: 40px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-family: 'Space Mono', monospace;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .work-arrow:hover { background: var(--surface); border-color: var(--gray); }
+    .work-arrow:disabled { opacity: 0.25; cursor: default; }
 
     /* CONTACT */
     #contact {
@@ -720,10 +759,8 @@
       section { padding: 60px 18px; }
       .section-header { margin-bottom: 34px; }
       .services-grid { grid-template-columns: 1fr; }
-      .work-grid { grid-template-columns: 1fr; }
       .work-card { aspect-ratio: 5/4; }
       .work-card-inner { padding: 18px; }
-      .testimonials-grid { grid-template-columns: 1fr; }
       .contact-layout { grid-template-columns: 1fr; gap: 34px; }
       footer { padding: 30px 18px; flex-direction: column; gap: 16px; align-items: flex-start; }
     }
@@ -737,7 +774,6 @@
       .marquee-track span { padding: 0 22px; }
       .service-card { padding: 28px 20px; }
       .work-card { aspect-ratio: 4/3; }
-      .testimonials-grid .tcard { padding: 24px 20px; }
       .contact-info-item { padding: 16px 0; }
       .chat-panel { width: min(300px, calc(100vw - 24px)); }
       #chat-bubble { right: 12px; bottom: 12px; }
@@ -754,7 +790,6 @@
     <ul class="nav-links">
       <li><a href="#services" data-i18n="nav.services">Services</a></li>
       <li><a href="#work" data-i18n="nav.work">Work</a></li>
-      <li><a href="#testimonials" data-i18n="nav.clients">Clients</a></li>
       <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
     </ul>
     <div class="nav-actions" style="display:flex;align-items:center;gap:12px;">
@@ -762,7 +797,7 @@
         <button type="button" class="lang-btn" data-locale="en" aria-pressed="true">EN</button>
         <button type="button" class="lang-btn" data-locale="es" aria-pressed="false">ES</button>
       </div>
-    <button class="nav-cta" data-i18n="nav.getQuote" onclick="document.getElementById('quote').scrollIntoView({behavior:'smooth'})">Get a Quote</button>
+    <button class="nav-cta" data-i18n="nav.getQuote" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact Us</button>
     </div>
   </nav>
 
@@ -779,7 +814,7 @@
       </h1>
       <p class="hero-sub" data-i18n="hero.sub">Websites, mobile apps, and custom software — delivered fast, priced fairly. No fluff, no bloat, just clean code that works.</p>
       <div class="hero-actions">
-        <button class="btn-primary" data-i18n="hero.ctaPrimary" onclick="document.getElementById('quote').scrollIntoView({behavior:'smooth'})">Start Your Project</button>
+        <button class="btn-primary" data-i18n="hero.ctaPrimary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Start Your Project</button>
         <button class="btn-ghost" data-i18n="hero.ctaGhost" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">See Our Work</button>
       </div>
     </div>
@@ -862,96 +897,103 @@
     </div>
   </section>
 
-  <!-- QUOTE WIZARD -->
-  <section id="quote">
-    <div class="section-header reveal">
-      <div class="section-tag" data-i18n="quoteSec.tag">// Instant estimate</div>
-      <h2 class="section-title"><span data-i18n="quoteSec.title1">What are you</span><br/><span class="accent" data-i18n="quoteSec.title2">building?</span></h2>
-    </div>
-    <div id="quote-root"></div>
-  </section>
-
   <!-- WORK -->
   <section id="work">
     <div class="section-header reveal">
       <div class="section-tag" data-i18n="workSec.tag">// Selected work</div>
       <h2 class="section-title"><span data-i18n="workSec.title1">Products we've</span><br/><span class="accent" data-i18n="workSec.title2">shipped.</span></h2>
     </div>
-    <div class="work-grid reveal">
-      <div class="work-card">
-        <div class="work-card-bg">
-          <img class="work-card-img" src="assets/work/cooking-dashboard.png" alt="cooking app dashboard" loading="lazy" />
-        </div>
-        <div class="work-card-inner">
-          <div class="work-tag" data-i18n="work.item1.tag">Mobile/Web App</div>
-          <div class="work-title">Chefsitos Online Cooking App</div>
-        </div>
-      </div>
-      <div class="work-card">
-        <div class="work-card-bg">
-          <img class="work-card-img" src="assets/work/docusearch.png" alt="DocuSearch loading screen interface" loading="lazy" />
-        </div>
-        <div class="work-card-inner">
-          <div class="work-tag" data-i18n="work.item2.tag">Web Platform</div>
-          <div class="work-title">DocuSearch</div>
-        </div>
-      </div>
-      <div class="work-card">
-        <div class="work-card-bg">
-          <img class="work-card-img" src="assets/work/redpoint-wealth.png" alt="Redpoint Wealth Management landing page" loading="lazy" />
-        </div>
-        <div class="work-card-inner">
-          <div class="work-tag" data-i18n="work.item3.tag">Landing Page</div>
-          <div class="work-title">Redpoint Wealth Management</div>
-        </div>
-      </div>
-      <div class="work-card">
-        <div class="work-card-bg">
-          <img class="work-card-img" src="assets/work/easytrack-dashboard.png" alt="EasyTrack project management dashboard" loading="lazy" />
-        </div>
-        <div class="work-card-inner">
-          <div class="work-tag" data-i18n="work.item4.tag">SaaS Dashboard</div>
-          <div class="work-title">EasyTrack</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TESTIMONIALS -->
-  <section id="testimonials">
-    <div class="section-header reveal">
-      <div class="section-tag" data-i18n="testimonials.tag">// Client voices</div>
-      <h2 class="section-title"><span data-i18n="testimonials.title1">Trusted by</span><br/><span class="accent" data-i18n="testimonials.title2">builders.</span></h2>
-    </div>
-    <div class="testimonials-grid reveal">
-      <div class="tcard">
-        <p class="tcard-text" data-i18n="testimonials.t1">"CodeLaunch delivered our e-commerce site in under 3 weeks. Fast, clean, exactly what we asked for — and the ongoing support has been excellent."</p>
-        <div class="tcard-author">
-          <div class="tcard-avatar">JM</div>
-          <div>
-            <div class="tcard-name">Jamie Mitchell</div>
-            <div class="tcard-role" data-i18n="testimonials.t1role">Founder, Nomad Goods</div>
+    <div class="work-carousel-wrap reveal">
+      <div class="work-carousel">
+        <div class="work-carousel-track" id="work-track">
+          <div class="work-card">
+            <div class="work-card-bg">
+              <img class="work-card-img" src="assets/work/lnbp-basketball.png" alt="LNBP Basketball league website" loading="lazy" />
+            </div>
+            <div class="work-card-inner">
+              <div class="work-tag">Sports Platform</div>
+              <div class="work-title">LNBP — Liga Nacional de Baloncesto</div>
+            </div>
+          </div>
+          <div class="work-card">
+            <div class="work-card-bg">
+              <img class="work-card-img" src="assets/work/charros-baseball.png" alt="Charros de Jalisco baseball website" loading="lazy" />
+            </div>
+            <div class="work-card-inner">
+              <div class="work-tag">Sports Website</div>
+              <div class="work-title">Charros de Jalisco</div>
+            </div>
+          </div>
+          <div class="work-card">
+            <div class="work-card-bg">
+              <img class="work-card-img" src="assets/work/lvbp-baseball.png" alt="LVBP Venezuelan baseball league website" loading="lazy" />
+            </div>
+            <div class="work-card-inner">
+              <div class="work-tag">Sports Platform</div>
+              <div class="work-title">LVBP — Liga Venezolana de Béisbol</div>
+            </div>
+          </div>
+          <div class="work-card">
+            <div class="work-card-bg">
+              <img class="work-card-img" src="assets/work/lvbp-standings.png" alt="LMBP standings and statistics" loading="lazy" />
+            </div>
+            <div class="work-card-inner">
+              <div class="work-tag">Sports Platform</div>
+              <div class="work-title">LMBP — Posiciones y Estadísticas</div>
+            </div>
+          </div>
+          <div class="work-card">
+            <div class="work-card-bg">
+              <img class="work-card-img" src="assets/work/iadatalab.png" alt="IADataLab research platform" loading="lazy" />
+            </div>
+            <div class="work-card-inner">
+              <div class="work-tag">Research Platform</div>
+              <div class="work-title">IADataLab</div>
+            </div>
+          </div>
+          <div class="work-card">
+            <div class="work-card-bg">
+              <img class="work-card-img" src="assets/work/cooking-dashboard.png" alt="Chefsitos cooking app" loading="lazy" />
+            </div>
+            <div class="work-card-inner">
+              <div class="work-tag">Mobile / Web App</div>
+              <div class="work-title">Chefsitos Cooking App</div>
+            </div>
+          </div>
+          <div class="work-card">
+            <div class="work-card-bg">
+              <img class="work-card-img" src="assets/work/docusearch.png" alt="DocuSearch platform" loading="lazy" />
+            </div>
+            <div class="work-card-inner">
+              <div class="work-tag">Web Platform</div>
+              <div class="work-title">DocuSearch</div>
+            </div>
+          </div>
+          <div class="work-card">
+            <div class="work-card-bg">
+              <img class="work-card-img" src="assets/work/redpoint-wealth.png" alt="Redpoint Wealth Management" loading="lazy" />
+            </div>
+            <div class="work-card-inner">
+              <div class="work-tag">Landing Page</div>
+              <div class="work-title">Redpoint Wealth Management</div>
+            </div>
+          </div>
+          <div class="work-card">
+            <div class="work-card-bg" style="background:#0f0f0f;">
+              <img class="work-card-img contain" src="assets/work/easytrack-dashboard.png" alt="EasyTrack project management" loading="lazy" />
+            </div>
+            <div class="work-card-inner">
+              <div class="work-tag">SaaS Dashboard</div>
+              <div class="work-title">EasyTrack</div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="tcard">
-        <p class="tcard-text" data-i18n="testimonials.t2">"The mobile app they built exceeded every expectation. Clean UI, zero bugs on launch day. I'd recommend them to any startup that wants things done right."</p>
-        <div class="tcard-author">
-          <div class="tcard-avatar">SR</div>
-          <div>
-            <div class="tcard-name">Sarah Reynolds</div>
-            <div class="tcard-role" data-i18n="testimonials.t2role">CEO, FitTrack Pro</div>
-          </div>
-        </div>
-      </div>
-      <div class="tcard">
-        <p class="tcard-text" data-i18n="testimonials.t3">"Our custom analytics dashboard transformed how we operate. The CodeLaunch team actually understood our business before writing a single line of code."</p>
-        <div class="tcard-author">
-          <div class="tcard-avatar">DK</div>
-          <div>
-            <div class="tcard-name">Daniel Kwon</div>
-            <div class="tcard-role" data-i18n="testimonials.t3role">CTO, Vanta Analytics</div>
-          </div>
+      <div class="work-carousel-nav">
+        <div class="work-carousel-dots" id="work-dots"></div>
+        <div class="work-carousel-arrows">
+          <button class="work-arrow" id="work-prev" aria-label="Previous">←</button>
+          <button class="work-arrow" id="work-next" aria-label="Next">→</button>
         </div>
       </div>
     </div>
@@ -1071,7 +1113,7 @@
       const I18N = {
         en: {
           'meta.title': 'CodeLaunch — Affordable Software Development',
-          'nav.services': 'Services', 'nav.work': 'Work', 'nav.clients': 'Clients', 'nav.contact': 'Contact', 'nav.getQuote': 'Get a Quote',
+          'nav.services': 'Services', 'nav.work': 'Work', 'nav.contact': 'Contact', 'nav.getQuote': 'Contact Us',
           'hero.eyebrow': 'Affordable Software Solutions',
           'hero.title1': 'We build software', 'hero.title2a': 'that ', 'hero.title2b': 'launches', 'hero.title3': 'your business.',
           'hero.sub': 'Websites, mobile apps, and custom software — delivered fast, priced fairly. No fluff, no bloat, just clean code that works.',
@@ -1085,16 +1127,9 @@
           'services.ux.name': 'UI/UX Design', 'services.ux.desc': 'User research, wireframes, high-fidelity prototypes, and polished design systems. Beautiful and functional.',
           'services.api.name': 'API & Integrations', 'services.api.desc': 'Connect your tools. We build robust APIs and integrate third-party services like payments, CRMs, and analytics.',
           'services.support.name': 'Maintenance & Support', 'services.support.desc': 'Ongoing hosting, updates, and dedicated support. We keep your software running and improving after launch.',
-          'quoteSec.tag': '// Instant estimate', 'quoteSec.title1': 'What are you', 'quoteSec.title2': 'building?',
+          
           'workSec.tag': "// Selected work", 'workSec.title1': "Products we've", 'workSec.title2': 'shipped.',
           'work.item1.tag': 'Mobile App', 'work.item2.tag': 'Web Platform', 'work.item3.tag': 'Landing Page', 'work.item4.tag': 'SaaS Dashboard',
-          'testimonials.tag': '// Client voices', 'testimonials.title1': 'Trusted by', 'testimonials.title2': 'builders.',
-          'testimonials.t1': '“CodeLaunch delivered our e-commerce site in under 3 weeks. Fast, clean, exactly what we asked for — and the ongoing support has been excellent.”',
-          'testimonials.t1role': 'Founder, Nomad Goods',
-          'testimonials.t2': '“The mobile app they built exceeded every expectation. Clean UI, zero bugs on launch day. I’d recommend them to any startup that wants things done right.”',
-          'testimonials.t2role': 'CEO, FitTrack Pro',
-          'testimonials.t3': '“Our custom analytics dashboard transformed how we operate. The CodeLaunch team actually understood our business before writing a single line of code.”',
-          'testimonials.t3role': 'CTO, Vanta Analytics',
           'contactSec.tag': "// Let's talk", 'contactSec.title1': 'Ready to', 'contactSec.title2': 'build?',
           'contact.labelName': 'Your Name', 'contact.phName': 'Jane Smith',
           'contact.labelEmail': 'Email', 'contact.phEmail': 'jane@company.com',
@@ -1111,7 +1146,7 @@
         },
         es: {
           'meta.title': 'CodeLaunch — Desarrollo de software asequible',
-          'nav.services': 'Servicios', 'nav.work': 'Trabajo', 'nav.clients': 'Clientes', 'nav.contact': 'Contacto', 'nav.getQuote': 'Solicitar presupuesto',
+          'nav.services': 'Servicios', 'nav.work': 'Trabajo', 'nav.contact': 'Contacto', 'nav.getQuote': 'Contáctanos',
           'hero.eyebrow': 'Soluciones de software asequibles',
           'hero.title1': 'Construimos software', 'hero.title2a': 'que ', 'hero.title2b': 'impulsa', 'hero.title3': 'tu negocio.',
           'hero.sub': 'Sitios web, apps móviles y software a medida — entregas rápidas, precios justos. Sin relleno: código limpio que funciona.',
@@ -1125,16 +1160,8 @@
           'services.ux.name': 'Diseño UI/UX', 'services.ux.desc': 'Investigación, wireframes, prototipos y sistemas de diseño pulidos. Bonito y funcional.',
           'services.api.name': 'APIs e integraciones', 'services.api.desc': 'Conecta tus herramientas. APIs sólidas e integración con pagos, CRMs, analítica y más.',
           'services.support.name': 'Mantenimiento y soporte', 'services.support.desc': 'Hosting, actualizaciones y soporte continuo. Tu producto sigue creciendo después del lanzamiento.',
-          'quoteSec.tag': '// Presupuesto al instante', 'quoteSec.title1': '¿Qué estás', 'quoteSec.title2': 'construyendo?',
-          'workSec.tag': '// Proyectos', 'workSec.title1': 'Lo que hemos', 'workSec.title2': 'lanzado.',
-          'work.item1.tag': 'App móvil', 'work.item2.tag': 'Plataforma web', 'work.item3.tag': 'Landing page', 'work.item4.tag': 'Panel SaaS',
-          'testimonials.tag': '// Opiniones', 'testimonials.title1': 'Quién confía', 'testimonials.title2': 'en nosotros.',
-          'testimonials.t1': '“CodeLaunch entregó nuestra tienda en menos de 3 semanas. Rápido, limpio, justo lo pedido — y el soporte continuo es excelente.”',
-          'testimonials.t1role': 'Fundadora, Nomad Goods',
-          'testimonials.t2': '“La app superó todas las expectativas. UI clara, cero fallos en el lanzamiento. Los recomendaría a cualquier startup que quiera bien hecho.”',
-          'testimonials.t2role': 'CEO, FitTrack Pro',
-          'testimonials.t3': '“Nuestro panel de analítica cambió la forma de trabajar. El equipo entendió el negocio antes de escribir la primera línea de código.”',
-          'testimonials.t3role': 'CTO, Vanta Analytics',
+          
+          'workSec.tag': '// Proyectos', 'workSec.title1': 'Un poco de lo lo que hemos', 'workSec.title2': 'lanzado.',
           'contactSec.tag': '// Hablemos', 'contactSec.title1': '¿Listo para', 'contactSec.title2': 'construir?',
           'contact.labelName': 'Tu nombre', 'contact.phName': 'María García',
           'contact.labelEmail': 'Correo', 'contact.phEmail': 'maria@empresa.com',
@@ -1407,254 +1434,165 @@
     }
   </script>
 
-  <!-- QUOTE WIZARD (React) -->
-  <script type="text/babel">
-    const { useState, useEffect } = React;
 
-    function getQuoteSteps(es) {
-      const L = (en, s) => (es ? s : en);
-      return [
-        {
-          id: 'type',
-          question: L('What do you want to build?', '¿Qué quieres construir?'),
-          hint: L('Pick the closest match', 'Elige la opción más cercana'),
-          options: [
-            { value: 'website',   label: L('Website', 'Sitio web'),              sub: L('Landing page, business site, portfolio', 'Landing, web corporativa, portafolio'), icon: '[ web ]' },
-            { value: 'mobile',    label: L('Mobile App', 'App móvil'),            sub: L('iOS, Android, or both', 'iOS, Android o ambos'),                                  icon: '[ app ]' },
-            { value: 'ecommerce', label: L('E-Commerce', 'E‑commerce'),           sub: L('Online store, product catalog', 'Tienda online, catálogo de productos'),          icon: '[ $ ]'   },
-            { value: 'software',  label: L('Custom Software', 'Software a medida'), sub: L('SaaS, internal tool, platform', 'SaaS, herramienta interna, plataforma'),      icon: '[ sys ]' },
-          ]
-        },
-        {
-          id: 'start',
-          question: L('Where are you starting from?', '¿Desde dónde partes?'),
-          hint: L('This affects cost and timeline the most', 'Esto afecta más el costo y el tiempo'),
-          options: [
-            { value: 'fresh',    label: L('From scratch', 'Desde cero'),           sub: L('No designs or code yet', 'Sin diseños ni código existente'),          icon: '[ 0 ]'  },
-            { value: 'designs',  label: L('I have designs', 'Tengo diseños'),       sub: L('Mockups or Figma ready to build', 'Mockups o Figma listos'),           icon: '[ ▢ ]'  },
-            { value: 'redesign', label: L('Redesign / upgrade', 'Rediseño'),        sub: L('Something already exists', 'Ya existe algo funcionando'),             icon: '[ ↺ ]'  },
-            { value: 'features', label: L('Add features', 'Agregar funciones'),     sub: L('Extend an existing product', 'Ampliar un producto existente'),        icon: '[ + ]'  },
-          ]
-        },
-        {
-          id: 'priority',
-          question: L('What matters most to you?', '¿Qué es lo más importante para ti?'),
-          hint: L('Helps us tailor the right approach', 'Nos ayuda a preparar la mejor propuesta'),
-          options: [
-            { value: 'speed',   label: L('Launch fast', 'Lanzar rápido'),           sub: L('Speed over perfection', 'Velocidad sobre perfección'),                icon: '[ >> ]' },
-            { value: 'budget',  label: L('Stay on budget', 'Respetar presupuesto'), sub: L('Predictable cost, no surprises', 'Sin sorpresas en el costo'),        icon: '[ $ ]'  },
-            { value: 'quality', label: L('Quality first', 'Calidad ante todo'),     sub: L('Built to last long-term', 'Hecho para durar'),                        icon: '[ ★ ]'  },
-            { value: 'scale',   label: L('Built to scale', 'Listo para crecer'),    sub: L('Designed for growth from day one', 'Diseñado para escalar'),          icon: '[ ∞ ]'  },
-          ]
-        },
-        {
-          id: 'budget',
-          question: L("What's your budget range?", '¿Cuál es tu rango de presupuesto?'),
-          hint: L('Helps us prepare a fair proposal', 'Nos ayuda a preparar una propuesta justa'),
-          options: [
-            { value: 'low',        label: L('Under $15,000 MXN', 'Menos de $15,000 MXN'),         sub: L('Small scope projects', 'Proyectos de alcance pequeño'),              icon: '[ $ ]'    },
-            { value: 'mid',        label: L('$15,000 – $60,000 MXN', '$15,000 – $60,000 MXN'),    sub: L('Most projects land here', 'Donde encajan muchos proyectos'),          icon: '[ $$ ]'   },
-            { value: 'high',       label: L('$60,000 – $150,000 MXN', '$60,000 – $150,000 MXN'),  sub: L('Full-featured builds', 'Proyectos con muchas funciones'),             icon: '[ $$$ ]'  },
-            { value: 'enterprise', label: L('$150,000+ MXN', '$150,000+ MXN'),                     sub: L('Enterprise or complex systems', 'Empresarial o sistemas complejos'), icon: '[ $$$$ ]' },
-          ]
-        },
-      ];
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">✕</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+
+  <!-- WORK CAROUSEL SCRIPT -->
+  <script>
+  (function() {
+    const GAP = 2;
+    const track = document.getElementById('work-track');
+    const dotsEl = document.getElementById('work-dots');
+    const prevBtn = document.getElementById('work-prev');
+    const nextBtn = document.getElementById('work-next');
+
+    if (!track) return;
+
+    const viewport = track.parentElement;
+    const cards = Array.from(track.children);
+    const total = cards.length;
+    let current = 0;
+
+    function visibleCount() {
+      return window.matchMedia('(max-width: 900px)').matches ? 1 : 2;
     }
 
-    const estimates = {
-      'website-fresh':    '$8,000–$18,000 MXN',   'website-designs':   '$6,000–$14,000 MXN',   'website-redesign':   '$10,000–$28,000 MXN',  'website-features':   '$5,000–$15,000 MXN',
-      'mobile-fresh':     '$35,000–$80,000 MXN',  'mobile-designs':    '$25,000–$60,000 MXN',  'mobile-redesign':    '$40,000–$90,000 MXN',   'mobile-features':    '$20,000–$50,000 MXN',
-      'ecommerce-fresh':  '$12,000–$30,000 MXN',  'ecommerce-designs': '$9,000–$22,000 MXN',   'ecommerce-redesign': '$14,000–$35,000 MXN',   'ecommerce-features': '$8,000–$20,000 MXN',
-      'software-fresh':   '$28,000–$70,000 MXN',  'software-designs':  '$20,000–$55,000 MXN',  'software-redesign':  '$30,000–$80,000 MXN',   'software-features':  '$15,000–$40,000 MXN',
-    };
+    function pageCount() {
+      return Math.ceil(total / visibleCount());
+    }
 
-    const timelines = {
-      'website-fresh':    '4–7 weeks',   'website-designs':   '3–5 weeks',   'website-redesign':   '5–9 weeks',    'website-features':   '2–5 weeks',
-      'mobile-fresh':     '10–16 weeks', 'mobile-designs':    '8–13 weeks',  'mobile-redesign':    '12–18 weeks',  'mobile-features':    '6–12 weeks',
-      'ecommerce-fresh':  '5–9 weeks',   'ecommerce-designs': '4–7 weeks',   'ecommerce-redesign': '6–11 weeks',   'ecommerce-features': '3–7 weeks',
-      'software-fresh':   '10–18 weeks', 'software-designs':  '8–15 weeks',  'software-redesign':  '12–20 weeks',  'software-features':  '6–13 weeks',
-    };
-    const timelinesEs = {
-      'website-fresh':    '4–7 semanas',   'website-designs':   '3–5 semanas',   'website-redesign':   '5–9 semanas',    'website-features':   '2–5 semanas',
-      'mobile-fresh':     '10–16 semanas', 'mobile-designs':    '8–13 semanas',  'mobile-redesign':    '12–18 semanas',  'mobile-features':    '6–12 semanas',
-      'ecommerce-fresh':  '5–9 semanas',   'ecommerce-designs': '4–7 semanas',   'ecommerce-redesign': '6–11 semanas',   'ecommerce-features': '3–7 semanas',
-      'software-fresh':   '10–18 semanas', 'software-designs':  '8–15 semanas',  'software-redesign':  '12–20 semanas',  'software-features':  '6–13 semanas',
-    };
+    function cardWidth() {
+      const vc = visibleCount();
+      return Math.floor((viewport.offsetWidth - GAP * (vc - 1)) / vc);
+    }
 
-    function QuoteWizard({ lang }) {
-      const es = lang === 'es';
-      const steps = getQuoteSteps(es);
-      const [step, setStep] = useState(0);
-      const [answers, setAnswers] = useState({});
-      const [done, setDone] = useState(false);
-      const [email, setEmail] = useState('');
-      const [submitted, setSubmitted] = useState(false);
-      const L = (a, b) => (es ? b : a);
-
-      const current = steps[step];
-
-      const labelForAnswer = (qid, val) => {
-        const s = getQuoteSteps(es).find((x) => x.id === qid);
-        const opt = s && s.options.find((o) => o.value === val);
-        return (opt && opt.label) || val;
-      };
-
-      const select = (val) => {
-        const newAnswers = { ...answers, [current.id]: val };
-        setAnswers(newAnswers);
-        if (step < steps.length - 1) {
-          setTimeout(() => setStep(step + 1), 220);
-        } else {
-          setTimeout(() => setDone(true), 220);
-        }
-      };
-
-      const reset = () => { setStep(0); setAnswers({}); setDone(false); setSubmitted(false); setEmail(''); };
-
-      const getEstimate = () => estimates[`${answers.type}-${answers.start}`] || L('Custom Quote', 'Presupuesto personalizado');
-      const getTimeline = () => {
-        const k = `${answers.type}-${answers.start}`;
-        if (es) return timelinesEs[k] || timelines[k] || L('Depends on scope', 'Según el alcance');
-        return timelines[k] || L('Depends on scope', 'Según el alcance');
-      };
-
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!email) return;
-        try {
-          await fetch('/api/quote', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              email,
-              type: answers.type,
-              start: answers.start,
-              priority: answers.priority,
-              budget: answers.budget,
-              estimate: getEstimate(),
-              estTimeline: getTimeline(),
-            }),
-          });
-        } catch (_) {
-          // submission stored locally — set submitted anyway
-        }
-        setSubmitted(true);
-      };
-
-      const progressStyle = { display: 'flex', gap: '8px', marginBottom: '40px' };
-      const dotStyle = (i) => ({
-        height: '3px', flex: 1,
-        background: i <= step ? 'var(--orange)' : 'var(--border)',
-        transition: 'background 0.3s', borderRadius: '2px',
-      });
-      const cardStyle = (selected) => ({
-        background: selected ? 'rgba(249,115,22,0.1)' : 'var(--bg)',
-        border: `1px solid ${selected ? 'var(--orange)' : 'var(--border)'}`,
-        padding: '24px', cursor: 'pointer', transition: 'all 0.18s',
-        display: 'flex', alignItems: 'flex-start', gap: '16px',
-      });
-
-      if (submitted) {
-        return (
-          <div style={{maxWidth:'780px'}}>
-            <div style={{textAlign:'center', padding:'60px 0'}}>
-              <div style={{fontFamily:'Space Mono, monospace', fontSize:'13px', color:'var(--orange)', marginBottom:'20px', letterSpacing:'0.15em'}}>{L('[ ESTIMATE SENT ]', '[ PRESUPUESTO ENVIADO ]')}</div>
-              <h3 style={{fontFamily:'Space Grotesk, sans-serif', fontSize:'36px', fontWeight:700, color:'var(--white)', marginBottom:'16px', letterSpacing:'-0.02em'}}>{L("We'll be in touch soon.", 'Pronto te contactaremos.')}</h3>
-              <p style={{color:'var(--gray)', fontSize:'15px', maxWidth:'420px', margin:'0 auto 32px'}}>
-                {es ? (
-                  <>Revisa tu bandeja en <strong style={{color:'var(--white)'}}>{email}</strong>. Te enviaremos un presupuesto detallado en 24 horas.</>
-                ) : (
-                  <>Check your inbox at <strong style={{color:'var(--white)'}}>{email}</strong>. We&apos;ll follow up with a detailed quote within 24 hours.</>
-                )}
-              </p>
-              <button onClick={reset} type="button" style={{background:'transparent', border:'1px solid var(--border)', color:'var(--gray)', fontFamily:'Space Grotesk, sans-serif', fontSize:'14px', padding:'12px 28px', cursor:'pointer'}}>{L('Start Over', 'Volver a empezar')}</button>
-            </div>
-          </div>
-        );
+    function buildDots() {
+      dotsEl.innerHTML = '';
+      for (let i = 0; i < pageCount(); i++) {
+        const d = document.createElement('button');
+        d.className = 'work-dot' + (i === current ? ' active' : '');
+        d.setAttribute('aria-label', 'Slide ' + (i + 1));
+        d.addEventListener('click', () => goTo(i));
+        dotsEl.appendChild(d);
       }
+    }
 
-      if (done) {
-        return (
-          <div style={{maxWidth:'780px'}}>
-            <div style={progressStyle}>
-              {steps.map((_, i) => <div key={i} style={dotStyle(i)}></div>)}
-            </div>
-            <div style={{fontFamily:'Space Mono, monospace', fontSize:'11px', color:'var(--orange)', letterSpacing:'0.2em', textTransform:'uppercase', marginBottom:'24px'}}>{L('// Your Estimate', '// Tu estimación')}</div>
-            <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:'2px', background:'var(--border)', border:'1px solid var(--border)', marginBottom:'32px'}}>
-              <div style={{background:'var(--bg)', padding:'32px'}}>
-                <div style={{fontFamily:'Space Mono, monospace', fontSize:'11px', color:'var(--gray)', letterSpacing:'0.1em', textTransform:'uppercase', marginBottom:'10px'}}>{L('Estimated Cost', 'Coste estimado')}</div>
-                <div style={{fontFamily:'Space Grotesk, sans-serif', fontSize:'40px', fontWeight:700, color:'var(--orange)', letterSpacing:'-0.02em'}}>{getEstimate()}</div>
-              </div>
-              <div style={{background:'var(--bg)', padding:'32px'}}>
-                <div style={{fontFamily:'Space Mono, monospace', fontSize:'11px', color:'var(--gray)', letterSpacing:'0.1em', textTransform:'uppercase', marginBottom:'10px'}}>{L('Est. Timeline', 'Plazo aprox.')}</div>
-                <div style={{fontFamily:'Space Grotesk, sans-serif', fontSize:'40px', fontWeight:700, color:'var(--white)', letterSpacing:'-0.02em'}}>{getTimeline()}</div>
-              </div>
-            </div>
-            <div style={{display:'flex', gap:'12px', marginBottom:'32px', flexWrap:'wrap'}}>
-              {Object.entries(answers).map(([k, v]) => (
-                <div key={k} style={{background:'var(--bg3)', border:'1px solid var(--border)', padding:'6px 14px', fontFamily:'Space Mono, monospace', fontSize:'11px', color:'var(--gray)', letterSpacing:'0.05em'}}>{labelForAnswer(k, v)}</div>
-              ))}
-            </div>
-            <p style={{color:'var(--gray)', fontSize:'14px', marginBottom:'24px', lineHeight:'1.7'}}>{L("This is a rough estimate based on your answers. Drop your email below and we'll send you a detailed, no-obligation quote.", 'Es una estimación según tus respuestas. Deja tu email y te enviaremos un presupuesto detallado sin compromiso.')}</p>
-            <form onSubmit={handleSubmit} style={{display:'flex', gap:'0'}}>
-              <input type="email" placeholder={L('your@email.com', 'tu@email.com')} value={email} onChange={e => setEmail(e.target.value)} required
-                style={{flex:1, background:'var(--bg3)', border:'1px solid var(--border)', borderRight:'none', color:'var(--white)', fontFamily:'DM Sans, sans-serif', fontSize:'15px', padding:'14px 16px', outline:'none'}} />
-              <button type="submit" style={{background:'var(--orange)', color:'#000', fontFamily:'Space Grotesk, sans-serif', fontWeight:700, fontSize:'14px', padding:'14px 28px', border:'none', cursor:'pointer', whiteSpace:'nowrap'}}>
-                {L('Get Full Quote →', 'Recibir presupuesto →')}
-              </button>
-            </form>
-            <button type="button" onClick={reset} style={{marginTop:'16px', background:'transparent', border:'none', color:'var(--gray)', fontFamily:'Space Grotesk, sans-serif', fontSize:'13px', cursor:'pointer', padding:'0'}}>{L('← Start over', '← Volver al inicio')}</button>
-          </div>
-        );
+    function goTo(page) {
+      const vc = visibleCount();
+      const cw = cardWidth();
+      current = Math.max(0, Math.min(page, pageCount() - 1));
+      const offset = current * vc * (cw + GAP);
+      track.style.transform = `translateX(-${offset}px)`;
+      Array.from(dotsEl.children).forEach((d, i) => d.classList.toggle('active', i === current));
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current >= pageCount() - 1;
+    }
+
+    function init() {
+      const vc = visibleCount();
+      const cw = cardWidth();
+      track.style.gap = GAP + 'px';
+      cards.forEach(c => {
+        c.style.flex = `0 0 ${cw}px`;
+        c.style.width = cw + 'px';
+      });
+      if (current >= pageCount()) current = pageCount() - 1;
+      buildDots();
+      goTo(current);
+    }
+
+    prevBtn.addEventListener('click', () => goTo(current - 1));
+    nextBtn.addEventListener('click', () => goTo(current + 1));
+
+    /* ── Touch drag ── */
+    let touchStartX = 0;
+    viewport.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    viewport.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 50) goTo(dx < 0 ? current + 1 : current - 1);
+    }, { passive: true });
+
+    /* ── Mouse drag ── */
+    let isDragging = false;
+    let dragStartX = 0;
+    let dragCurrentX = 0;
+    let baseOffset = 0;
+
+    function getBaseOffset() {
+      const vc = visibleCount();
+      const cw = cardWidth();
+      return current * vc * (cw + GAP);
+    }
+
+    viewport.addEventListener('mousedown', e => {
+      isDragging = true;
+      dragStartX = e.clientX;
+      baseOffset = getBaseOffset();
+      track.style.transition = 'none';
+      viewport.style.cursor = 'grabbing';
+      e.preventDefault();
+    });
+
+    window.addEventListener('mousemove', e => {
+      if (!isDragging) return;
+      dragCurrentX = e.clientX;
+      const dx = dragStartX - dragCurrentX;
+      track.style.transform = `translateX(-${baseOffset + dx}px)`;
+    });
+
+    window.addEventListener('mouseup', e => {
+      if (!isDragging) return;
+      isDragging = false;
+      viewport.style.cursor = '';
+      track.style.transition = '';
+      const dx = dragStartX - e.clientX;
+      if (Math.abs(dx) > 60) {
+        goTo(dx > 0 ? current + 1 : current - 1);
+      } else {
+        goTo(current);
       }
+    });
 
-      return (
-        <div style={{maxWidth:'780px'}}>
-          <div style={progressStyle}>
-            {steps.map((_, i) => <div key={i} style={dotStyle(i)}></div>)}
-          </div>
-          <div style={{fontFamily:'Space Mono, monospace', fontSize:'11px', color:'var(--gray)', letterSpacing:'0.1em', marginBottom:'12px'}}>
-            {es ? `Paso ${step + 1} de ${steps.length}` : `Step ${step + 1} of ${steps.length}`}
-          </div>
-          <h3 style={{fontFamily:'Space Grotesk, sans-serif', fontSize:'clamp(24px,3vw,36px)', fontWeight:700, color:'var(--white)', marginBottom:'8px', letterSpacing:'-0.02em'}}>
-            {current.question}
-          </h3>
-          <p style={{color:'var(--gray)', fontSize:'14px', marginBottom:'32px'}}>{current.hint}</p>
-          <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:'2px', background:'var(--border)'}}>
-            {current.options.map(opt => (
-              <div
-                key={opt.value}
-                style={cardStyle(answers[current.id] === opt.value)}
-                onClick={() => select(opt.value)}
-                onMouseEnter={e => { if (answers[current.id] !== opt.value) e.currentTarget.style.borderColor = 'var(--gray2)'; }}
-                onMouseLeave={e => { if (answers[current.id] !== opt.value) e.currentTarget.style.borderColor = 'var(--border)'; }}
-              >
-                <div style={{fontFamily:'Space Mono, monospace', fontSize:'13px', color:'var(--orange)', flexShrink:0, paddingTop:'2px'}}>{opt.icon}</div>
-                <div>
-                  <div style={{fontFamily:'Space Grotesk, sans-serif', fontWeight:600, fontSize:'16px', color:'var(--white)', marginBottom:'4px'}}>{opt.label}</div>
-                  <div style={{fontSize:'13px', color:'var(--gray)'}}>{opt.sub}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      );
+    /* ── Lightbox ── */
+    const lightbox     = document.getElementById('lightbox');
+    const lightboxImg  = document.getElementById('lightbox-img');
+    const lightboxCap  = document.getElementById('lightbox-caption');
+    const lightboxClose = document.getElementById('lightbox-close');
+
+    function openLightbox(src, alt, title) {
+      lightboxImg.src = src;
+      lightboxImg.alt = alt;
+      lightboxCap.textContent = title;
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
     }
 
-    function QuoteApp() {
-      const [lang, setLang] = useState(() => (window.CodeLaunchI18N && window.CodeLaunchI18N.getLocale()) || 'en');
-      useEffect(() => {
-        const onLang = (e) => {
-          const next = (e && e.detail && e.detail.lang) || (window.CodeLaunchI18N && window.CodeLaunchI18N.getLocale()) || 'en';
-          setLang(next);
-        };
-        window.addEventListener('codelaunch-lang', onLang);
-        return () => window.removeEventListener('codelaunch-lang', onLang);
-      }, []);
-      return <QuoteWizard key={lang} lang={lang} />;
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
     }
 
-    ReactDOM.createRoot(document.getElementById('quote-root')).render(<QuoteApp />);
+    cards.forEach(card => {
+      card.addEventListener('click', e => {
+        if (Math.abs(dragStartX - e.clientX) > 8) return;
+        const img   = card.querySelector('.work-card-img');
+        const title = card.querySelector('.work-title');
+        if (img) openLightbox(img.src, img.alt, title ? title.textContent : '');
+      });
+    });
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+    window.addEventListener('resize', init);
+    init();
+  })();
   </script>
 
 </body>
