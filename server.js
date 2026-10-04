@@ -15,6 +15,22 @@ app.set('trust proxy', 1);
 // ── Middleware ────────────────────────────────────────────────────────────────
 
 app.use(express.json());
+
+// RETA subsite — must come before express.static (static redirects /reta to /reta/ otherwise)
+const MOBILE_UA = /Mobile|Android|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i;
+
+app.get('/reta', (req, res) => {
+  const isMobile = MOBILE_UA.test(req.headers['user-agent'] || '');
+  const file = isMobile ? 'mobile.html' : 'light.html';
+  res.sendFile(path.join(__dirname, 'reta', file));
+});
+app.get('/reta/m', (req, res) => {
+  res.sendFile(path.join(__dirname, 'reta', 'mobile.html'));
+});
+app.get('/reta/dark', (req, res) => {
+  res.sendFile(path.join(__dirname, 'reta', 'dark.html'));
+});
+
 app.use(express.static(path.join(__dirname)));
 
 // Rate limit all /api routes: 20 requests per 15 minutes per IP
@@ -180,6 +196,8 @@ app.post('/api/quote', async (req, res) => {
 
 // Catch-all: serve index.html for any non-API route
 app.get('*', (req, res) => {
+  const retaSubpages = ['/reta/dark', '/reta/m'];
+  if (req.path.startsWith('/reta/') && !retaSubpages.includes(req.path)) return res.status(404).end();
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 

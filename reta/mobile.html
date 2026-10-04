@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RETA — Software de membresías para negocios de fitness</title>
+<link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #F5F3EE; color: #17190F; font-family: 'Archivo', system-ui, sans-serif; -webkit-font-smoothing: antialiased; text-wrap: pretty; padding-bottom: 88px; }
+  a { color: inherit; text-decoration: none; }
+  input[type=range] { -webkit-appearance: none; appearance: none; height: 5px; border-radius: 99px; background: #DDD9CF; outline: none; width: 100%; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 26px; height: 26px; border-radius: 50%; background: #17190F; border: 4px solid #F5F3EE; box-shadow: 0 0 0 2px #17190F; cursor: grab; }
+  .faq-answer { overflow: hidden; transition: max-height .25s ease; }
+  #demo-track::-webkit-scrollbar { display: none; }
+</style>
+</helmet>
+
+<!-- HEADER -->
+<header style="position: sticky; top: 0; z-index: 60; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); background: rgba(245,243,238,.94); border-bottom: 1px solid #DDD9CF;">
+  <div style="padding: 12px 18px; display: flex; align-items: center; justify-content: space-between;">
+    <img src="./reta-lockup-color-light-bg.svg" alt="RETA" height="24" style="display: block;" />
+    <a href="{{ waLink }}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 6px; padding: 9px 14px; border-radius: 99px; font-size: 13px; font-weight: 700; background: #FF5A1F; color: #FFF; white-space: nowrap;">
+      WA · {{ whatsappDisplay }}
+    </a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section style="padding: 32px 18px 28px;">
+  <div style="font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: #6E6E68; margin-bottom: 14px;">Software de membresías · LATAM</div>
+  <h1 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 36px; line-height: 1.06; letter-spacing: -.02em; margin: 0 0 6px;">Tu estudio no necesita más planillas.</h1>
+  <p style="font-family: 'Instrument Serif', serif; font-style: italic; font-size: 28px; line-height: 1.1; color: #FF5A1F; margin: 0 0 18px;">Necesita menos trabajo.</p>
+  <p style="font-size: 15px; line-height: 1.6; color: #52534B; margin: 0 0 24px;">Reservas, membresías y cobros en un solo lugar. Tu equipo trabaja desde el panel; tus socios reservan y pagan desde su celular, con tu marca.</p>
+  <a href="{{ waLink }}" target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 16px; border-radius: 14px; font-size: 16px; font-weight: 700; background: #FF5A1F; color: #FFF; margin-bottom: 24px;">
+    Hablar por WhatsApp
+  </a>
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; text-align: center;">
+    <div style="background: #EDE9E0; border-radius: 12px; padding: 14px 8px;">
+      <div style="font-family: 'Anton', sans-serif; font-size: 24px; color: #FF5A1F; line-height: 1;">20'</div>
+      <div style="font-size: 10px; color: #6E6E68; margin-top: 4px; line-height: 1.3;">para arrancar</div>
+    </div>
+    <div style="background: #EDE9E0; border-radius: 12px; padding: 14px 8px;">
+      <div style="font-family: 'Anton', sans-serif; font-size: 24px; color: #FF5A1F; line-height: 1;">$0</div>
+      <div style="font-size: 10px; color: #6E6E68; margin-top: 4px; line-height: 1.3;">cobros manuales</div>
+    </div>
+    <div style="background: #EDE9E0; border-radius: 12px; padding: 14px 8px;">
+      <div style="font-family: 'Anton', sans-serif; font-size: 24px; color: #FF5A1F; line-height: 1;">3</div>
+      <div style="font-size: 10px; color: #6E6E68; margin-top: 4px; line-height: 1.3;">toques para reservar</div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section style="padding: 0 18px 36px;">
+  <div style="background: #FFFFFF; border-radius: 16px; border: 1px solid #DDD9CF; padding: 20px; margin-bottom: 8px;">
+    <div style="font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: #6E6E68; margin-bottom: 14px;">Hoy</div>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="display: flex; gap: 10px; font-size: 14px; line-height: 1.45; color: #52534B;"><span style="color: #DDD9CF; flex: none;">—</span>Reservas por WhatsApp a las 6 am que nadie registra</div>
+      <div style="display: flex; gap: 10px; font-size: 14px; line-height: 1.45; color: #52534B;"><span style="color: #DDD9CF; flex: none;">—</span>Cobrar cuotas es perseguir gente cada mes</div>
+      <div style="display: flex; gap: 10px; font-size: 14px; line-height: 1.45; color: #52534B;"><span style="color: #DDD9CF; flex: none;">—</span>Membresías vencidas que nadie ve hasta que el socio se fue</div>
+      <div style="display: flex; gap: 10px; font-size: 14px; line-height: 1.45; color: #52534B;"><span style="color: #DDD9CF; flex: none;">—</span>Clases con lugares vacíos porque la lista de espera estaba en un papel</div>
+    </div>
+  </div>
+  <div style="background: #FF5A1F; border-radius: 16px; padding: 20px;">
+    <div style="font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.65); margin-bottom: 14px;">Con RETA</div>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="display: flex; gap: 10px; font-size: 14px; line-height: 1.45; color: #FFF;"><span style="opacity:.5; flex: none;">—</span>Socios reservan solos desde la app, en 3 toques</div>
+      <div style="display: flex; gap: 10px; font-size: 14px; line-height: 1.45; color: #FFF;"><span style="opacity:.5; flex: none;">—</span>Las cuotas se debitan solas el día que configuraste</div>
+      <div style="display: flex; gap: 10px; font-size: 14px; line-height: 1.45; color: #FFF;"><span style="opacity:.5; flex: none;">—</span>El panel te avisa antes de que el socio se vaya</div>
+      <div style="display: flex; gap: 10px; font-size: 14px; line-height: 1.45; color: #FFF;"><span style="opacity:.5; flex: none;">—</span>La lista de espera llena clases al instante, sola</div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO CAROUSEL -->
+<section style="padding: 0 0 40px;">
+  <div style="padding: 0 18px 16px;">
+    <div style="font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: #FF5A1F; margin-bottom: 8px;">Demo</div>
+    <h2 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 28px; line-height: 1.1; letter-spacing: -.01em; margin: 0;">Así se ve RETA por dentro</h2>
+  </div>
+  <!-- scroll track -->
+  <div style="display: flex; overflow-x: scroll; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; gap: 0; padding: 4px 0; -ms-overflow-style: none;" id="demo-track">
+
+    <!-- SLIDE 1: Agenda -->
+    <div style="flex: none; width: 100vw; scroll-snap-align: start; padding: 0 18px;">
+      <div style="background: #1C1C1E; border-radius: 34px; padding: 10px; box-shadow: 0 20px 60px rgba(0,0,0,.28);">
+        <!-- notch bar -->
+        <div style="background: #1C1C1E; border-radius: 26px 26px 0 0; height: 30px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px;">
+          <span style="font-size: 10px; color: #FFF; font-weight: 600;">10:41</span>
+          <div style="width: 60px; height: 18px; background: #000; border-radius: 99px;"></div>
+          <div style="display: flex; gap: 4px; align-items: center;"><div style="width: 14px; height: 8px; border: 1.5px solid rgba(255,255,255,.5); border-radius: 2px;"><div style="height: 100%; width: 70%; background: #FFF; border-radius: 1px;"></div></div></div>
+        </div>
+        <!-- screen -->
+        <div style="background: #F8F8F8; border-radius: 24px; overflow: hidden; min-height: 420px;">
+          <!-- app header -->
+          <div style="background: #FFFFFF; padding: 12px 14px 10px; border-bottom: 1px solid #EFEFEF;">
+            <div style="font-size: 9px; color: #999; margin-bottom: 2px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;">Pilates Studio · Martes 15</div>
+            <div style="font-size: 15px; font-weight: 700; color: #1C1C1E;">Agenda del día</div>
+          </div>
+          <!-- class rows -->
+          <div style="padding: 8px 0;">
+            <div style="padding: 10px 14px; background: #FFF; margin-bottom: 6px; border-left: 3px solid #34C759;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;">
+                <div>
+                  <div style="font-size: 9px; color: #34C759; font-weight: 700; letter-spacing: .05em;">07:00</div>
+                  <div style="font-size: 12px; font-weight: 700; color: #1C1C1E;">Pilates Reformer</div>
+                  <div style="font-size: 10px; color: #8E8E93;">Ana González</div>
+                </div>
+                <div style="text-align: right;">
+                  <div style="font-size: 10px; color: #1C1C1E; font-weight: 600;">8 / 12</div>
+                  <div style="font-size: 9px; color: #8E8E93;">lugares</div>
+                </div>
+              </div>
+              <div style="display: flex; gap: 2px; margin-top: 4px;">
+                <div style="height: 5px; border-radius: 99px; background: #34C759; flex: 8;"></div>
+                <div style="height: 5px; border-radius: 99px; background: #E5E5EA; flex: 4;"></div>
+              </div>
+            </div>
+            <div style="padding: 10px 14px; background: #FFF; margin-bottom: 6px; border-left: 3px solid #FF3B30;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>
+                  <div style="font-size: 9px; color: #FF3B30; font-weight: 700; letter-spacing: .05em;">09:00</div>
+                  <div style="font-size: 12px; font-weight: 700; color: #1C1C1E;">Core &amp; Stretch</div>
+                  <div style="font-size: 10px; color: #8E8E93;">Laura Martínez</div>
+                </div>
+                <div style="text-align: right;">
+                  <div style="font-size: 9px; font-weight: 700; background: #FF3B30; color: #FFF; padding: 2px 6px; border-radius: 4px;">LLENO</div>
+                  <div style="font-size: 9px; color: #FF9500; margin-top: 3px;">Espera: 3</div>
+                </div>
+              </div>
+            </div>
+            <div style="padding: 10px 14px; background: #FFF; border-left: 3px solid #007AFF;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;">
+                <div>
+                  <div style="font-size: 9px; color: #007AFF; font-weight: 700; letter-spacing: .05em;">11:00</div>
+                  <div style="font-size: 12px; font-weight: 700; color: #1C1C1E;">Pilates Mat</div>
+                  <div style="font-size: 10px; color: #8E8E93;">Ana González</div>
+                </div>
+                <div style="text-align: right;">
+                  <div style="font-size: 10px; color: #1C1C1E; font-weight: 600;">4 / 12</div>
+                  <div style="font-size: 9px; color: #8E8E93;">lugares</div>
+                </div>
+              </div>
+              <div style="display: flex; gap: 2px; margin-top: 4px;">
+                <div style="height: 5px; border-radius: 99px; background: #007AFF; flex: 4;"></div>
+                <div style="height: 5px; border-radius: 99px; background: #E5E5EA; flex: 8;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- home indicator -->
+        <div style="height: 20px; display: flex; align-items: center; justify-content: center;"><div style="width: 80px; height: 4px; background: rgba(255,255,255,.35); border-radius: 99px;"></div></div>
+      </div>
+      <div style="padding: 12px 4px 0; font-size: 13px; font-weight: 600; color: #17190F;">Agenda en vivo</div>
+      <div style="font-size: 12px; color: #6E6E68; margin-top: 2px;">Horarios, ocupación y lista de espera actualizados en tiempo real.</div>
+    </div>
+
+    <!-- SLIDE 2: Cobros -->
+    <div style="flex: none; width: 100vw; scroll-snap-align: start; padding: 0 18px;">
+      <div style="background: #1C1C1E; border-radius: 34px; padding: 10px; box-shadow: 0 20px 60px rgba(0,0,0,.28);">
+        <div style="background: #1C1C1E; border-radius: 26px 26px 0 0; height: 30px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px;">
+          <span style="font-size: 10px; color: #FFF; font-weight: 600;">10:41</span>
+          <div style="width: 60px; height: 18px; background: #000; border-radius: 99px;"></div>
+          <div style="display: flex; gap: 4px; align-items: center;"><div style="width: 14px; height: 8px; border: 1.5px solid rgba(255,255,255,.5); border-radius: 2px;"><div style="height: 100%; width: 70%; background: #FFF; border-radius: 1px;"></div></div></div>
+        </div>
+        <div style="background: #F8F8F8; border-radius: 24px; overflow: hidden; min-height: 420px;">
+          <div style="background: #FFFFFF; padding: 12px 14px 10px; border-bottom: 1px solid #EFEFEF;">
+            <div style="font-size: 9px; color: #999; margin-bottom: 2px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;">Octubre 2025 · 120 socios</div>
+            <div style="font-size: 15px; font-weight: 700; color: #1C1C1E;">Cobros del mes</div>
+          </div>
+          <!-- status summary -->
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 10px 10px 4px;">
+            <div style="background: #FFF; border-radius: 10px; padding: 8px; text-align: center; border: 1px solid #EFEFEF;">
+              <div style="font-size: 16px; font-weight: 800; color: #34C759;">112</div>
+              <div style="font-size: 8px; color: #8E8E93; margin-top: 2px;">Al día</div>
+            </div>
+            <div style="background: #FFF; border-radius: 10px; padding: 8px; text-align: center; border: 1px solid #EFEFEF;">
+              <div style="font-size: 16px; font-weight: 800; color: #FF9500;">6</div>
+              <div style="font-size: 8px; color: #8E8E93; margin-top: 2px;">Por vencer</div>
+            </div>
+            <div style="background: #FFF; border-radius: 10px; padding: 8px; text-align: center; border: 1px solid #EFEFEF;">
+              <div style="font-size: 16px; font-weight: 800; color: #FF3B30;">2</div>
+              <div style="font-size: 8px; color: #8E8E93; margin-top: 2px;">Morosos</div>
+            </div>
+          </div>
+          <!-- recent transactions -->
+          <div style="padding: 8px 10px; display: flex; flex-direction: column; gap: 5px;">
+            <div style="font-size: 9px; color: #8E8E93; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; padding: 0 4px; margin-bottom: 2px;">Últimos cobros</div>
+            <div style="background: #FFF; border-radius: 10px; padding: 8px 10px; display: flex; justify-content: space-between; align-items: center;">
+              <div style="display: flex; align-items: center; gap: 7px;"><div style="width: 7px; height: 7px; border-radius: 50%; background: #34C759; flex: none;"></div><div><div style="font-size: 11px; font-weight: 600;">Daniela R.</div><div style="font-size: 9px; color: #8E8E93;">Hoy · automático</div></div></div>
+              <div style="font-size: 11px; font-weight: 700; color: #34C759;">$800</div>
+            </div>
+            <div style="background: #FFF; border-radius: 10px; padding: 8px 10px; display: flex; justify-content: space-between; align-items: center;">
+              <div style="display: flex; align-items: center; gap: 7px;"><div style="width: 7px; height: 7px; border-radius: 50%; background: #34C759; flex: none;"></div><div><div style="font-size: 11px; font-weight: 600;">Carlos M.</div><div style="font-size: 9px; color: #8E8E93;">Hoy · automático</div></div></div>
+              <div style="font-size: 11px; font-weight: 700; color: #34C759;">$800</div>
+            </div>
+            <div style="background: #FFF; border-radius: 10px; padding: 8px 10px; display: flex; justify-content: space-between; align-items: center;">
+              <div style="display: flex; align-items: center; gap: 7px;"><div style="width: 7px; height: 7px; border-radius: 50%; background: #FF9500; flex: none;"></div><div><div style="font-size: 11px; font-weight: 600;">Miguel T.</div><div style="font-size: 9px; color: #FF9500;">Vence en 3 días</div></div></div>
+              <div style="background: #FF9500; color: #FFF; font-size: 9px; font-weight: 700; padding: 3px 7px; border-radius: 6px;">Recordar</div>
+            </div>
+          </div>
+        </div>
+        <div style="height: 20px; display: flex; align-items: center; justify-content: center;"><div style="width: 80px; height: 4px; background: rgba(255,255,255,.35); border-radius: 99px;"></div></div>
+      </div>
+      <div style="padding: 12px 4px 0; font-size: 13px; font-weight: 600; color: #17190F;">Cobros automáticos</div>
+      <div style="font-size: 12px; color: #6E6E68; margin-top: 2px;">Las cuotas se debitan solas. Los morosos aparecen con un toque para recordarles.</div>
+    </div>
+
+    <!-- SLIDE 3: App del socio -->
+    <div style="flex: none; width: 100vw; scroll-snap-align: start; padding: 0 18px;">
+      <div style="background: #1C1C1E; border-radius: 34px; padding: 10px; box-shadow: 0 20px 60px rgba(0,0,0,.28);">
+        <div style="background: #1C1C1E; border-radius: 26px 26px 0 0; height: 30px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px;">
+          <span style="font-size: 10px; color: #FFF; font-weight: 600;">10:41</span>
+          <div style="width: 60px; height: 18px; background: #000; border-radius: 99px;"></div>
+          <div style="display: flex; gap: 4px; align-items: center;"><div style="width: 14px; height: 8px; border: 1.5px solid rgba(255,255,255,.5); border-radius: 2px;"><div style="height: 100%; width: 70%; background: #FFF; border-radius: 1px;"></div></div></div>
+        </div>
+        <div style="background: #F8F8F8; border-radius: 24px; overflow: hidden; min-height: 420px;">
+          <div style="background: #FF5A1F; padding: 14px 14px 16px;">
+            <div style="font-size: 10px; color: rgba(255,255,255,.7); margin-bottom: 4px;">Hola,</div>
+            <div style="font-size: 17px; font-weight: 800; color: #FFF; margin-bottom: 12px;">Daniela</div>
+            <div style="background: rgba(255,255,255,.15); border-radius: 12px; padding: 10px 12px;">
+              <div style="font-size: 9px; color: rgba(255,255,255,.7); margin-bottom: 5px; text-transform: uppercase; letter-spacing: .05em; font-weight: 600;">Tu membresía</div>
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <div style="font-size: 11px; font-weight: 700; color: #FFF;">Pilates Studio</div>
+                <div style="font-size: 9px; background: rgba(255,255,255,.25); color: #FFF; padding: 2px 7px; border-radius: 99px; font-weight: 700;">Activa</div>
+              </div>
+              <div style="margin-top: 6px; height: 4px; background: rgba(255,255,255,.2); border-radius: 99px;">
+                <div style="height: 100%; width: 50%; background: #FFF; border-radius: 99px;"></div>
+              </div>
+              <div style="font-size: 9px; color: rgba(255,255,255,.6); margin-top: 4px;">Vence el 31 de octubre</div>
+            </div>
+          </div>
+          <div style="padding: 10px 10px;">
+            <div style="font-size: 9px; color: #8E8E93; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; margin-bottom: 8px; padding: 0 4px;">Clases disponibles hoy</div>
+            <div style="background: #FFF; border-radius: 12px; padding: 10px 12px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-size: 12px; font-weight: 700; color: #1C1C1E;">Pilates Mat</div>
+                <div style="font-size: 10px; color: #8E8E93; margin-top: 1px;">11:00 · 4 lugares</div>
+              </div>
+              <div style="background: #FF5A1F; color: #FFF; font-size: 10px; font-weight: 700; padding: 5px 10px; border-radius: 8px;">Reservar</div>
+            </div>
+            <div style="background: #FFF; border-radius: 12px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-size: 12px; font-weight: 700; color: #1C1C1E;">Core &amp; Stretch</div>
+                <div style="font-size: 10px; color: #FF9500; margin-top: 1px;">18:00 · LLENO</div>
+              </div>
+              <div style="border: 1px solid #E5E5EA; color: #8E8E93; font-size: 10px; font-weight: 700; padding: 5px 10px; border-radius: 8px;">Espera</div>
+            </div>
+          </div>
+        </div>
+        <div style="height: 20px; display: flex; align-items: center; justify-content: center;"><div style="width: 80px; height: 4px; background: rgba(255,255,255,.35); border-radius: 99px;"></div></div>
+      </div>
+      <div style="padding: 12px 4px 0; font-size: 13px; font-weight: 600; color: #17190F;">App del socio con tu marca</div>
+      <div style="font-size: 12px; color: #6E6E68; margin-top: 2px;">Tus socios reservan, pagan y ven su membresía desde su celular — con tu logo y tus colores.</div>
+    </div>
+
+    <!-- SLIDE 4: Retención -->
+    <div style="flex: none; width: 100vw; scroll-snap-align: start; padding: 0 18px;">
+      <div style="background: #1C1C1E; border-radius: 34px; padding: 10px; box-shadow: 0 20px 60px rgba(0,0,0,.28);">
+        <div style="background: #1C1C1E; border-radius: 26px 26px 0 0; height: 30px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px;">
+          <span style="font-size: 10px; color: #FFF; font-weight: 600;">10:41</span>
+          <div style="width: 60px; height: 18px; background: #000; border-radius: 99px;"></div>
+          <div style="display: flex; gap: 4px; align-items: center;"><div style="width: 14px; height: 8px; border: 1.5px solid rgba(255,255,255,.5); border-radius: 2px;"><div style="height: 100%; width: 70%; background: #FFF; border-radius: 1px;"></div></div></div>
+        </div>
+        <div style="background: #F8F8F8; border-radius: 24px; overflow: hidden; min-height: 420px;">
+          <div style="background: #FFFFFF; padding: 12px 14px 10px; border-bottom: 1px solid #EFEFEF;">
+            <div style="font-size: 9px; color: #999; margin-bottom: 2px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;">Alertas de retención</div>
+            <div style="font-size: 15px; font-weight: 700; color: #1C1C1E;">3 socios en riesgo</div>
+          </div>
+          <div style="padding: 8px 10px; display: flex; flex-direction: column; gap: 5px;">
+            <div style="background: #FFF3F3; border: 1px solid #FFD6D6; border-radius: 10px; padding: 10px 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                <div>
+                  <div style="font-size: 12px; font-weight: 700; color: #1C1C1E;">Mariana L.</div>
+                  <div style="font-size: 10px; color: #FF3B30;">Sin venir 8 días · riesgo alto</div>
+                </div>
+              </div>
+              <div style="background: #FF3B30; color: #FFF; font-size: 10px; font-weight: 700; text-align: center; padding: 6px; border-radius: 7px;">Enviar recordatorio por WA</div>
+            </div>
+            <div style="background: #FFF; border: 1px solid #EFEFEF; border-radius: 10px; padding: 10px 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <div style="font-size: 12px; font-weight: 700; color: #1C1C1E;">Roberto K.</div>
+                  <div style="font-size: 10px; color: #FF9500;">Sin venir 6 días</div>
+                </div>
+                <div style="background: #FF9500; color: #FFF; font-size: 9px; font-weight: 700; padding: 4px 8px; border-radius: 6px;">Recordar</div>
+              </div>
+            </div>
+            <div style="background: #FFF; border: 1px solid #EFEFEF; border-radius: 10px; padding: 10px 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <div style="font-size: 12px; font-weight: 700; color: #1C1C1E;">Ana S.</div>
+                  <div style="font-size: 10px; color: #FF9500;">Sin venir 5 días</div>
+                </div>
+                <div style="background: #FF9500; color: #FFF; font-size: 9px; font-weight: 700; padding: 4px 8px; border-radius: 6px;">Recordar</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="height: 20px; display: flex; align-items: center; justify-content: center;"><div style="width: 80px; height: 4px; background: rgba(255,255,255,.35); border-radius: 99px;"></div></div>
+      </div>
+      <div style="padding: 12px 4px 0; font-size: 13px; font-weight: 600; color: #17190F;">Alertas de retención</div>
+      <div style="font-size: 12px; color: #6E6E68; margin-top: 2px;">RETA detecta quién está dejando de venir y te avisa antes de que se vayan del todo.</div>
+    </div>
+  </div>
+  <!-- pagination dots -->
+  <div style="display: flex; justify-content: center; gap: 6px; padding: 16px 0 0;" id="demo-dots">
+    <div style="width: 20px; height: 5px; background: #17190F; border-radius: 99px;" data-dot="0"></div>
+    <div style="width: 5px; height: 5px; background: #DDD9CF; border-radius: 99px;" data-dot="1"></div>
+    <div style="width: 5px; height: 5px; background: #DDD9CF; border-radius: 99px;" data-dot="2"></div>
+    <div style="width: 5px; height: 5px; background: #DDD9CF; border-radius: 99px;" data-dot="3"></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section style="padding: 0 18px 36px;">
+  <h2 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 28px; line-height: 1.1; letter-spacing: -.01em; margin: 0 0 18px;">Qué hace RETA por tu negocio</h2>
+  <div style="display: flex; flex-direction: column; gap: 8px;">
+    <div style="background: #FFFFFF; border-radius: 14px; border: 1px solid #DDD9CF; padding: 18px 18px 18px 14px; display: flex; gap: 14px; align-items: flex-start;">
+      <span style="font-family: 'Anton', sans-serif; font-size: 28px; color: #FF5A1F; line-height: 1; flex: none; width: 32px;">01</span>
+      <div>
+        <div style="font-weight: 700; font-size: 15px; margin-bottom: 4px;">Una agenda que se llena sola</div>
+        <div style="font-size: 13.5px; color: #6E6E68; line-height: 1.5;">Tus socios ven los horarios, reservan y la lista de espera se mueve sin que intervengas.</div>
+      </div>
+    </div>
+    <div style="background: #FFFFFF; border-radius: 14px; border: 1px solid #DDD9CF; padding: 18px 18px 18px 14px; display: flex; gap: 14px; align-items: flex-start;">
+      <span style="font-family: 'Anton', sans-serif; font-size: 28px; color: #FF5A1F; line-height: 1; flex: none; width: 32px;">02</span>
+      <div>
+        <div style="font-weight: 700; font-size: 15px; margin-bottom: 4px;">Cobros sin persecución</div>
+        <div style="font-size: 13.5px; color: #6E6E68; line-height: 1.5;">Las cuotas se debitan automáticamente. Los vencimientos avisan antes de que se vayan.</div>
+      </div>
+    </div>
+    <div style="background: #FFFFFF; border-radius: 14px; border: 1px solid #DDD9CF; padding: 18px 18px 18px 14px; display: flex; gap: 14px; align-items: flex-start;">
+      <span style="font-family: 'Anton', sans-serif; font-size: 28px; color: #FF5A1F; line-height: 1; flex: none; width: 32px;">03</span>
+      <div>
+        <div style="font-weight: 700; font-size: 15px; margin-bottom: 4px;">Tu marca, tu app</div>
+        <div style="font-size: 13.5px; color: #6E6E68; line-height: 1.5;">Tus socios ven tu logo, tu nombre, tus colores. Un subdominio tuyo con horarios en vivo.</div>
+      </div>
+    </div>
+    <div style="background: #FFFFFF; border-radius: 14px; border: 1px solid #DDD9CF; padding: 18px 18px 18px 14px; display: flex; gap: 14px; align-items: flex-start;">
+      <span style="font-family: 'Anton', sans-serif; font-size: 28px; color: #FF5A1F; line-height: 1; flex: none; width: 32px;">04</span>
+      <div>
+        <div style="font-weight: 700; font-size: 15px; margin-bottom: 4px;">Te avisa antes de perder un socio</div>
+        <div style="font-size: 13.5px; color: #6E6E68; line-height: 1.5;">RETA detecta quién está dejando de venir y le escribe por ti, con una razón para volver.</div>
+      </div>
+    </div>
+    <div style="background: #FFFFFF; border-radius: 14px; border: 1px solid #DDD9CF; padding: 18px 18px 18px 14px; display: flex; gap: 14px; align-items: flex-start;">
+      <span style="font-family: 'Anton', sans-serif; font-size: 28px; color: #FF5A1F; line-height: 1; flex: none; width: 32px;">05</span>
+      <div>
+        <div style="font-weight: 700; font-size: 15px; margin-bottom: 4px;">Control de acceso en la puerta</div>
+        <div style="font-size: 13.5px; color: #6E6E68; line-height: 1.5;">El QR del socio registra asistencia y avisa si la cuota está por vencer. Sin recepcionista extra.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RED RETA -->
+<section style="padding: 0 18px 36px;">
+  <div style="background: #EDE9E0; border-radius: 18px; padding: 24px 20px;">
+    <div style="font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: #FF5A1F; margin-bottom: 12px;">Red RETA</div>
+    <h2 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 26px; line-height: 1.1; letter-spacing: -.01em; margin: 0 0 14px;">La red conecta disciplinas, no competidores.</h2>
+    <p style="font-size: 14px; line-height: 1.6; color: #52534B; margin: 0 0 20px;">Un socio de box, yoga o funcional puede reservar y pagar una clase en tu estudio. Para ellos es descubrir algo nuevo. Para ti es ingreso inmediato y un lead que ya vivió tu espacio — sin que hayas gastado un peso en publicidad.</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+      <div style="background: #FFFFFF; border-radius: 12px; padding: 14px; border: 1px solid #DDD9CF;">
+        <div style="font-size: 11px; color: #6E6E68; margin-bottom: 6px;">Alcance potencial</div>
+        <div style="font-family: 'Anton', sans-serif; font-size: 28px; color: #17190F; line-height: 1;">Red</div>
+        <div style="font-size: 11px; color: #6E6E68; margin-top: 4px;">de negocios complementarios</div>
+      </div>
+      <div style="background: #FFFFFF; border-radius: 12px; padding: 14px; border: 1px solid #DDD9CF;">
+        <div style="font-size: 11px; color: #6E6E68; margin-bottom: 6px;">Tus clases abiertas</div>
+        <div style="font-family: 'Anton', sans-serif; font-size: 28px; color: #17190F; line-height: 1;">Tú</div>
+        <div style="font-size: 11px; color: #6E6E68; margin-top: 4px;">decides qué, cuándo y a qué precio</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section style="padding: 0 18px 36px;">
+  <h2 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 28px; line-height: 1.1; letter-spacing: -.01em; margin: 0 0 6px;">Precio simple, sin sorpresas</h2>
+  <p style="font-size: 14px; color: #6E6E68; margin: 0 0 18px; line-height: 1.5;">Suscripción mensual en MXN. Tus pagos van directo a tu cuenta.</p>
+  <div style="display: flex; flex-direction: column; gap: 8px;">
+
+    <!-- Estudio -->
+    <div style="background: #FFFFFF; border-radius: 16px; border: 1px solid #DDD9CF; padding: 20px;">
+      <div style="font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; opacity: .5; margin-bottom: 8px;">Estudio</div>
+      <div style="font-family: 'Instrument Serif', serif; font-style: italic; font-size: 15px; margin-bottom: 12px; color: #52534B;">Deja de cobrar a mano, para siempre.</div>
+      <div style="display: flex; align-items: baseline; gap: 6px; margin-bottom: 4px;">
+        <span style="font-size: 12px; color: #6E6E68;">desde</span>
+        <span style="font-family: 'Anton', sans-serif; font-size: 38px; line-height: 1;">$799</span>
+        <span style="font-size: 12px; color: #6E6E68;">/mes</span>
+      </div>
+      <div style="font-size: 12.5px; color: #6E6E68; margin-bottom: 16px;">Hasta 150 socios activos</div>
+      <div style="display: flex; flex-direction: column; gap: 7px; margin-bottom: 16px;">
+        <div style="font-size: 13.5px; display: flex; gap: 8px;"><span style="opacity:.4;">—</span>Cobros automáticos conectados a tu cuenta</div>
+        <div style="font-size: 13.5px; display: flex; gap: 8px;"><span style="opacity:.4;">—</span>App del socio con tu marca</div>
+        <div style="font-size: 13.5px; display: flex; gap: 8px;"><span style="opacity:.4;">—</span>Panel completo y agenda ilimitada</div>
+        <div style="font-size: 13.5px; display: flex; gap: 8px;"><span style="opacity:.4;">—</span>Tu sitio en subdominio propio</div>
+      </div>
+      <a href="{{ waLink }}" target="_blank" rel="noopener" style="display: block; text-align: center; padding: 12px; border-radius: 10px; border: 1.5px solid #17190F; font-size: 14px; font-weight: 700;">Empezar con Estudio</a>
+    </div>
+
+    <!-- Gym (featured) -->
+    <div style="background: #FF5A1F; border-radius: 16px; padding: 20px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+        <div style="font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.65);">Gym</div>
+        <div style="font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; background: rgba(255,255,255,.2); color: #FFF; padding: 3px 8px; border-radius: 99px;">Más popular</div>
+      </div>
+      <div style="font-family: 'Instrument Serif', serif; font-style: italic; font-size: 15px; margin-bottom: 12px; color: rgba(255,255,255,.85);">Llena clases vacías con socios de toda la red.</div>
+      <div style="display: flex; align-items: baseline; gap: 6px; margin-bottom: 4px;">
+        <span style="font-size: 12px; color: rgba(255,255,255,.65);">desde</span>
+        <span style="font-family: 'Anton', sans-serif; font-size: 38px; line-height: 1; color: #FFF;">$1,999</span>
+        <span style="font-size: 12px; color: rgba(255,255,255,.65);">/mes</span>
+      </div>
+      <div style="font-size: 12.5px; color: rgba(255,255,255,.65); margin-bottom: 16px;">Hasta 400 socios activos</div>
+      <div style="display: flex; flex-direction: column; gap: 7px; margin-bottom: 16px;">
+        <div style="font-size: 13.5px; display: flex; gap: 8px; color: #FFF;"><span style="opacity:.5;">—</span>Red RETA: socios de otras disciplinas pagan clases en el tuyo</div>
+        <div style="font-size: 13.5px; display: flex; gap: 8px; color: #FFF;"><span style="opacity:.5;">—</span>Todo lo de Estudio</div>
+        <div style="font-size: 13.5px; display: flex; gap: 8px; color: #FFF;"><span style="opacity:.5;">—</span>Multi-entrenador y control de acceso</div>
+        <div style="font-size: 13.5px; display: flex; gap: 8px; color: #FFF;"><span style="opacity:.5;">—</span>Reportes de ocupación y retención</div>
+        <div style="font-size: 13.5px; display: flex; gap: 8px; color: #FFF;"><span style="opacity:.5;">—</span>Soporte prioritario por WhatsApp</div>
+      </div>
+      <a href="{{ waLink }}" target="_blank" rel="noopener" style="display: block; text-align: center; padding: 13px; border-radius: 10px; background: #17190F; font-size: 14px; font-weight: 700; color: #FFF;">Empezar con Gym</a>
+    </div>
+
+    <!-- Cadena -->
+    <div style="background: #FFFFFF; border-radius: 16px; border: 1px solid #DDD9CF; padding: 20px;">
+      <div style="font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; opacity: .5; margin-bottom: 8px;">Cadena</div>
+      <div style="font-family: 'Instrument Serif', serif; font-style: italic; font-size: 15px; margin-bottom: 12px; color: #52534B;">Todas tus sedes. Una sola pantalla.</div>
+      <div style="display: flex; align-items: baseline; gap: 6px; margin-bottom: 4px;">
+        <span style="font-size: 12px; color: #6E6E68;">desde</span>
+        <span style="font-family: 'Anton', sans-serif; font-size: 38px; line-height: 1;">$3,499</span>
+        <span style="font-size: 12px; color: #6E6E68;">/mes</span>
+      </div>
+      <div style="font-size: 12.5px; color: #6E6E68; margin-bottom: 16px;">Para 2 sedes o más</div>
+      <div style="display: flex; flex-direction: column; gap: 7px; margin-bottom: 16px;">
+        <div style="font-size: 13.5px; display: flex; gap: 8px;"><span style="opacity:.4;">—</span>Panel unificado para todas tus sedes</div>
+        <div style="font-size: 13.5px; display: flex; gap: 8px;"><span style="opacity:.4;">—</span>Todo lo de Gym</div>
+        <div style="font-size: 13.5px; display: flex; gap: 8px;"><span style="opacity:.4;">—</span>Gestor de cuenta dedicado</div>
+        <div style="font-size: 13.5px; display: flex; gap: 8px;"><span style="opacity:.4;">—</span>Migración asistida · onboarding de tu equipo</div>
+      </div>
+      <a href="{{ waLink }}" target="_blank" rel="noopener" style="display: block; text-align: center; padding: 12px; border-radius: 10px; border: 1.5px solid #17190F; font-size: 14px; font-weight: 700;">Hablar con ventas</a>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section style="padding: 0 18px 36px;">
+  <div style="background: #FFFFFF; border-radius: 18px; border: 1px solid #DDD9CF; padding: 22px 20px;">
+    <h2 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 24px; line-height: 1.15; margin: 0 0 22px;">¿Cuánto te cuesta realmente?</h2>
+    <div style="margin-bottom: 20px;">
+      <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 10px;"><span style="color: #6E6E68;">Socios activos</span><strong>{{ calcMembers }}</strong></div>
+      <input type="range" min="20" max="600" step="10" value="{{ calcMembersRaw }}" onChange="{{ onMembers }}" />
+    </div>
+    <div style="margin-bottom: 24px;">
+      <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 10px;"><span style="color: #6E6E68;">Cuota promedio</span><strong>{{ calcFee }}</strong></div>
+      <input type="range" min="200" max="5000" step="100" value="{{ calcFeeRaw }}" onChange="{{ onFee }}" />
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+      <div style="background: #EDE9E0; border-radius: 12px; padding: 14px;">
+        <div style="font-size: 11px; color: #6E6E68; margin-bottom: 5px;">Facturás / mes</div>
+        <div style="font-family: 'Anton', sans-serif; font-size: 22px; line-height: 1;">{{ calcRevenue }}</div>
+      </div>
+      <div style="background: #EDE9E0; border-radius: 12px; padding: 14px;">
+        <div style="font-size: 11px; color: #6E6E68; margin-bottom: 5px;">Pagás a RETA</div>
+        <div style="font-family: 'Anton', sans-serif; font-size: 22px; line-height: 1; color: #FF5A1F;">{{ calcCostDisplay }}</div>
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+      <div style="background: #FF5A1F; border-radius: 12px; padding: 14px;">
+        <div style="font-size: 11px; color: rgba(255,255,255,.7); margin-bottom: 5px;">Costo por socio</div>
+        <div style="font-family: 'Anton', sans-serif; font-size: 22px; line-height: 1; color: #FFF;">{{ calcPerMember }}</div>
+      </div>
+      <div style="background: #EDE9E0; border-radius: 12px; padding: 14px;">
+        <div style="font-size: 11px; color: #6E6E68; margin-bottom: 5px;">% de tus ingresos</div>
+        <div style="font-family: 'Anton', sans-serif; font-size: 22px; line-height: 1;">{{ calcPct }}</div>
+      </div>
+    </div>
+    <div style="font-size: 11px; color: #6E6E68; margin-top: 14px; line-height: 1.5;">Estimación en MXN. Solo pagas la suscripción mensual — tus cobros van directo a tu cuenta.</div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="padding: 0 18px 36px;">
+  <h2 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 28px; line-height: 1.1; margin: 0 0 16px;">Lo que todos preguntan</h2>
+  <div style="display: flex; flex-direction: column;">
+    <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="5">
+      <div style="border-bottom: 1px solid #DDD9CF;">
+        <button type="button" onClick="{{ f.onToggle }}" style="width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 16px 0; background: none; border: none; font-family: 'Archivo', sans-serif; font-size: 15px; font-weight: 600; color: #17190F; text-align: left; cursor: pointer; gap: 12px;">
+          {{ f.q }}<span style="color: #FF5A1F; font-size: 20px; font-weight: 400; flex: none;">{{ f.sign }}</span>
+        </button>
+        <div style="max-height: {{ f.maxH }}; overflow: hidden; transition: max-height .25s ease;">
+          <div style="padding-bottom: 16px; font-size: 14px; line-height: 1.65; color: #52534B;">{{ f.a }}</div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="padding: 0 18px 36px;">
+  <div style="background: #FF5A1F; border-radius: 20px; padding: 32px 22px; text-align: center;">
+    <h2 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 28px; line-height: 1.1; color: #FFF; margin: 0 0 12px;">Mostranos tus horarios y te los dejamos cargados</h2>
+    <p style="font-size: 14px; color: rgba(255,255,255,.8); margin: 0 0 24px; line-height: 1.6;">Una charla de 20 minutos por WhatsApp. Te armamos el demo con los datos reales de tu negocio.</p>
+    <a href="{{ waLink }}" target="_blank" rel="noopener" style="display: block; padding: 15px; border-radius: 12px; background: #17190F; font-size: 15px; font-weight: 700; color: #FFF; margin-bottom: 12px;">Hablar por WhatsApp</a>
+    <div style="font-size: 13px; color: rgba(255,255,255,.7);">{{ whatsappDisplay }}</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="padding: 0 18px 20px; text-align: center;">
+  <img src="./reta-lockup-color-light-bg.svg" alt="RETA" height="20" style="display: block; margin: 0 auto 10px; opacity: .5;" />
+  <div style="font-size: 12px; color: #6E6E68; line-height: 1.6;">Software de membresías para negocios de fitness · LATAM</div>
+  <a href="/reta/dark" style="font-size: 12px; color: #6E6E68; text-decoration: underline; display: inline-block; margin-top: 8px;">Ver versión completa ↗</a>
+</footer>
+
+<!-- FIXED BOTTOM BAR -->
+<div style="position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; padding: 10px 18px; padding-bottom: calc(10px + env(safe-area-inset-bottom)); background: rgba(245,243,238,.96); border-top: 1px solid #DDD9CF; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);">
+  <a href="{{ waLink }}" target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px; border-radius: 12px; background: #FF5A1F; font-size: 15px; font-weight: 700; color: #FFF;">
+    Hablar por WhatsApp · {{ whatsappDisplay }}
+  </a>
+</div>
+
+</x-dc>
+<script>
+  (function() {
+    const track = document.getElementById('demo-track');
+    const dots = document.querySelectorAll('[data-dot]');
+    if (!track) return;
+    track.addEventListener('scroll', function() {
+      const slideW = track.scrollWidth / 4;
+      const idx = Math.round(track.scrollLeft / slideW);
+      dots.forEach(function(d, i) {
+        d.style.width = i === idx ? '20px' : '5px';
+        d.style.background = i === idx ? '#17190F' : '#DDD9CF';
+      });
+    }, { passive: true });
+  })();
+</script>
+<script type="text/x-dc" data-dc-script>
+const money = (n) => '$' + new Intl.NumberFormat('es-MX', { maximumFractionDigits: 0 }).format(Math.round(n));
+const moneyShort = (n) => {
+  if (n >= 1000000) return '$' + (n / 1000000).toFixed(1).replace('.', ',') + ' M';
+  if (n >= 1000) return '$' + new Intl.NumberFormat('es-MX', { maximumFractionDigits: 0 }).format(Math.round(n / 1000)) + ',000';
+  return money(n);
+};
+
+const FAQS = [
+  { q: '¿Tengo que migrar mis datos a mano?', a: 'No. Nos pasás tu planilla o tu lista de socios y la cargamos nosotros antes de que empieces. El primer día ya ves tus horarios y tus membresías funcionando.' },
+  { q: '¿Mis socios tienen que pagar la app?', a: 'No. La app del socio es gratuita para ellos. Vos pagás la suscripción mensual del negocio y listo.' },
+  { q: '¿Cómo funciona el cobro?', a: 'Configurás tus planes una vez y RETA cobra automáticamente cada mes con los medios de pago locales. Los vencidos aparecen en el panel con un botón para recordar por WhatsApp.' },
+  { q: '¿Qué pasa si quiero irme?', a: 'Sin contrato de permanencia. Te exportamos tus clientes, asistencias y pagos en un archivo y listo.' },
+  { q: '¿La Red RETA me roba socios?', a: 'No, porque la red conecta disciplinas complementarias, no competidores directos. Un socio de box que visita tu estudio de pilates no viene a quedarse — viene a probar algo nuevo. Pero te deja ingresos y, muchas veces, termina siendo un socio tuyo. Vos controlás qué clases abrís a la red, en qué horarios y a qué precio.' }
+];
+
+class Component extends DCLogic {
+  state = { members: 120, fee: 800, openFaq: null };
+
+  renderVals() {
+    const accent = '#FF5A1F';
+    const wa = '+52 6623704032';
+    const waLink = 'https://wa.me/526623704032?text=Hola%2C%20quiero%20ver%20un%20demo%20de%20RETA';
+
+    const calcRevenue = this.state.members * this.state.fee;
+    const tierBase = this.state.members <= 150 ? 799 : this.state.members <= 400 ? 1999 : 3499;
+    const calcCost = tierBase;
+    const calcPerMember = Math.round(calcCost / this.state.members);
+
+    return {
+      accent,
+      waLink,
+      whatsappDisplay: wa,
+      calcMembers: this.state.members,
+      calcMembersRaw: this.state.members,
+      calcFee: money(this.state.fee),
+      calcFeeRaw: this.state.fee,
+      calcRevenue: moneyShort(calcRevenue),
+      calcCostDisplay: money(calcCost),
+      calcPerMember: '$' + new Intl.NumberFormat('es-MX', { maximumFractionDigits: 0 }).format(calcPerMember) + '/socio',
+      calcPct: (calcCost / calcRevenue * 100).toFixed(1).replace('.', ',') + ' %',
+      onMembers: (e) => this.setState({ members: Number(e.target.value) }),
+      onFee: (e) => this.setState({ fee: Number(e.target.value) }),
+      faqs: FAQS.map((f, i) => ({
+        q: f.q, a: f.a,
+        sign: this.state.openFaq === i ? '−' : '+',
+        maxH: this.state.openFaq === i ? '400px' : '0px',
+        onToggle: () => this.setState(s => ({ openFaq: s.openFaq === i ? null : i }))
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

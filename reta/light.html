@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RETA — Software de membresías y reservas para negocios de fitness</title>
+<link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="./favicon-192.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<script src="./image-slot.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #F5F3EE; color: #17190F; font-family: 'Archivo', system-ui, sans-serif; -webkit-font-smoothing: antialiased; text-wrap: pretty; }
+  a { color: inherit; text-decoration: none; }
+  a:hover { color: #F97316; }
+  input[type=range] { -webkit-appearance: none; appearance: none; height: 4px; border-radius: 99px; background: #DDD9CF; outline: none; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #17190F; border: 4px solid #F5F3EE; box-shadow: 0 0 0 2px #17190F; cursor: grab; }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @keyframes pop { 0% { transform: scale(.96); opacity: 0 } 100% { transform: scale(1); opacity: 1 } }
+  @keyframes dash { to { stroke-dashoffset: -24; } }
+</style>
+</helmet>
+
+<div style="max-width: 100%; overflow-x: hidden;">
+
+<header style="position: sticky; top: 0; z-index: 60; backdrop-filter: blur(14px); background: rgba(245,243,238,.92); border-bottom: 1px solid #DDD9CF;">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 14px 22px; display: flex; align-items: center; gap: 22px;">
+    <img src="./reta-lockup-color-light-bg.svg" alt="RETA" height="30" style="display: block;" />
+    <nav style="display: flex; gap: 20px; margin-left: auto; font-size: 14px; color: #6E6E68;">
+      <a href="#demo">Demo</a>
+      <a href="#producto">Producto</a>
+      <a href="#red">Red RETA</a>
+      <a href="#precios">Precios</a>
+      <a href="#faq">Preguntas</a>
+      <a href="/reta/dark" style="opacity: .55;">Versión oscura ↗</a>
+    </nav>
+    <a href="{{ waLink }}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 99px; font-size: 14px; font-weight: 600; background: {{ accent }}; color: {{ accentInk }};" style-hover="filter: brightness(1.1)">Hablar por WhatsApp</a>
+  </div>
+</header>
+
+<section style="position: relative; max-width: 1200px; margin: 0 auto; padding: 80px 22px 46px;">
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 46px; align-items: center;">
+    <div>
+      <div style="display: flex; align-items: center; gap: 10px; font-size: 12.5px; letter-spacing: .16em; text-transform: uppercase; color: #6E6E68; margin-bottom: 28px;">
+        <span style="width: 34px; height: 1px; background: {{ accent }};"></span>
+        Software de membresías · LATAM
+      </div>
+      <h1 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(40px, 5.4vw, 74px); line-height: 1.04; letter-spacing: -.015em; margin: 0 0 26px;">
+        Tu estudio no necesita<br />más planillas.<br /><em style="font-style: italic; color: {{ accent }};">Necesita menos trabajo.</em>
+      </h1>
+      <p style="font-size: 18.5px; line-height: 1.6; color: #52534B; max-width: 480px; margin: 0 0 34px;">
+        Reservas, membresías y cobros en un solo lugar. Tu equipo trabaja desde un panel; tus socios reservan y pagan desde su celular, con tu marca.
+      </p>
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 20px;">
+        <a href="{{ waLink }}" target="_blank" rel="noopener" style="padding: 15px 26px; border-radius: 99px; font-size: 15.5px; font-weight: 700; background: {{ accent }}; color: {{ accentInk }};" style-hover="filter: brightness(1.1)">Hablar por WhatsApp</a>
+        <a href="#demo" style="font-size: 15.5px; color: #52534B; border-bottom: 1px solid #C8C5BC; padding-bottom: 3px;" style-hover="border-color: {{ accent }}">Mirá el demo · 45 s</a>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; border-top: 1px solid #DDD9CF;">
+      <sc-for list="{{ editorialRows }}" as="r" hint-placeholder-count="4">
+        <div style="display: flex; align-items: baseline; gap: 18px; padding: 20px 4px; border-bottom: 1px solid #E8E4DA;">
+          <span style="font-family: 'Instrument Serif', serif; font-size: 34px; color: {{ accent }}; min-width: 58px;">{{ r.n }}</span>
+          <span style="flex: 1 1 140px;">
+            <span style="display: block; font-size: 16px; font-weight: 600; margin-bottom: 4px;">{{ r.t }}</span>
+            <span style="display: block; font-size: 14px; color: #6E6E68; line-height: 1.5;">{{ r.d }}</span>
+          </span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section style="max-width: 1200px; margin: 0 auto; padding: 60px 22px;">
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;">
+    <div style="padding: 24px; border-radius: 18px; background: #FFFFFF; border: 1px solid #DDD9CF;">
+      <div style="font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: #6E6E68; margin-bottom: 14px;">HOY</div>
+      <div style="font-size: 17px; line-height: 1.5;">Reservas por WhatsApp a las 6 am, planillas que nadie actualiza, y un socio que asegura que ya pagó.</div>
+    </div>
+    <div style="padding: 24px; border-radius: 18px; background: #FFFFFF; border: 1px solid #DDD9CF;">
+      <div style="font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: #6E6E68; margin-bottom: 14px;">EL COSTO</div>
+      <div style="font-size: 17px; line-height: 1.5;">Horas de administración por semana, clases con lugares vacíos y membresías vencidas que nadie vio.</div>
+    </div>
+    <div style="padding: 24px; border-radius: 18px; background: {{ accent }}; color: {{ accentInk }}; border: 1px solid transparent;">
+      <div style="font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; opacity: .6; margin-bottom: 14px;">CON RETA</div>
+      <div style="font-size: 17px; line-height: 1.5; font-weight: 600;">Una agenda que se llena sola, cobros automáticos y un panel que te dice qué pasa hoy en tu negocio.</div>
+    </div>
+  </div>
+</section>
+
+<section id="demo" ref="{{ filmRef }}" style="max-width: 1240px; margin: 0 auto; padding: 70px 22px 40px;">
+  <div style="text-align: center; margin-bottom: 34px;">
+    <div style="font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: {{ accent }}; margin-bottom: 14px;">Un día con RETA · 45 segundos</div>
+    <div style="display: grid; max-width: 820px; margin: 0 auto;">
+      <sc-for list="{{ captions }}" as="k" hint-placeholder-count="1">
+        <div style="grid-area: 1 / 1; opacity: {{ k.o }}; transform: {{ k.tf }}; transition: opacity .6s ease, transform .8s cubic-bezier(.2,.8,.2,1); pointer-events: none;">
+          <h2 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(38px, 5.4vw, 72px); line-height: 1.02; letter-spacing: -.015em; margin: 0 0 16px;">{{ k.title }}</h2>
+          <p style="font-size: 17.5px; line-height: 1.55; color: #6E6E68; max-width: 560px; margin: 0 auto;">{{ k.body }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div ref="{{ stageRef }}" style="position: relative; height: {{ stageH }}; border-radius: 28px; background: #121410; border: 1px solid #22241D; overflow: hidden;">
+    <div style="position: absolute; left: 50%; top: 0; width: 1040px; height: 620px; transform: translateX(-50%) scale({{ stageScale }}); transform-origin: top center;">
+      <div style="position: absolute; left: 220px; top: 20px; width: 600px; height: 600px; border-radius: 50%; background: {{ glow }}; opacity: .9;"></div>
+
+      <div style="position: absolute; left: 0; top: 0; width: 660px; height: 430px; transform-origin: 0 0; transform: {{ lapT }}; opacity: {{ lapO }}; transition: transform 1.1s cubic-bezier(.2,.8,.2,1), opacity .7s ease; z-index: 2;">
+        <div style="width: 100%; height: 100%; border-radius: 16px; background: #0B0C09; border: 1px solid #2A2C25; box-shadow: 0 50px 90px -40px rgba(0,0,0,.95); overflow: hidden; display: flex; flex-direction: column;">
+          <div style="height: 34px; flex: none; display: flex; align-items: center; gap: 7px; padding: 0 14px; background: #161812; border-bottom: 1px solid #22241D;">
+            <span style="width: 10px; height: 10px; border-radius: 50%; background: #3A3D33;"></span>
+            <span style="width: 10px; height: 10px; border-radius: 50%; background: #3A3D33;"></span>
+            <span style="width: 10px; height: 10px; border-radius: 50%; background: #3A3D33;"></span>
+            <span style="margin: 0 auto; padding: 4px 16px; border-radius: 99px; background: #0E0F0C; font-size: 11.5px; color: #8C8F82;">{{ lapUrl }}</span>
+          </div>
+          <div style="position: relative; flex: 1;">
+
+            <div style="position: absolute; inset: 0; padding: 18px 20px; opacity: {{ lPanel }}; transition: opacity .5s;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+                <span style="font-size: 14px; font-weight: 600;">Miércoles 23 · Iron House</span>
+                <span style="display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: #8C8F82;"><span style="width: 7px; height: 7px; border-radius: 50%; background: {{ accent }};"></span>En vivo</span>
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px;">
+                <div style="padding: 12px 14px; border-radius: 12px; background: #161812;"><div style="font-size: 11px; color: #8C8F82;">Reservas hoy</div><div style="font-family: 'Anton', sans-serif; font-size: 30px; margin-top: 4px;">{{ kRes }}</div></div>
+                <div style="padding: 12px 14px; border-radius: 12px; background: #161812;"><div style="font-size: 11px; color: #8C8F82;">Ocupación</div><div style="font-family: 'Anton', sans-serif; font-size: 30px; margin-top: 4px; color: {{ accent }};">{{ kOcc }}</div></div>
+                <div style="padding: 12px 14px; border-radius: 12px; background: #161812;"><div style="font-size: 11px; color: #8C8F82;">Lista de espera</div><div style="font-family: 'Anton', sans-serif; font-size: 30px; margin-top: 4px;">{{ kWait }}</div></div>
+              </div>
+              <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px;">
+                <div style="padding: 14px; border-radius: 12px; background: #161812; display: flex; flex-direction: column; gap: 11px;">
+                  <div style="font-size: 11.5px; color: #8C8F82;">Agenda de hoy</div>
+                  <sc-for list="{{ agenda }}" as="g" hint-placeholder-count="4">
+                    <div>
+                      <div style="display: flex; justify-content: space-between; font-size: 12.5px; margin-bottom: 5px;"><span><span style="color: #8C8F82; margin-right: 8px;">{{ g.time }}</span>{{ g.name }}</span><span style="color: {{ g.ink }};">{{ g.count }}</span></div>
+                      <div style="height: 5px; border-radius: 99px; background: #22241D; overflow: hidden;"><div style="height: 100%; width: {{ g.w }}; background: {{ g.bar }}; border-radius: 99px; transition: width .8s cubic-bezier(.2,.8,.2,1);"></div></div>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="padding: 14px; border-radius: 12px; background: #161812; display: flex; flex-direction: column; gap: 8px; overflow: hidden;">
+                  <div style="font-size: 11.5px; color: #8C8F82;">Actividad</div>
+                  <sc-for list="{{ feed }}" as="f" hint-placeholder-count="4">
+                    <div style="display: flex; gap: 9px; align-items: flex-start; padding: 8px 9px; border-radius: 9px; background: {{ f.bg }}; opacity: {{ f.o }}; transform: {{ f.tf }}; max-height: {{ f.h }}; transition: all .6s cubic-bezier(.2,.8,.2,1); overflow: hidden;">
+                      <span style="width: 6px; height: 6px; margin-top: 5px; border-radius: 50%; flex: none; background: {{ f.dot }};"></span>
+                      <span style="font-size: 12px; line-height: 1.4;">{{ f.text }}<span style="display: block; color: #8C8F82; font-size: 11px;">{{ f.when }}</span></span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+
+            <div style="position: absolute; inset: 0; padding: 18px 20px; opacity: {{ lRecep }}; transition: opacity .5s; display: grid; grid-template-columns: 1fr 1.1fr; gap: 14px;">
+              <div style="border-radius: 14px; background: #161812; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                  <div style="font-size: 11.5px; color: #8C8F82; margin-bottom: 6px;">Recepción · 18:52</div>
+                  <div style="font-family: 'Anton', sans-serif; font-size: 64px; line-height: 1;">{{ presentes }}</div>
+                  <div style="font-size: 12px; color: #8C8F82; margin-top: 4px;">presentes ahora</div>
+                </div>
+                <div style="padding: 14px; border-radius: 12px; border: 1px solid {{ scanBorder }}; background: {{ scanBg }}; transition: all .5s;">
+                  <div style="font-size: 11px; color: {{ scanInk }}; margin-bottom: 4px;">{{ scanLabel }}</div>
+                  <div style="font-size: 14px; font-weight: 600;">{{ scanName }}</div>
+                  <div style="font-size: 11.5px; color: #A9AC9E; margin-top: 3px;">{{ scanNote }}</div>
+                </div>
+              </div>
+              <div style="border-radius: 14px; background: #161812; padding: 14px; display: flex; flex-direction: column; gap: 7px; overflow: hidden;">
+                <div style="font-size: 11.5px; color: #8C8F82; margin-bottom: 2px;">Llegadas · HIIT 45 19:00</div>
+                <sc-for list="{{ arrivals }}" as="r" hint-placeholder-count="5">
+                  <div style="display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; background: {{ r.bg }}; opacity: {{ r.o }}; max-height: {{ r.h }}; transition: all .6s cubic-bezier(.2,.8,.2,1); overflow: hidden;">
+                    <span style="width: 28px; height: 28px; flex: none; border-radius: 50%; background: #22241D; display: grid; place-items: center; font-size: 10.5px; font-weight: 700;">{{ r.ini }}</span>
+                    <span style="flex: 1; font-size: 12.5px;">{{ r.name }}<span style="display: block; font-size: 11px; color: #8C8F82;">{{ r.note }}</span></span>
+                    <span style="font-size: 11px; font-weight: 700; color: {{ r.ink }};">{{ r.state }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <div style="position: absolute; inset: 0; padding: 22px 24px; opacity: {{ lCob }}; transition: opacity .5s;">
+              <div style="font-size: 12px; color: #8C8F82;">Ingresos de octubre · cobrado automático</div>
+              <div style="font-family: 'Anton', sans-serif; font-size: 58px; line-height: 1.05; margin: 6px 0 12px;">{{ revenue }}</div>
+              <div style="height: 6px; border-radius: 99px; background: #22241D; overflow: hidden; margin-bottom: 18px;"><div style="height: 100%; width: {{ revW }}; background: {{ accent }}; border-radius: 99px; transition: width .15s linear;"></div></div>
+              <div style="display: flex; flex-direction: column; gap: 7px;">
+                <sc-for list="{{ charges }}" as="p" hint-placeholder-count="4">
+                  <div style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; background: #161812;">
+                    <span style="flex: 1; font-size: 13px;">{{ p.name }}<span style="color: #8C8F82; margin-left: 8px; font-size: 11.5px;">{{ p.plan }}</span></span>
+                    <span style="font-size: 13px; font-weight: 600;">{{ p.amount }}</span>
+                    <span style="min-width: 86px; text-align: center; padding: 4px 10px; border-radius: 99px; font-size: 11px; font-weight: 700; background: {{ p.bg }}; color: {{ p.ink }}; transition: all .4s;">{{ p.state }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <div style="position: absolute; inset: 0; padding: 22px 24px; opacity: {{ lRisk }}; transition: opacity .5s;">
+              <div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px;">
+                <span style="font-size: 15px; font-weight: 600;">Riesgo de baja</span>
+                <span style="font-size: 11.5px; color: #8C8F82;">calculado con asistencia y pagos</span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 9px;">
+                <sc-for list="{{ risk }}" as="r" hint-placeholder-count="3">
+                  <div style="padding: 13px 14px; border-radius: 12px; background: {{ r.bg }}; border: 1px solid {{ r.border }}; transition: all .5s;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                      <span style="flex: 1; font-size: 13.5px; font-weight: 600;">{{ r.name }}<span style="display: block; font-size: 11.5px; font-weight: 400; color: #8C8F82;">{{ r.reason }}</span></span>
+                      <span style="padding: 4px 11px; border-radius: 99px; font-size: 11px; font-weight: 700; background: {{ r.chipBg }}; color: {{ r.chipInk }}; transition: all .4s;">{{ r.chip }}</span>
+                    </div>
+                    <div style="height: 4px; border-radius: 99px; background: #22241D; overflow: hidden;"><div style="height: 100%; width: {{ r.w }}; background: {{ r.bar }}; transition: all .8s cubic-bezier(.2,.8,.2,1);"></div></div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <div style="position: absolute; inset: 0; background: #F4F2EC; color: #17190F; opacity: {{ lSite }}; transition: opacity .5s; overflow: hidden;">
+              <div style="display: flex; align-items: center; padding: 14px 24px; border-bottom: 1px solid #DDDBCF; font-size: 12px; gap: 18px;">
+                <span style="font-family: 'Instrument Serif', serif; font-size: 22px;">Iron House</span>
+                <span style="margin-left: auto; color: #5E6154;">Horarios</span><span style="color: #5E6154;">Planes</span><span style="color: #5E6154;">Equipo</span>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px 24px;">
+                <div>
+                  <div style="font-family: 'Instrument Serif', serif; font-size: 40px; line-height: 1; margin-bottom: 8px;">Entrená cuando quieras.</div>
+                  <div style="font-size: 12px; color: #5E6154; line-height: 1.5; margin-bottom: 14px;">Funcional, HIIT y sala libre. Reservá tu lugar online.</div>
+                  <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <sc-for list="{{ siteRows }}" as="s" hint-placeholder-count="3">
+                      <div style="position: relative; display: flex; align-items: center; gap: 10px; padding: 9px 11px; border-radius: 10px; border: 1px solid #DDDBCF; background: #FFFFFF;">
+                        <span style="font-size: 12px; color: #5E6154; min-width: 38px;">{{ s.time }}</span>
+                        <span style="flex: 1; font-size: 12.5px; font-weight: 600;">{{ s.name }}</span>
+                        <span style="padding: 5px 12px; border-radius: 99px; font-size: 11px; font-weight: 700; background: {{ s.bg }}; color: {{ s.ink }}; transition: all .35s;">{{ s.btn }}</span>
+                        <span style="position: absolute; right: 22px; top: 16px; width: 18px; height: 18px; opacity: {{ s.curO }}; transform: {{ s.curT }}; transition: transform 1.1s cubic-bezier(.4,0,.2,1), opacity .3s; pointer-events: none;">
+                          <span style="display: block; width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 18px solid #17190F; transform: rotate(-28deg);"></span>
+                        </span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+                <div style="height: 290px; border-radius: 14px; overflow: hidden; background: #E4E2D8;"></div>
+              </div>
+              <div style="position: absolute; left: 50%; bottom: 18px; padding: 10px 18px; border-radius: 99px; background: #17190F; color: #F4F2EC; font-size: 12.5px; font-weight: 600; opacity: {{ siteToastO }}; transform: {{ siteToastT }}; transition: all .5s cubic-bezier(.2,.8,.2,1);">Reserva confirmada · te llega el recordatorio</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div style="position: absolute; left: 0; top: 0; width: 250px; height: 520px; transform-origin: 0 0; transform: {{ phoneT }}; opacity: {{ phoneO }}; transition: transform 1.1s cubic-bezier(.2,.8,.2,1), opacity .7s ease; z-index: 3;">
+        <div style="width: 100%; height: 100%; border-radius: 44px; background: #050604; padding: 9px; box-shadow: 0 50px 90px -30px rgba(0,0,0,.95), 0 0 0 1px #2E3128;">
+          <div style="position: relative; width: 100%; height: 100%; border-radius: 36px; overflow: hidden; background: #0E0F0C;">
+            <div style="position: absolute; left: 0; right: 0; top: 0; height: 34px; display: flex; align-items: center; justify-content: space-between; padding: 0 22px; font-size: 11px; font-weight: 700; z-index: 5; color: {{ statusInk }};">
+              <span>18:52</span><span style="width: 70px; height: 20px; border-radius: 99px; background: #000;"></span><span>5G</span>
+            </div>
+
+            <div style="position: absolute; inset: 0; padding: 44px 14px 14px; opacity: {{ pBook }}; transition: opacity .5s;">
+              <div style="font-size: 11px; color: #8C8F82;">Iron House</div>
+              <div style="font-family: 'Instrument Serif', serif; font-size: 28px; line-height: 1.05; margin: 2px 0 12px;">Hola, Lucía</div>
+              <div style="display: flex; gap: 5px; margin-bottom: 12px;">
+                <span style="padding: 5px 9px; border-radius: 99px; font-size: 10.5px; border: 1px solid #2C2F26; color: #8C8F82;">Mar</span>
+                <span style="padding: 5px 9px; border-radius: 99px; font-size: 10.5px; font-weight: 700; background: {{ accent }}; color: {{ accentInk }};">Mié 23</span>
+                <span style="padding: 5px 9px; border-radius: 99px; font-size: 10.5px; border: 1px solid #2C2F26; color: #8C8F82;">Jue</span>
+                <span style="padding: 5px 9px; border-radius: 99px; font-size: 10.5px; border: 1px solid #2C2F26; color: #8C8F82;">Vie</span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 7px;">
+                <sc-for list="{{ bookRows }}" as="r" hint-placeholder-count="4">
+                  <div style="position: relative; display: flex; align-items: center; gap: 10px; padding: 11px 11px; border-radius: 14px; background: #15170F; border: 1px solid {{ r.border }}; transition: border-color .4s;">
+                    <span style="font-family: 'Anton', sans-serif; font-size: 15px; min-width: 40px;">{{ r.time }}</span>
+                    <span style="flex: 1; font-size: 12px; font-weight: 600; line-height: 1.3;">{{ r.name }}<span style="display: block; font-size: 10.5px; font-weight: 400; color: #8C8F82;">{{ r.coach }}</span></span>
+                    <span style="padding: 4px 8px; border-radius: 99px; font-size: 10px; font-weight: 700; background: {{ r.chipBg }}; color: {{ r.chipInk }}; transition: all .35s;">{{ r.chip }}</span>
+                    <span style="position: absolute; right: 18px; top: 50%; width: 38px; height: 38px; margin-top: -19px; border-radius: 50%; border: 2px solid #F4F2EC; background: rgba(244,242,236,.18); opacity: {{ r.tapO }}; transform: {{ r.tapT }}; transition: all .45s cubic-bezier(.2,.8,.2,1); pointer-events: none;"></span>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="position: absolute; left: 10px; right: 10px; top: 42px; padding: 11px 13px; border-radius: 14px; background: #22241D; font-size: 11px; line-height: 1.4; opacity: {{ pToastO }}; transform: {{ pToastT }}; transition: all .6s cubic-bezier(.2,.8,.2,1);"><strong style="display: block; font-size: 11.5px;">Recordatorio programado</strong>Te avisamos 2 h antes de HIIT 45.</div>
+              <div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 18px 16px 22px; border-radius: 26px 26px 0 0; background: #1B1D17; border-top: 1px solid #2C2F26; transform: {{ sheetT }}; transition: transform .6s cubic-bezier(.2,.8,.2,1);">
+                <div style="width: 36px; height: 4px; border-radius: 99px; background: #383B31; margin: 0 auto 14px;"></div>
+                <div style="width: 44px; height: 44px; border-radius: 50%; background: {{ accent }}; color: {{ accentInk }}; display: grid; place-items: center; font-size: 22px; font-weight: 700; margin-bottom: 10px;">✓</div>
+                <div style="font-family: 'Instrument Serif', serif; font-size: 24px; line-height: 1.05;">Tenés tu lugar</div>
+                <div style="font-size: 11.5px; color: #A9AC9E; margin-top: 5px;">HIIT 45 · hoy 19:00 · con Dani</div>
+              </div>
+            </div>
+
+            <div style="position: absolute; inset: 0; padding: 48px 18px 18px; opacity: {{ pQr }}; transition: opacity .5s; text-align: center;">
+              <div style="font-size: 11px; color: #8C8F82;">Tu pase</div>
+              <div style="font-family: 'Instrument Serif', serif; font-size: 26px; margin: 2px 0 16px;">Lucía Fernández</div>
+              <div style="position: relative; width: 170px; height: 170px; margin: 0 auto; padding: 12px; border-radius: 18px; background: #F4F2EC; overflow: hidden;">
+                <div style="display: grid; grid-template-columns: repeat(12, 1fr); width: 100%; height: 100%;">
+                  <sc-for list="{{ qr }}" as="q" hint-placeholder-count="12"><span style="background: {{ q.bg }};"></span></sc-for>
+                </div>
+                <div style="position: absolute; left: 0; right: 0; top: {{ scanTop }}; height: 3px; background: {{ accent }}; box-shadow: 0 0 14px 3px {{ accent }}; opacity: {{ scanO }}; transition: top .15s linear, opacity .3s;"></div>
+                <div style="position: absolute; inset: 0; display: grid; place-items: center; background: {{ accent }}; color: {{ accentInk }}; font-size: 54px; font-weight: 700; opacity: {{ qrDoneO }}; transform: {{ qrDoneT }}; transition: all .5s cubic-bezier(.2,.8,.2,1);">✓</div>
+              </div>
+              <div style="font-size: 12px; color: #A9AC9E; margin-top: 16px;">Plan libre · vence en 4 días</div>
+              <div style="margin-top: 18px; padding: 11px; border-radius: 12px; background: #1B1F14; font-size: 12px; font-weight: 600; opacity: {{ qrDoneO }}; transition: opacity .5s;">Adentro · 18:52 · que la disfrutes</div>
+            </div>
+
+            <div style="position: absolute; inset: 0; padding: 60px 10px 14px; opacity: {{ pPay }}; transition: opacity .5s; background: #0B0C09;">
+              <div style="text-align: center; margin-bottom: 22px;">
+                <div style="font-size: 12px; color: #8C8F82;">miércoles 23 de septiembre</div>
+                <div style="font-family: 'Anton', sans-serif; font-size: 62px; line-height: 1.05;">18:52</div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <sc-for list="{{ notifs }}" as="n" hint-placeholder-count="3">
+                  <div style="padding: 11px 13px; border-radius: 16px; background: #1B1D17; opacity: {{ n.o }}; transform: {{ n.tf }}; transition: all .6s cubic-bezier(.2,.8,.2,1);">
+                    <div style="display: flex; align-items: center; gap: 7px; font-size: 10px; color: #8C8F82; margin-bottom: 4px;"><span style="width: 14px; height: 14px; border-radius: 4px; background: {{ accent }};"></span>IRON HOUSE · ahora</div>
+                    <div style="font-size: 12px; font-weight: 600;">{{ n.title }}</div>
+                    <div style="font-size: 11px; color: #A9AC9E; line-height: 1.4;">{{ n.body }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <div style="position: absolute; inset: 0; opacity: {{ pWa }}; transition: opacity .5s; display: flex; flex-direction: column; background: #0E0F0C;">
+              <div style="padding: 42px 14px 10px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #22241D;">
+                <span style="width: 30px; height: 30px; border-radius: 50%; background: {{ accent }}; color: {{ accentInk }}; display: grid; place-items: center; font-family: 'Anton', sans-serif; font-size: 13px;">I</span>
+                <span style="font-size: 12.5px; font-weight: 600;">Iron House<span style="display: block; font-size: 10px; font-weight: 400; color: #8C8F82;">mensaje automático</span></span>
+              </div>
+              <div style="flex: 1; padding: 14px 12px; display: flex; flex-direction: column; gap: 8px; justify-content: flex-end;">
+                <sc-for list="{{ chat }}" as="m" hint-placeholder-count="3">
+                  <div style="align-self: {{ m.side }}; max-width: 84%; padding: 9px 12px; border-radius: 14px; font-size: 11.5px; line-height: 1.45; background: {{ m.bg }}; color: {{ m.ink }}; opacity: {{ m.o }}; transform: {{ m.tf }}; transition: all .5s cubic-bezier(.2,.8,.2,1);">{{ m.text }}</div>
+                </sc-for>
+              </div>
+            </div>
+
+            <div style="position: absolute; inset: 0; opacity: {{ pSite }}; transition: opacity .5s; background: #F4F2EC; color: #17190F; padding: 42px 14px 14px;">
+              <div style="font-family: 'Instrument Serif', serif; font-size: 22px; margin-bottom: 10px;">Iron House</div>
+              <div style="height: 120px; border-radius: 12px; background: #E4E2D8; margin-bottom: 12px; overflow: hidden;"></div>
+              <div style="font-family: 'Instrument Serif', serif; font-size: 24px; line-height: 1.05; margin-bottom: 12px;">Entrená cuando quieras.</div>
+              <div style="display: flex; flex-direction: column; gap: 6px;">
+                <sc-for list="{{ siteRows }}" as="s" hint-placeholder-count="3">
+                  <div style="display: flex; align-items: center; gap: 8px; padding: 9px 10px; border-radius: 10px; border: 1px solid #DDDBCF; background: #FFFFFF;">
+                    <span style="font-size: 11px; color: #5E6154;">{{ s.time }}</span>
+                    <span style="flex: 1; font-size: 11.5px; font-weight: 600;">{{ s.name }}</span>
+                    <span style="padding: 4px 9px; border-radius: 99px; font-size: 10px; font-weight: 700; background: {{ s.bg }}; color: {{ s.ink }}; transition: all .35s;">{{ s.btn }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: flex; align-items: center; gap: 18px; margin-top: 22px;">
+    <button type="button" onClick="{{ onPlay }}" aria-label="{{ playAria }}" style="flex: none; width: 46px; height: 46px; border-radius: 50%; border: 1px solid #C8C5BC; background: #FFFFFF; color: #17190F; cursor: pointer; font-size: 13px; display: grid; place-items: center;" style-hover="border-color: #6E6E68">{{ playIcon }}</button>
+    <div style="flex: 1; display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 14px;">
+      <sc-for list="{{ chapters }}" as="c" hint-placeholder-count="6">
+        <button type="button" onClick="{{ c.onPick }}" style="cursor: pointer; text-align: left; border: none; background: transparent; padding: 6px 0; font-family: 'Archivo', sans-serif; color: {{ c.ink }}; transition: color .3s;">
+          <div style="height: 2px; border-radius: 99px; background: #DDD9CF; overflow: hidden; margin-bottom: 10px;"><div style="height: 100%; width: {{ c.w }}; background: {{ c.bar }}; transition: {{ c.tr }};"></div></div>
+          <span style="font-family: 'Anton', sans-serif; font-size: 12px; letter-spacing: .08em; margin-right: 7px; color: {{ c.num }};">{{ c.n }}</span><span style="font-size: 14px; font-weight: 600;">{{ c.label }}</span>
+        </button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px 22px; margin-top: 46px; font-size: 15.5px; color: #6E6E68;">
+    <span>¿Lo querés ver con tus horarios y tus planes?</span>
+    <a href="{{ waLink }}" target="_blank" rel="noopener" style="font-weight: 700; color: {{ accent }}; border-bottom: 1px solid {{ accent }}; padding-bottom: 2px;">Te armamos el demo por WhatsApp</a>
+  </div>
+</section>
+
+<section id="producto" style="max-width: 1200px; margin: 0 auto; padding: 70px 22px;">
+  <h2 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(32px, 4.2vw, 54px); line-height: 1.03; letter-spacing: -.015em; margin: 0 0 12px;">Cinco piezas, un solo sistema</h2>
+  <p style="font-size: 16.5px; color: #6E6E68; max-width: 620px; margin: 0 0 34px;">Todo comparte la misma base de datos. Cambiás un horario en el panel y aparece al instante en la app y en tu sitio.</p>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px;">
+    <sc-for list="{{ systems }}" as="s" hint-placeholder-count="4">
+      <div style="padding: 22px; border-radius: 18px; background: #FFFFFF; border: 1px solid #DDD9CF; display: flex; flex-direction: column; gap: 12px;">
+        <div style="font-family: 'Archivo', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: {{ accent }};">{{ s.n }}</div>
+        <div style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 20px; line-height: 1.15;">{{ s.t }}</div>
+        <div style="font-size: 14.5px; line-height: 1.5; color: #6E6E68;">{{ s.d }}</div>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section id="red" style="max-width: 1200px; margin: 0 auto; padding: 50px 22px 70px;">
+  <div style="border-radius: 24px; border: 1px solid #DDD9CF; background: #FFFFFF; padding: 34px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 34px; align-items: center;">
+    <div>
+      <div style="font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: {{ accent }}; margin-bottom: 12px;">Red RETA</div>
+      <h2 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(32px, 3.8vw, 50px); line-height: 1.03; letter-spacing: -.015em; margin: 0 0 16px;">La red conecta disciplinas,<br />no competidores.</h2>
+      <p style="font-size: 16px; line-height: 1.55; color: #6E6E68; margin: 0 0 20px;">Un socio de box, yoga o funcional puede reservar y pagar una clase suelta en tu estudio — sin que hagas nada. Para ellos es descubrir algo nuevo. Para vos es ingreso inmediato y un lead caliente que ya vivió tu espacio. Tus socios también ganan: acceden a más disciplinas sin salir de la app, lo que hace que tu membresía valga más.</p>
+      <button type="button" onClick="{{ onToggleRed }}" style="cursor: pointer; font-family: 'Archivo', sans-serif; font-size: 14px; font-weight: 700; padding: 13px 20px; border-radius: 99px; border: 1px solid {{ redBtnBorder }}; background: {{ redBtnBg }}; color: {{ redBtnInk }};">{{ redBtnLabel }}</button>
+    </div>
+    <div>
+      <div style="display: flex; gap: 12px; margin-bottom: 14px;">
+        <div style="flex: 1; padding: 18px; border-radius: 16px; background: #EDE9E0;">
+          <div style="font-size: 12px; color: #6E6E68; margin-bottom: 8px;">Alcance de tu negocio</div>
+          <div style="font-family: 'Anton', sans-serif; font-size: 40px; line-height: 1; color: {{ accent }};">{{ reachValue }}</div>
+          <div style="font-size: 12px; color: #6E6E68; margin-top: 7px;">{{ reachNote }}</div>
+        </div>
+        <div style="flex: 1; padding: 18px; border-radius: 16px; background: #EDE9E0;">
+          <div style="font-size: 12px; color: #6E6E68; margin-bottom: 8px;">Ingreso cruzado / mes</div>
+          <div style="font-family: 'Anton', sans-serif; font-size: 40px; line-height: 1;">{{ reachRevenue }}</div>
+          <div style="font-size: 12px; color: #6E6E68; margin-top: 7px;">clases sueltas de la red</div>
+        </div>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 7px;">
+        <sc-for list="{{ redChips }}" as="r" hint-placeholder-count="6">
+          <span style="display: inline-flex; align-items: center; gap: 7px; padding: 8px 12px; border-radius: 99px; font-size: 12.5px; background: {{ r.bg }}; color: {{ r.ink }}; border: 1px solid {{ r.border }};">
+            <span style="width: 6px; height: 6px; border-radius: 50%; background: {{ r.dot }};"></span>{{ r.name }}
+          </span>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="precios" style="max-width: 1200px; margin: 0 auto; padding: 20px 22px 70px;">
+  <h2 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(32px, 4.2vw, 54px); line-height: 1.03; letter-spacing: -.015em; margin: 0 0 12px;">Precio simple, sin sorpresas</h2>
+  <p style="font-size: 16.5px; color: #6E6E68; max-width: 620px; margin: 0 0 30px;">Suscripción mensual en MXN. Tus pagos van directo a tu cuenta — nosotros no tocamos tu dinero.</p>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 12px; margin-bottom: 14px;">
+    <sc-for list="{{ tiers }}" as="t" hint-placeholder-count="3">
+      <div style="padding: 24px; border-radius: 20px; background: {{ t.bg }}; color: {{ t.ink }}; border: 1px solid {{ t.border }}; display: flex; flex-direction: column;">
+        <div style="font-family: 'Archivo', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; opacity: .65;">{{ t.name }}</div>
+        <div style="font-family: 'Instrument Serif', serif; font-style: italic; font-size: 17px; line-height: 1.35; margin: 10px 0 14px; opacity: .9;">{{ t.tagline }}</div>
+        <div style="display: flex; align-items: baseline; gap: 7px; margin: 0 0 4px;">
+          <span style="font-size: 13px; opacity: .6;">desde</span>
+          <span style="font-family: 'Anton', sans-serif; font-size: 44px; line-height: 1;">{{ t.price }}</span>
+          <span style="font-size: 13px; opacity: .6;">{{ t.per }}</span>
+        </div>
+        <div style="font-size: 13.5px; opacity: .7; margin-bottom: 18px;">{{ t.note }}</div>
+        <sc-for list="{{ t.features }}" as="f" hint-placeholder-count="4">
+          <div style="display: flex; gap: 9px; font-size: 14px; padding: 7px 0; line-height: 1.4;">
+            <span style="opacity: .5;">—</span>{{ f }}
+          </div>
+        </sc-for>
+        <a href="{{ waLink }}" target="_blank" rel="noopener" style="margin-top: auto; padding-top: 18px; font-size: 14px; font-weight: 700; text-decoration: underline; text-underline-offset: 4px;">{{ t.cta }}</a>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="border-radius: 20px; border: 1px solid #DDD9CF; background: #FFFFFF; padding: 26px;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; align-items: center;">
+      <div>
+        <div style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 26px; margin-bottom: 18px;">¿Cuánto te cuesta realmente?</div>
+        <div style="margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; font-size: 13.5px; margin-bottom: 9px;"><span style="color: #6E6E68;">Socios activos</span><strong style="font-weight: 700;">{{ calcMembers }}</strong></div>
+          <input type="range" min="20" max="800" step="10" value="{{ calcMembersRaw }}" onChange="{{ onMembers }}" style="width: 100%;" />
+        </div>
+        <div>
+          <div style="display: flex; justify-content: space-between; font-size: 13.5px; margin-bottom: 9px;"><span style="color: #6E6E68;">Cuota promedio</span><strong style="font-weight: 700;">{{ calcFee }}</strong></div>
+          <input type="range" min="200" max="5000" step="100" value="{{ calcFeeRaw }}" onChange="{{ onFee }}" style="width: 100%;" />
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px;">
+        <div style="padding: 16px; border-radius: 14px; background: #EDE9E0;"><div style="font-size: 11.5px; color: #6E6E68;">Facturás / mes</div><div style="font-family: 'Anton', sans-serif; font-size: 26px; margin-top: 6px;">{{ calcRevenue }}</div></div>
+        <div style="padding: 16px; border-radius: 14px; background: #EDE9E0;"><div style="font-size: 11.5px; color: #6E6E68;">Pagás a RETA</div><div style="font-family: 'Anton', sans-serif; font-size: 26px; margin-top: 6px; color: {{ accent }};">{{ calcCost }}</div></div>
+        <div style="padding: 16px; border-radius: 14px; background: #EDE9E0;"><div style="font-size: 11.5px; color: #6E6E68;">% de tus ingresos</div><div style="font-family: 'Anton', sans-serif; font-size: 26px; margin-top: 6px;">{{ calcPct }}</div></div>
+        <div style="padding: 16px; border-radius: 14px; background: {{ accent }}; color: {{ accentInk }};"><div style="font-size: 11.5px; opacity: .7;">Costo por socio activo</div><div style="font-family: 'Anton', sans-serif; font-size: 26px; margin-top: 6px;">{{ calcHours }}</div></div>
+      </div>
+    </div>
+    <div style="font-size: 12px; color: #6E6E68; margin-top: 18px; line-height: 1.5;">Estimación en MXN. Solo pagas la suscripción mensual — tus cobros van directo a tu cuenta.</div>
+  </div>
+</section>
+
+<section id="faq" style="max-width: 900px; margin: 0 auto; padding: 20px 22px 70px;">
+  <h2 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(32px, 4.2vw, 54px); line-height: 1.03; letter-spacing: -.015em; margin: 0 0 26px;">Lo que todos preguntan</h2>
+  <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="5">
+    <div style="border-bottom: 1px solid #DDD9CF;">
+      <button type="button" onClick="{{ f.onToggle }}" style="width: 100%; cursor: pointer; display: flex; align-items: center; gap: 14px; padding: 20px 2px; border: none; background: transparent; text-align: left; font-family: 'Archivo', sans-serif; font-size: 17px; font-weight: 600; color: #17190F;">
+        <span style="flex: 1;">{{ f.q }}</span>
+        <span style="font-size: 22px; line-height: 1; color: {{ accent }};">{{ f.sign }}</span>
+      </button>
+      <sc-if value="{{ f.open }}">
+        <div style="padding: 0 2px 22px; font-size: 15.5px; line-height: 1.6; color: #6E6E68; max-width: 700px; animation: pop .18s ease both;">{{ f.a }}</div>
+      </sc-if>
+    </div>
+  </sc-for>
+</section>
+
+<section style="max-width: 1200px; margin: 0 auto; padding: 20px 22px 90px;">
+  <div style="border-radius: 26px; padding: 54px 38px; background: {{ accent }}; color: {{ accentInk }}; text-align: center;">
+    <h2 style="font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(36px, 5.2vw, 66px); line-height: 1.02; letter-spacing: -.015em; margin: 0 auto 18px; max-width: 800px;">Mostranos tus horarios y te los dejamos cargados</h2>
+    <p style="font-size: 17.5px; line-height: 1.5; max-width: 540px; margin: 0 auto 28px; font-weight: 500;">Una charla de 20 minutos por WhatsApp. Te armamos el demo con los datos reales de tu negocio.</p>
+    <a href="{{ waLink }}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 10px; padding: 17px 30px; border-radius: 99px; font-size: 16.5px; font-weight: 700; background: {{ accentInk }}; color: {{ accent }};" style-hover="filter: brightness(1.2)">Hablar por WhatsApp</a>
+    <div style="font-size: 13.5px; margin-top: 16px; opacity: .7;">{{ whatsappDisplay }}</div>
+  </div>
+</section>
+
+<footer style="border-top: 1px solid #DDD9CF;">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 30px 22px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; font-size: 13px; color: #6E6E68;">
+    <img src="./reta-lockup-color-light-bg.svg" alt="RETA" height="24" style="display: block; opacity: .8;" />
+    <span>Software de membresías para negocios de fitness · LATAM</span>
+    <span style="margin-left: auto;">Los datos del demo son ficticios.</span>
+  </div>
+</footer>
+
+<sc-if value="{{ toast }}">
+  <div style="position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%); z-index: 90; padding: 13px 20px; border-radius: 99px; font-size: 14px; font-weight: 700; background: {{ accent }}; color: {{ accentInk }}; box-shadow: 0 20px 40px -18px rgba(0,0,0,.2); animation: pop .2s ease both;">{{ toast }}</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;brandColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#F97316&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#D6FF3F&quot;,&quot;#FF5A1F&quot;,&quot;#7C5CFF&quot;,&quot;#22D3EE&quot;],&quot;section&quot;:&quot;Marca&quot;},&quot;whatsappNumber&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;+52 6623704032&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contacto&quot;}}">
+const QR_BITS = '1111111010000101011101011101010111010100000101111111000000010110110100101110110001011010100111001001111111010001010111010101110101011101010000010111111';
+const NETWORK = [
+  { name: 'Box 44', color: '#FF5A1F' }, { name: 'Casa Prana', color: '#22D3EE' }, { name: 'Estudio Vértebra', color: '#F2E8C9' },
+  { name: 'Dojo Sur', color: '#FF4D8D' }, { name: 'Sala Norte', color: '#7C5CFF' }
+];
+const INKS = { '#d6ff3f': '#14170A', '#ff5a1f': '#1A0B04', '#7c5cff': '#F4F2EC', '#22d3ee': '#06202B', '#ff4d8d': '#2A0713', '#f2e8c9': '#17190F', '#f97316': '#0A0500' };
+const DUR = 7000;
+const CH = [
+  { label: 'Reservar', title: 'Tres toques y tiene su lugar.', body: 'Tus socios ven los horarios, eligen y reservan desde su celular. Sin mensajes, sin esperar respuesta.',
+    phone: [395, 50, 1, 1], lap: [520, 110, .9, 0] },
+  { label: 'Panel', title: 'Y vos lo ves al instante.', body: 'Cada reserva mueve tu agenda, tu ocupación y tu lista de espera en tiempo real.',
+    phone: [90, 130, .82, 1], lap: [300, 95, 1, 1] },
+  { label: 'Recepción', title: 'Llega, escanea, entra.', body: 'El QR del socio registra la asistencia y avisa en la puerta si la cuota está por vencer.',
+    phone: [130, 60, .96, 1], lap: [340, 95, 1, 1] },
+  { label: 'Cobros', title: 'Las cuotas se cobran solas.', body: 'Débito automático con medios de pago locales y recibo al instante. Nadie tiene que perseguir a nadie.',
+    phone: [735, 60, .96, 1], lap: [50, 95, 1, 1] },
+  { label: 'Retención', title: 'Te avisa antes de que se vaya.', body: 'RETA detecta quién está dejando de venir y le escribe por vos, con una razón para volver.',
+    phone: [720, 80, .92, 1], lap: [80, 95, 1, 1] },
+  { label: 'Tu sitio', title: 'Y tu web también reserva.', body: 'Tu sitio con tu marca y tus horarios en vivo. Quien te encuentra en Google, reserva ahí mismo.',
+    phone: [770, 150, .8, 1], lap: [170, 70, 1.03, 1] }
+];
+const FAQS = [
+  { q: '¿Tengo que migrar mis datos a mano?', a: 'No. Nos pasás tu planilla o tu lista de socios y la cargamos nosotros antes de que empieces. El primer día ya ves tus horarios y tus membresías funcionando.' },
+  { q: '¿Mis socios tienen que pagar la app?', a: 'Nunca. RETA le cobra al negocio, no al socio. La app es gratis para ellos y sale con tu nombre y tu color.' },
+  { q: '¿Y si mis socios no usan apps?', a: 'Pueden reservar desde tu sitio web sin instalar nada, y tu recepción sigue pudiendo anotar reservas a mano desde el panel. La app es una opción más, no una obligación.' },
+  { q: '¿Cómo funciona el cobro?', a: 'Configurás tus planes una vez y RETA cobra automáticamente cada mes con los medios de pago locales. Los vencidos aparecen en el panel con un botón para recordar por WhatsApp.' },
+  { q: '¿Qué pasa si quiero irme?', a: 'Sin contrato de permanencia. Te exportamos tus clientes, asistencias y pagos en un archivo y listo.' },
+  { q: '¿La Red RETA me roba socios?', a: 'No, porque la red conecta disciplinas complementarias, no competidores directos. Un socio de box que visita tu estudio de pilates no viene a quedarse — viene a probar algo nuevo. Pero te deja ingresos y, muchas veces, termina siendo un socio tuyo. Vos controlás qué clases abrís a la red, en qué horarios y a qué precio.' }
+];
+const money = (n) => '$' + new Intl.NumberFormat('es-MX', { maximumFractionDigits: 0 }).format(Math.round(n));
+const moneyShort = (n) => n >= 1000000 ? '$' + (n / 1000000).toFixed(1).replace('.', ',') + ' M' : money(n);
+const tf = (p) => 'translate(' + p[0] + 'px,' + p[1] + 'px) scale(' + p[2] + ')';
+const up = (on, d) => on ? 'none' : 'translateY(' + (d || 12) + 'px)';
+
+class Component extends DCLogic {
+  state = { ch: 0, t: 0, playing: false, userPaused: false, scale: 1, openFaq: null, redOn: true, members: 120, fee: 800 };
+  filmRef = React.createRef();
+  stageRef = React.createRef();
+
+  componentDidMount() {
+    this._iv = setInterval(() => {
+      if (!this.state.playing) return;
+      this.setState(s => s.t + 100 >= DUR ? { ch: (s.ch + 1) % CH.length, t: 0 } : { t: s.t + 100 });
+    }, 100);
+    if (window.IntersectionObserver && this.filmRef.current) {
+      this._io = new IntersectionObserver((es) => {
+        const vis = es[0].isIntersecting;
+        this.setState(s => ({ playing: vis && !s.userPaused }));
+      }, { threshold: 0.35 });
+      this._io.observe(this.filmRef.current);
+    }
+    if (window.ResizeObserver && this.stageRef.current) {
+      this._ro = new ResizeObserver(() => {
+        const w = this.stageRef.current ? this.stageRef.current.clientWidth : 1040;
+        this.setState({ scale: Math.min(1.12, w / 1040) });
+      });
+      this._ro.observe(this.stageRef.current);
+    }
+  }
+  componentWillUnmount() { clearInterval(this._iv); if (this._io) this._io.disconnect(); if (this._ro) this._ro.disconnect(); }
+
+  renderVals() {
+    const accent = this.props.brandColor || '#F97316';
+    const ink = INKS[accent.toLowerCase()] || '#14170A';
+    const wa = (this.props.whatsappNumber || '+52 6623704032');
+    const waLink = 'https://wa.me/' + wa.replace(/[^0-9]/g, '') + '?text=' + encodeURIComponent('Hola RETA, quiero ver el demo para mi negocio');
+    const c = this.state.ch, t = this.state.t;
+    const b = t < 1300 ? 0 : t < 2800 ? 1 : t < 4400 ? 2 : 3;
+    const cur = CH[c];
+    const on = (v) => v ? 1 : 0;
+    const socios = 312, cross = this.state.redOn ? Math.round(socios * 0.14) + 6 : 0;
+
+    const booked = c > 0 || b >= 2;
+    const p1 = c === 1 && b >= 1, p2 = c === 1 && b >= 2;
+    const checked = c === 2 && b >= 2;
+    const revFrac = c === 3 ? Math.min(1, t / 4400) : 0;
+    const sitePicked = c === 5 && b >= 2;
+
+    const calcRevenue = this.state.members * this.state.fee;
+    const tierBase = this.state.members <= 150 ? 799 : this.state.members <= 400 ? 1999 : 3499;
+    const calcCost = tierBase;
+
+    return {
+      accent, accentInk: ink, waLink, whatsappDisplay: wa, toast: '',
+      filmRef: this.filmRef, stageRef: this.stageRef,
+      stageScale: String(this.state.scale),
+      stageH: Math.round(620 * this.state.scale) + 'px',
+      glow: 'radial-gradient(closest-side, ' + accent + '26, transparent)',
+
+      captions: CH.map((k, i) => ({ title: k.title, body: k.body, o: on(i === c), tf: i === c ? 'none' : 'translateY(' + (i < c ? -14 : 14) + 'px)' })),
+      chapters: CH.map((k, i) => ({
+        n: '0' + (i + 1), label: k.label,
+        ink: i === c ? '#17190F' : '#6E6E68', num: i === c ? accent : '#9A9B96',
+        bar: i === c ? accent : '#C8C5BC',
+        w: i < c ? '100%' : i === c ? (t / DUR * 100) + '%' : '0%',
+        tr: i === c && t > 0 ? 'width .1s linear' : 'none',
+        onPick: () => this.setState({ ch: i, t: 0, playing: true, userPaused: false })
+      })),
+      playIcon: this.state.playing ? '❚❚' : '▶',
+      playAria: this.state.playing ? 'Pausar' : 'Reproducir',
+      onPlay: () => this.setState(s => ({ playing: !s.playing, userPaused: s.playing })),
+
+      phoneT: tf(cur.phone), phoneO: cur.phone[3], lapT: tf(cur.lap), lapO: cur.lap[3],
+      lapUrl: c === 5 ? 'ironhouse.reta.app' : 'app.reta.app/' + (c === 2 ? 'recepcion' : c === 3 ? 'cobros' : c === 4 ? 'retencion' : 'panel'),
+      statusInk: c === 5 ? '#17190F' : '#F4F2EC',
+      pBook: on(c <= 1), pQr: on(c === 2), pPay: on(c === 3), pWa: on(c === 4), pSite: on(c === 5),
+      lPanel: on(c <= 1), lRecep: on(c === 2), lCob: on(c === 3), lRisk: on(c === 4), lSite: on(c === 5),
+
+      bookRows: [['07:00', 'Funcional AM', 'Dani', '6 libres'], ['12:30', 'Full Body', 'Rubén', '9 libres'], ['19:00', 'HIIT 45', 'Dani', '3 libres'], ['20:00', 'Spinning', 'Meli', 'Completa']].map((r, i) => {
+        const tgt = i === 2, mine = tgt && booked, full = i === 3;
+        return {
+          time: r[0], name: r[1], coach: r[2],
+          chip: mine ? 'Reservado' : r[3],
+          chipBg: mine ? accent : full ? '#2E1414' : '#22241D', chipInk: mine ? ink : full ? '#F08A8A' : '#A9AC9E',
+          border: mine ? accent : 'transparent',
+          tapO: on(tgt && c === 0 && b === 1), tapT: tgt && c === 0 && b === 1 ? 'scale(1)' : 'scale(.4)'
+        };
+      }),
+      sheetT: c === 0 && b === 2 ? 'translateY(0)' : 'translateY(110%)',
+      pToastO: on((c === 0 && b === 3) || c === 1), pToastT: up((c === 0 && b === 3) || c === 1, -16),
+
+      kRes: p1 ? 87 : 86, kOcc: p1 ? '81%' : '78%', kWait: p2 ? 3 : 4,
+      agenda: [['07:00', 'Funcional AM', 14, 20], ['12:30', 'Full Body', 7, 16], ['19:00', 'HIIT 45', p1 ? 19 : 18, 20], ['20:00', 'Spinning', 22, 22]].map((g, i) => ({
+        time: g[0], name: g[1], count: g[2] + '/' + g[3], w: (g[2] / g[3] * 100) + '%',
+        bar: i === 2 && p1 ? accent : '#5E6154', ink: i === 2 && p1 ? accent : '#8C8F82'
+      })),
+      feed: [
+        { text: 'Martín O. pasó de la lista de espera a Spinning', when: 'recién', show: p2, hi: true },
+        { text: 'Lucía F. reservó HIIT 45 · 19:00', when: 'recién', show: p1, hi: true },
+        { text: 'Sofía D. renovó su plan libre', when: 'hace 12 min', show: true },
+        { text: 'Diego S. canceló Full Body', when: 'hace 40 min', show: true }
+      ].map(f => ({ text: f.text, when: f.when, o: on(f.show), tf: up(f.show, -10), h: f.show ? '70px' : '0px', bg: f.hi ? '#1E2317' : 'transparent', dot: f.hi ? accent : '#5E6154' })),
+
+      presentes: checked ? 24 : 23,
+      scanLabel: checked ? 'Check-in correcto' : 'Esperando QR…',
+      scanName: checked ? 'Lucía Fernández' : '—',
+      scanNote: checked ? 'Plan libre · vence en 4 días, le avisamos' : 'Acercá el celular al lector',
+      scanBorder: checked ? accent : '#2C2F26', scanBg: checked ? '#1B1F14' : 'transparent', scanInk: checked ? accent : '#8C8F82',
+      arrivals: [
+        { name: 'Lucía Fernández', note: 'Plan libre', lucia: true },
+        { name: 'Sofía Duarte', note: 'Plan libre' }, { name: 'Diego Salas', note: '8 clases · quedan 2' },
+        { name: 'Ana Pizarro', note: 'Red RETA · clase suelta' }, { name: 'Martín Ocampo', note: '3 días' }
+      ].map(r => ({
+        name: r.name, note: r.note, ini: r.name.split(' ').map(w => w[0]).join(''),
+        o: r.lucia ? on(checked) : 1, h: r.lucia && !checked ? '0px' : '60px',
+        bg: r.lucia ? '#1E2317' : '#1B1D17', state: 'Adentro', ink: r.lucia ? accent : '#8C8F82'
+      })),
+      qr: QR_BITS.split('').slice(0, 144).map(x => ({ bg: x === '1' ? '#14170A' : 'transparent' })),
+      scanO: on(c === 2 && b === 1), scanTop: (c === 2 && b === 1 ? Math.min(100, (t - 1300) / 1500 * 100) : 0) + '%',
+      qrDoneO: on(checked), qrDoneT: checked ? 'scale(1)' : 'scale(.85)',
+
+      revenue: money(132000 + revFrac * 17200), revW: (70 + revFrac * 22) + '%',
+      charges: [['Lucía Fernández', 'Plan libre', 950], ['Sofía Duarte', 'Plan libre', 950], ['Martín Ocampo', '3 días', 450], ['Ana Pizarro', 'Red RETA', 200]].map((p, i) => {
+        const done = c === 3 && b >= Math.min(i + 1, 3);
+        return { name: p[0], plan: p[1], amount: money(p[2]), state: done ? 'Cobrado' : 'Programado', bg: done ? accent : '#22241D', ink: done ? ink : '#8C8F82' };
+      }),
+      notifs: [
+        { title: 'Cuota de octubre debitada', body: 'Plan libre · $950 · tarjeta terminada en 4417', s: 1 },
+        { title: 'Tu recibo está listo', body: 'Lo enviamos a tu correo. También está en Mi plan.', s: 2 },
+        { title: 'Tu membresía sigue activa', body: 'Próximo cobro: 23 de noviembre.', s: 3 }
+      ].map(n => ({ title: n.title, body: n.body, o: on(c === 3 && b >= n.s), tf: up(c === 3 && b >= n.s, -14) })),
+
+      risk: [['Javier Ruiz', '3 semanas sin venir · membresía vencida', 82], ['Ana Pizarro', 'bajó de 3 a 1 clase por semana', 64], ['Diego Salas', 'vence en 5 días y no reservó', 48]].map((r, i) => {
+        const j = i === 0 && c === 4, hi = j && b >= 1, sent = j && b === 2, back = j && b >= 3;
+        return {
+          name: r[0], reason: back ? 'reservó Funcional · jue 07:00' : r[1],
+          chip: back ? 'Volvió' : sent ? 'Mensaje enviado' : r[2] + ' %',
+          chipBg: back ? accent : sent ? '#22241D' : r[2] > 70 ? '#2E1414' : '#2C2410',
+          chipInk: back ? ink : sent ? '#F4F2EC' : r[2] > 70 ? '#F08A8A' : '#F0C65A',
+          w: (back ? 12 : r[2]) + '%', bar: back ? accent : r[2] > 70 ? '#F08A8A' : r[2] > 55 ? '#F0C65A' : '#8C8F82',
+          bg: hi ? '#1B1F14' : '#161812', border: hi ? accent : 'transparent'
+        };
+      }),
+      chat: [
+        { text: 'Hola Javier, hace unas semanas que no te vemos. Tu próxima clase va con 20 % off, ¿te guardamos un lugar?', me: false, s: 2 },
+        { text: '¡Sí! El jueves a la mañana', me: true, s: 3 },
+        { text: 'Listo: Funcional AM · jue 07:00. Te esperamos.', me: false, s: 3 }
+      ].map(m => ({ text: m.text, side: m.me ? 'flex-end' : 'flex-start', bg: m.me ? accent : '#1B1D17', ink: m.me ? ink : '#F4F2EC', o: on(c === 4 && b >= m.s), tf: up(c === 4 && b >= m.s, 10) })),
+
+      siteRows: [['07:00', 'Funcional AM'], ['19:00', 'HIIT 45'], ['20:00', 'Spinning']].map((s, i) => {
+        const tgt = i === 1, picked = tgt && sitePicked;
+        return {
+          time: s[0], name: s[1],
+          btn: picked ? 'Reservado ✓' : i === 2 ? 'Completa' : 'Reservar',
+          bg: picked ? accent : i === 2 ? '#EADFDF' : '#17190F', ink: picked ? ink : i === 2 ? '#8C3A3A' : '#F4F2EC',
+          curO: on(tgt && c === 5 && b <= 2), curT: tgt && c === 5 && b >= 1 ? 'translate(0,0)' : 'translate(-160px,90px)'
+        };
+      }),
+      siteToastO: on(c === 5 && b >= 3), siteToastT: 'translateX(-50%) ' + up(c === 5 && b >= 3, 12),
+
+      editorialRows: [
+        { n: '01', t: 'Una agenda que se llena sola', d: 'Tus socios reservan desde la app y la lista de espera se mueve sin que intervengas.' },
+        { n: '02', t: 'Cobros sin persecución', d: 'Las cuotas se debitan y los vencimientos avisan antes de que se venzan.' },
+        { n: '03', t: 'Tu marca, tu sitio', d: 'Un subdominio propio con tu identidad y tus horarios en vivo.' },
+        { n: '04', t: 'Una red que te trae gente', d: 'Socios de otros negocios de RETA pagan clases sueltas en el tuyo.' }
+      ],
+      systems: [
+        { n: '01', t: 'Panel de administración', d: 'Agenda semanal, clientes, cobros, riesgo de baja y automatizaciones.' },
+        { n: '02', t: 'Recepción y check-in', d: 'Tótem con QR o check-in manual. La asistencia se registra sola y avisa vencimientos en la puerta.' },
+        { n: '03', t: 'App del socio', d: 'Reservas, lista de espera, membresía y pagos. Con tu marca, gratis para tu gente.' },
+        { n: '04', t: 'Tu sitio web', d: 'Subdominio propio con tu identidad, modo claro u oscuro y tus horarios en vivo.' },
+        { n: '05', t: 'Red RETA', d: 'Clientes de otros negocios de la plataforma pagando clases sueltas en el tuyo.' }
+      ],
+
+      onToggleRed: () => this.setState(s => ({ redOn: !s.redOn })),
+      redBtnLabel: this.state.redOn ? 'Ver sin la Red RETA' : 'Activar la Red RETA',
+      redBtnBg: this.state.redOn ? 'transparent' : accent,
+      redBtnInk: this.state.redOn ? '#17190F' : ink,
+      redBtnBorder: this.state.redOn ? '#C8C5BC' : accent,
+      reachValue: new Intl.NumberFormat('es-MX').format(this.state.redOn ? socios + 4120 : socios),
+      reachNote: this.state.redOn ? 'tus socios + la red de la ciudad' : 'solo tus propios socios',
+      reachRevenue: this.state.redOn ? moneyShort(cross * 200) : '$0',
+      redChips: NETWORK.map(n => ({
+        name: n.name,
+        bg: this.state.redOn ? '#EDE9E0' : 'transparent', ink: this.state.redOn ? '#17190F' : '#9A9B96',
+        border: this.state.redOn ? '#DDD9CF' : '#E8E4DA', dot: this.state.redOn ? n.color : '#C8C5BC'
+      })),
+
+      tiers: [
+        { name: 'Estudio', price: '$799', per: '/mes', note: 'Hasta 150 socios activos', tagline: 'Deja de cobrar a mano, para siempre.', bg: '#FFFFFF', ink: '#17190F', border: '#DDD9CF', cta: 'Empezar con Estudio',
+          features: ['Cobros automáticos conectados a tu cuenta', 'App del socio con tu marca', 'Panel completo y agenda ilimitada', 'Tu sitio en subdominio propio'] },
+        { name: 'Gym', price: '$1,999', per: '/mes', note: 'Hasta 400 socios activos', tagline: 'Llena clases vacías con socios de toda la red.', bg: accent, ink: ink, border: accent, cta: 'Empezar con Gym',
+          features: ['Red RETA: socios de otras disciplinas descubren tu estudio y pagan', 'Todo lo de Estudio', 'Multi-entrenador y control de acceso', 'Reportes de ocupación y retención', 'Soporte prioritario por WhatsApp'] },
+        { name: 'Cadena', price: '$3,499', per: '/mes', note: 'Para 2 sedes o más', tagline: 'Todas tus sedes. Una sola pantalla.', bg: '#FFFFFF', ink: '#17190F', border: '#DDD9CF', cta: 'Hablar con ventas',
+          features: ['Panel unificado para todas tus sedes', 'Todo lo de Gym', 'Gestor de cuenta dedicado', 'Migración asistida · onboarding de tu equipo'] }
+      ],
+      calcMembers: this.state.members, calcMembersRaw: this.state.members,
+      calcFee: money(this.state.fee), calcFeeRaw: this.state.fee,
+      onMembers: (e) => this.setState({ members: Number(e.target.value) }),
+      onFee: (e) => this.setState({ fee: Number(e.target.value) }),
+      calcRevenue: moneyShort(calcRevenue), calcCost: moneyShort(calcCost),
+      calcPct: (calcCost / calcRevenue * 100).toFixed(1).replace('.', ',') + ' %',
+      calcHours: '$' + new Intl.NumberFormat('es-MX', { maximumFractionDigits: 0 }).format(Math.round(calcCost / this.state.members)) + ' /socio',
+      faqs: FAQS.map((f, i) => ({
+        q: f.q, a: f.a, open: this.state.openFaq === i, sign: this.state.openFaq === i ? '−' : '+',
+        onToggle: () => this.setState(s => ({ openFaq: s.openFaq === i ? null : i }))
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>
